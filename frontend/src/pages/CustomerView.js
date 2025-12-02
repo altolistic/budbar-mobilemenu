@@ -787,6 +787,94 @@ export default function CustomerView() {
                 </div>
               </DialogContent>
             </Dialog>
+
+            {/* Order History Dialog */}
+            <Dialog open={isOrderHistoryOpen} onOpenChange={setIsOrderHistoryOpen}>
+              <DialogContent className="max-w-2xl max-h-[80vh] overflow-y-auto">
+                <DialogHeader>
+                  <DialogTitle>Order History</DialogTitle>
+                  <DialogDescription>
+                    Enter your name and phone number to view your order history
+                  </DialogDescription>
+                </DialogHeader>
+                
+                <div className="space-y-4 py-4">
+                  <div className="grid grid-cols-2 gap-4">
+                    <Input
+                      placeholder="First Name"
+                      value={historyName}
+                      onChange={(e) => setHistoryName(e.target.value)}
+                      data-testid="history-name-input"
+                    />
+                    <Input
+                      placeholder="Phone Number"
+                      value={historyPhone}
+                      onChange={(e) => setHistoryPhone(e.target.value)}
+                      data-testid="history-phone-input"
+                    />
+                  </div>
+                  
+                  <Button
+                    onClick={fetchOrderHistory}
+                    className="w-full"
+                    data-testid="fetch-history-button"
+                  >
+                    View Order History
+                  </Button>
+
+                  {orderHistory.length > 0 && (
+                    <div className="space-y-4 mt-6">
+                      <h3 className="font-semibold text-lg">Your Orders</h3>
+                      {orderHistory.map((order, index) => (
+                        <div key={order.id || index} className="border rounded-lg p-4 space-y-2" data-testid={`history-order-${index}`}>
+                          <div className="flex justify-between items-start">
+                            <div>
+                              <p className="font-semibold">Order #{order.id}</p>
+                              <p className="text-sm text-gray-600">
+                                {new Date(order.created_at).toLocaleDateString()} at {new Date(order.created_at).toLocaleTimeString()}
+                              </p>
+                              <p className="text-sm">
+                                <span className="font-medium">Method:</span> {order.delivery_method}
+                              </p>
+                              {order.delivery_address && order.delivery_method !== 'pickup' && (
+                                <p className="text-sm">
+                                  <span className="font-medium">Address:</span> {order.delivery_address}
+                                </p>
+                              )}
+                            </div>
+                            <div className="text-right">
+                              <p className="font-bold text-lg">${order.total.toFixed(2)}</p>
+                              <Badge className={`${
+                                order.status === 'pending' ? 'bg-yellow-500' :
+                                order.status === 'confirmed' ? 'bg-blue-500' :
+                                order.status === 'completed' ? 'bg-green-500' :
+                                'bg-gray-500'
+                              }`}>
+                                {order.status}
+                              </Badge>
+                            </div>
+                          </div>
+                          
+                          {order.items && order.items.length > 0 && (
+                            <div className="mt-3 pt-3 border-t">
+                              <p className="font-medium text-sm mb-2">Items:</p>
+                              <div className="space-y-1">
+                                {order.items.map((item, itemIndex) => (
+                                  <div key={itemIndex} className="flex justify-between text-sm">
+                                    <span>{item.quantity}x {item.title} ({item.variant_name})</span>
+                                    <span>${(item.variant_price * item.quantity * (1 - (item.discount || 0) / 100)).toFixed(2)}</span>
+                                  </div>
+                                ))}
+                              </div>
+                            </div>
+                          )}
+                        </div>
+                      ))}
+                    </div>
+                  )}
+                </div>
+              </DialogContent>
+            </Dialog>
             </div>
           </div>
         </div>
