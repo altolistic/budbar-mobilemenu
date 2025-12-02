@@ -420,7 +420,7 @@ export default function CustomerView() {
             <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400 h-5 w-5" />
             <Input
               type="text"
-              placeholder="Search for products or services..."
+              placeholder="How would you like to feel today?"
               className="pl-12 py-6 text-lg"
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
