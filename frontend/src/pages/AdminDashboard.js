@@ -48,6 +48,7 @@ export default function AdminDashboard() {
   const [uploadedImages, setUploadedImages] = useState([]);
   const [availableCategories, setAvailableCategories] = useState([]);
   const [newCategoryInput, setNewCategoryInput] = useState("");
+  const [isCategoryManagerOpen, setIsCategoryManagerOpen] = useState(false);
 
   const getAuthHeaders = () => {
     const token = localStorage.getItem('admin_token');
