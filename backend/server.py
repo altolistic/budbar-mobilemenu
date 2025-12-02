@@ -45,6 +45,7 @@ class MenuItem(BaseModel):
     description: str
     categories: List[str] = []
     item_type: str = "blends"
+    event: str = ""
     meta_details: str = ""
     images: List[str] = []
     variants: List[Variant]
@@ -57,6 +58,7 @@ class MenuItemCreate(BaseModel):
     description: str
     categories: List[str] = []
     item_type: str = "blends"
+    event: str = ""
     meta_details: str = ""
     images: List[str] = []
     variants: List[Variant]
