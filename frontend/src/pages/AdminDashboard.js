@@ -338,7 +338,13 @@ export default function AdminDashboard() {
                 <Card key={item.id} data-testid={`admin-menu-item-${item.id}`}>
                   <CardHeader>
                     <div className="aspect-video overflow-hidden rounded-lg mb-4">
-                      <img src={item.image_url} alt={item.title} className="w-full h-full object-cover" />
+                      {item.images && item.images.length > 0 ? (
+                        <img src={item.images[0]} alt={item.title} className="w-full h-full object-cover" />
+                      ) : (
+                        <div className="w-full h-full bg-gray-200 flex items-center justify-center">
+                          <span className="text-gray-400">No image</span>
+                        </div>
+                      )}
                     </div>
                     <CardTitle>{item.title}</CardTitle>
                   </CardHeader>
