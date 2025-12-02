@@ -1,9 +1,10 @@
 import { useSortable } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
-import { GripVertical } from "lucide-react";
+import { GripVertical, Edit2, Trash2 } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
 
-export function SortableMenuItem({ item }) {
+export function SortableMenuItem({ item, onEdit, onDelete }) {
   const {
     attributes,
     listeners,
@@ -41,6 +42,24 @@ export function SortableMenuItem({ item }) {
       >
         {item.item_type === "buds" ? "Bud" : "Blend"}
       </Badge>
+      <div className="flex gap-2">
+        <Button
+          size="sm"
+          variant="outline"
+          onClick={() => onEdit(item)}
+          data-testid={`edit-list-item-${item.id}`}
+        >
+          <Edit2 className="h-4 w-4" />
+        </Button>
+        <Button
+          size="sm"
+          variant="destructive"
+          onClick={() => onDelete(item.id)}
+          data-testid={`delete-list-item-${item.id}`}
+        >
+          <Trash2 className="h-4 w-4" />
+        </Button>
+      </div>
     </div>
   );
 }
