@@ -125,7 +125,9 @@ export default function CustomerView() {
 
   const fetchMenuItems = async () => {
     try {
-      const response = await axios.get(`${API}/menu/items`);
+      const response = await axios.get(`${API}/menu/items`, {
+        params: { item_type: selectedType }
+      });
       setMenuItems(response.data);
     } catch (error) {
       console.error("Error fetching menu items:", error);
