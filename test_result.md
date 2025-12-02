@@ -102,7 +102,7 @@
 # Testing Data - Main Agent and testing sub agent both should log testing data below this section
 #====================================================================================================
 
-user_problem_statement: "Test the complete Event delivery option with Flight Pass membership popup functionality - verify Event option in delivery dropdown, Flight Pass popup appearance with benefits and signup bonus, Yes/Not Now button functionality, $50 charge addition, line item display, and popup behavior after acceptance"
+user_problem_statement: "Test the new duplicate menu item feature in BudBar admin dashboard - verify duplicate button (Copy icon) appears in both detailed and list views, creates new product with (Copy) suffix, copies all properties correctly, and allows editing of duplicated items"
 
 frontend:
   - task: "Multi-select categories feature in admin dashboard"
