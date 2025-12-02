@@ -68,6 +68,15 @@ export default function AdminDashboard() {
     }
   }, []);
 
+  const fetchCategories = useCallback(async () => {
+    try {
+      const response = await axios.get(`${API}/menu/categories`);
+      setAvailableCategories(response.data.categories || []);
+    } catch (error) {
+      console.error("Error fetching categories:", error);
+    }
+  }, []);
+
   const fetchInquiries = useCallback(async () => {
     try {
       const response = await axios.get(`${API}/admin/inquiries`, getAuthHeaders());
