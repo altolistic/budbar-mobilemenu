@@ -230,7 +230,7 @@ metadata:
 
 test_plan:
   current_focus:
-    - "Consolidated category management with drag, edit, and delete functionality"
+    - "Scroll functionality in category management sections"
   stuck_tasks: []
   test_all: false
   test_priority: "high_first"
