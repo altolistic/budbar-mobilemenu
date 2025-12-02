@@ -384,14 +384,58 @@ export default function CustomerView() {
                       <div className="p-4 bg-gray-50 rounded-lg border" data-testid="pickup-address-display">
                         <p className="text-sm font-semibold mb-1">Pick Up Location:</p>
                         <p className="text-sm">5624 Grand River Road</p>
+                        <p className="text-xs text-gray-500 mt-2">No minimum order required for pickup</p>
                       </div>
                     ) : (
-                      <Input
-                        placeholder="Delivery Address"
-                        value={deliveryAddress}
-                        onChange={(e) => setDeliveryAddress(e.target.value)}
-                        data-testid="delivery-address-input"
-                      />
+                      <div className="space-y-2">
+                        <Input
+                          placeholder="Delivery Address (e.g., 123 Main St, City, State ZIP)"
+                          value={deliveryAddress}
+                          onChange={(e) => {
+                            setDeliveryAddress(e.target.value);
+                            setDeliveryValidation(null);
+                          }}
+                          data-testid="delivery-address-input"
+                        />
+                        <Button
+                          type="button"
+                          variant="outline"
+                          size="sm"
+                          onClick={validateDeliveryAddress}
+                          disabled={!deliveryAddress || isValidatingAddress}
+                          className="w-full"
+                          data-testid="check-delivery-button"
+                        >
+                          {isValidatingAddress ? "Checking..." : "Check Delivery Minimum"}
+                        </Button>
+                        {deliveryValidation && (
+                          <div className={`p-3 rounded-lg border ${
+                            deliveryValidation.meets_minimum 
+                              ? 'bg-green-50 border-green-200' 
+                              : 'bg-yellow-50 border-yellow-200'
+                          }`} data-testid="delivery-validation-info">
+                            <p className="text-sm font-semibold mb-1">
+                              Distance: {deliveryValidation.distance_miles} miles
+                            </p>
+                            <p className="text-sm mb-1">
+                              Minimum Required: ${deliveryValidation.minimum_order.toFixed(2)}
+                            </p>
+                            <p className="text-sm mb-1">
+                              Your Total: ${deliveryValidation.cart_total.toFixed(2)}
+                            </p>
+                            {!deliveryValidation.meets_minimum && (
+                              <p className="text-sm font-bold text-yellow-700 mt-2">
+                                ⚠️ Add ${deliveryValidation.remaining_needed.toFixed(2)} more to meet minimum
+                              </p>
+                            )}
+                            {deliveryValidation.meets_minimum && (
+                              <p className="text-sm font-bold text-green-700 mt-2">
+                                ✓ Minimum met!
+                              </p>
+                            )}
+                          </div>
+                        )}
+                      </div>
                     )}
 
                     {/* Referral Name (Optional) */}
