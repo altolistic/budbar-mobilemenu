@@ -104,6 +104,10 @@ class AdminUser(BaseModel):
     password_hash: str
     created_at: datetime = Field(default_factory=lambda: datetime.now(timezone.utc))
 
+class DeliveryValidation(BaseModel):
+    delivery_address: str
+    cart_total: float
+
 # Auth helpers
 def create_access_token(data: dict):
     to_encode = data.copy()
