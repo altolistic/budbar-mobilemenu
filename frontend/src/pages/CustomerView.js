@@ -258,11 +258,36 @@ export default function CustomerView() {
         }
       });
 
-      const suggestions = response.data.map(item => ({
-        display_name: item.display_name,
-        lat: item.lat,
-        lon: item.lon
-      }));
+      const suggestions = response.data
+        .filter(item => item.address) // Only show results with detailed address info
+        .map(item => {
+          const addr = item.address;
+          // Format like Amazon: Street Number + Name, City, State ZIP
+          const streetParts = [];
+          
+          if (addr.house_number) streetParts.push(addr.house_number);
+          if (addr.road) streetParts.push(addr.road);
+          
+          const street = streetParts.join(' ');
+          const city = addr.city || addr.town || addr.village || addr.county;
+          const state = addr.state;
+          const zip = addr.postcode;
+          
+          // Build formatted address
+          let formatted = '';
+          if (street) formatted += street;
+          if (city) formatted += (formatted ? ', ' : '') + city;
+          if (state) formatted += (formatted ? ', ' : '') + state;
+          if (zip) formatted += (formatted ? ' ' : '') + zip;
+          
+          return {
+            display_name: formatted || item.display_name,
+            full_address: item.display_name, // Keep full for geocoding
+            lat: item.lat,
+            lon: item.lon
+          };
+        })
+        .filter(item => item.display_name); // Only show items with formatted addresses
 
       setAddressSuggestions(suggestions);
       setShowSuggestions(suggestions.length > 0);
