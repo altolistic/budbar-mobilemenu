@@ -89,6 +89,15 @@ export default function CustomerView() {
   useEffect(() => {
     fetchMenuItems();
     fetchCategories();
+    
+    // Refresh data when window gains focus (e.g., returning from admin)
+    const handleFocus = () => {
+      fetchMenuItems();
+      fetchCategories();
+    };
+    
+    window.addEventListener('focus', handleFocus);
+    return () => window.removeEventListener('focus', handleFocus);
   }, []);
 
   useEffect(() => {
