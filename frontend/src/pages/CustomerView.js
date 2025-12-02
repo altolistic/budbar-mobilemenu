@@ -408,6 +408,29 @@ export default function CustomerView() {
     }
   };
 
+  const fetchOrderHistory = async () => {
+    if (!historyName.trim() || !historyPhone.trim()) {
+      toast.error("Please enter both name and phone number");
+      return;
+    }
+
+    try {
+      const response = await axios.get(`${API}/inquiries/history`, {
+        params: {
+          first_name: historyName.trim(),
+          phone_number: historyPhone.trim()
+        }
+      });
+      setOrderHistory(response.data);
+      if (response.data.length === 0) {
+        toast.info("No order history found for this name and phone number");
+      }
+    } catch (error) {
+      console.error("Error fetching order history:", error);
+      toast.error("Failed to fetch order history");
+    }
+  };
+
   return (
     <div className="min-h-screen bg-white">
       {/* Header */}
