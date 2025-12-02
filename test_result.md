@@ -190,7 +190,8 @@ metadata:
   test_sequence: 1
 
 test_plan:
-  current_focus: []
+  current_focus:
+    - "Event delivery option with Flight Pass membership popup functionality"
   stuck_tasks: []
   test_all: false
   test_priority: "high_first"
