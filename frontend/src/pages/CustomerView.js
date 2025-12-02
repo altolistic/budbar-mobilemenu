@@ -166,6 +166,20 @@ export default function CustomerView() {
       );
     }
 
+    // Sort by type (buds first, then blends) and display_order
+    filtered.sort((a, b) => {
+      // First sort by type: buds (1) before blends (0)
+      const typeOrder = { 'buds': 0, 'blends': 1 };
+      const typeComparison = (typeOrder[a.item_type] || 1) - (typeOrder[b.item_type] || 1);
+      
+      if (typeComparison !== 0) {
+        return typeComparison;
+      }
+      
+      // Then sort by display_order within same type
+      return (a.display_order || 0) - (b.display_order || 0);
+    });
+
     setFilteredItems(filtered);
   };
 
