@@ -677,6 +677,42 @@ export default function AdminDashboard() {
                   </form>
                 </DialogContent>
               </Dialog>
+
+              {/* Manage Categories Dialog */}
+              <Dialog open={isCategoryManagerOpen} onOpenChange={setIsCategoryManagerOpen}>
+                <DialogTrigger asChild>
+                  <Button variant="outline" data-testid="manage-categories-button">
+                    Manage Categories
+                  </Button>
+                </DialogTrigger>
+                <DialogContent>
+                  <DialogHeader>
+                    <DialogTitle>Manage Categories</DialogTitle>
+                    <DialogDescription>
+                      Delete categories that are no longer needed. This will remove them from all products.
+                    </DialogDescription>
+                  </DialogHeader>
+                  <div className="space-y-2 mt-4">
+                    {availableCategories.length > 0 ? (
+                      availableCategories.map((cat) => (
+                        <div key={cat} className="flex items-center justify-between p-3 border rounded-md">
+                          <span className="font-medium">{cat}</span>
+                          <Button
+                            variant="destructive"
+                            size="sm"
+                            onClick={() => handleDeleteCategory(cat)}
+                            data-testid={`delete-category-${cat}`}
+                          >
+                            <Trash2 className="h-4 w-4" />
+                          </Button>
+                        </div>
+                      ))
+                    ) : (
+                      <p className="text-gray-500 text-center py-4">No categories available</p>
+                    )}
+                  </div>
+                </DialogContent>
+              </Dialog>
                 </div>
               </div>
             </div>
