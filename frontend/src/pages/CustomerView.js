@@ -615,7 +615,16 @@ export default function CustomerView() {
 
                   {/* Total */}
                   {cart.length > 0 && (
-                    <div className="border-t pt-4">
+                    <div className="border-t pt-4 space-y-2">
+                      {hasFlightPass && (
+                        <div className="flex justify-between items-center text-sm">
+                          <span className="flex items-center gap-2">
+                            ✈️ Flight Pass Membership
+                            <Badge className="bg-yellow-500 text-xs">Annual</Badge>
+                          </span>
+                          <span className="font-semibold">$50.00</span>
+                        </div>
+                      )}
                       <div className="flex justify-between items-center text-xl font-bold">
                         <span>Total:</span>
                         <span className="gold-text" data-testid="cart-total">${calculateTotal().toFixed(2)}</span>
