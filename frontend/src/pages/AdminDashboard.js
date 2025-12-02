@@ -697,7 +697,18 @@ export default function AdminDashboard() {
                     </CardHeader>
                     <CardContent>
                       <p className="text-sm text-gray-600 mb-2">{item.description}</p>
-                      <p className="text-sm mb-2">Category: <span className="font-semibold">{item.category}</span></p>
+                      <div className="mb-2">
+                        <p className="text-sm mb-1">Categories:</p>
+                        <div className="flex flex-wrap gap-1">
+                          {item.categories && item.categories.length > 0 ? (
+                            item.categories.map((cat, idx) => (
+                              <Badge key={idx} variant="outline">{cat}</Badge>
+                            ))
+                          ) : (
+                            <span className="text-xs text-gray-400">No categories</span>
+                          )}
+                        </div>
+                      </div>
                       <p className="text-sm mb-2">
                         Type: 
                         <Badge className={`ml-2 ${item.item_type === "buds" ? "bg-green-600" : "bg-purple-600"}`}>
