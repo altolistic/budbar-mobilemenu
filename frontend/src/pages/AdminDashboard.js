@@ -214,15 +214,24 @@ export default function AdminDashboard() {
     fetchInquiries();
   }, [fetchMenuItems, fetchCategories, fetchInquiries]);
 
-  // Auto-save form data to localStorage
+  // Auto-save form data to localStorage (excluding images to avoid quota errors)
   useEffect(() => {
     // Only save if form has data (not default empty state)
     if (formData.title || formData.description) {
-      localStorage.setItem('admin_form_draft', JSON.stringify({
-        formData,
-        editingItemId: editingItem?.id,
-        timestamp: Date.now()
-      }));
+      try {
+        // Exclude images from auto-save to prevent localStorage quota exceeded errors
+        const { images, ...formDataWithoutImages } = formData;
+        localStorage.setItem('admin_form_draft', JSON.stringify({
+          formData: formDataWithoutImages,
+          editingItemId: editingItem?.id,
+          timestamp: Date.now()
+        }));
+      } catch (error) {
+        // Silently handle quota exceeded errors
+        if (error.name === 'QuotaExceededError') {
+          console.warn('localStorage quota exceeded, skipping auto-save');
+        }
+      }
     }
   }, [formData, editingItem]);
 
