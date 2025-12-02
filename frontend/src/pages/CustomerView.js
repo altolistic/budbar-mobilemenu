@@ -1026,11 +1026,11 @@ export default function CustomerView() {
                       const variantIndex = parseInt(value);
                       const selectedVariant = item.variants[variantIndex];
                       addToCart(item, selectedVariant);
-                      toast.success(`${selectedVariant.name} added to cart`);
+                      toast.success(`${selectedVariant.name} added to inquiry`);
                     }}
                   >
                     <SelectTrigger className="w-full" data-testid={`variant-select-${item.id}`}>
-                      <SelectValue placeholder="Select size & add to cart" />
+                      <SelectValue placeholder="Select size & add to inquiry" />
                     </SelectTrigger>
                     <SelectContent>
                       {item.variants.map((variant, idx) => (
