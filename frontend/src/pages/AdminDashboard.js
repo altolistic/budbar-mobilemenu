@@ -310,6 +310,24 @@ export default function AdminDashboard() {
     }
   };
 
+  const handleCategoryOrderChange = (newOrder) => {
+    setAvailableCategories(newOrder);
+  };
+
+  const saveCategoryOrder = async () => {
+    try {
+      await axios.put(`${API}/admin/categories/order`, 
+        { categories: availableCategories }, 
+        getAuthHeaders()
+      );
+      toast.success("Category order saved successfully");
+      setIsCategoryOrderOpen(false);
+    } catch (error) {
+      console.error("Error saving category order:", error);
+      toast.error("Failed to save category order");
+    }
+  };
+
   const handleDuplicate = async (item) => {
     try {
       // Create a copy of the item with a new title
