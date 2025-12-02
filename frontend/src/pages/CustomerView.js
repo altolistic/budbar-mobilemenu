@@ -240,7 +240,9 @@ export default function CustomerView() {
   };
 
   const calculateTotal = () => {
-    return cart.reduce((sum, item) => sum + calculateItemPrice(item), 0);
+    const cartTotal = cart.reduce((sum, item) => sum + calculateItemPrice(item), 0);
+    const flightPassFee = hasFlightPass ? 50 : 0;
+    return cartTotal + flightPassFee;
   };
 
   const searchAddresses = async (query) => {
