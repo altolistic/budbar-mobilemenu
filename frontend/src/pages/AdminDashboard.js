@@ -753,7 +753,7 @@ export default function AdminDashboard() {
                           <SelectTrigger data-testid="category-dropdown">
                             <SelectValue placeholder="Select existing category" />
                           </SelectTrigger>
-                          <SelectContent>
+                          <SelectContent className="max-h-[300px] overflow-y-auto">
                             {availableCategories.map((cat) => (
                               <SelectItem 
                                 key={cat} 
