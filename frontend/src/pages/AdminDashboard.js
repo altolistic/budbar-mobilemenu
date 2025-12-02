@@ -37,18 +37,38 @@ export default function AdminDashboard() {
   });
   const [uploadedImages, setUploadedImages] = useState([]);
 
-  useEffect(() => {
-    fetchMenuItems();
-    fetchInquiries();
-  }, []);
+  const getAuthHeaders = () => {
+    const token = localStorage.getItem('admin_token');
+    return { headers: { Authorization: `Bearer ${token}` } };
+  };
 
-  useEffect(() => {
-    filterMenuItems();
-  }, [menuItems, menuSearchQuery]);
+  const handleLogout = () => {
+    localStorage.removeItem('admin_token');
+    navigate("/admin/login");
+  };
 
-  useEffect(() => {
-    filterInquiries();
-  }, [inquiries, inquirySearchQuery]);
+  const fetchMenuItems = async () => {
+    try {
+      const response = await axios.get(`${API}/menu/items`);
+      setMenuItems(response.data);
+      setFilteredMenuItems(response.data);
+    } catch (error) {
+      console.error("Error fetching menu items:", error);
+    }
+  };
+
+  const fetchInquiries = async () => {
+    try {
+      const response = await axios.get(`${API}/admin/inquiries`, getAuthHeaders());
+      setInquiries(response.data);
+      setFilteredInquiries(response.data);
+    } catch (error) {
+      console.error("Error fetching inquiries:", error);
+      if (error.response?.status === 401) {
+        handleLogout();
+      }
+    }
+  };
 
   const filterMenuItems = () => {
     if (!menuSearchQuery) {
@@ -82,38 +102,18 @@ export default function AdminDashboard() {
     setFilteredInquiries(filtered);
   };
 
-  const getAuthHeaders = () => {
-    const token = localStorage.getItem('admin_token');
-    return { headers: { Authorization: `Bearer ${token}` } };
-  };
+  useEffect(() => {
+    fetchMenuItems();
+    fetchInquiries();
+  }, []);
 
-  const handleLogout = () => {
-    localStorage.removeItem('admin_token');
-    navigate("/admin/login");
-  };
+  useEffect(() => {
+    filterMenuItems();
+  }, [menuItems, menuSearchQuery]);
 
-  const fetchMenuItems = async () => {
-    try {
-      const response = await axios.get(`${API}/menu/items`);
-      setMenuItems(response.data);
-      setFilteredMenuItems(response.data);
-    } catch (error) {
-      console.error("Error fetching menu items:", error);
-    }
-  };
-
-  const fetchInquiries = async () => {
-    try {
-      const response = await axios.get(`${API}/admin/inquiries`, getAuthHeaders());
-      setInquiries(response.data);
-      setFilteredInquiries(response.data);
-    } catch (error) {
-      console.error("Error fetching inquiries:", error);
-      if (error.response?.status === 401) {
-        handleLogout();
-      }
-    }
-  };
+  useEffect(() => {
+    filterInquiries();
+  }, [inquiries, inquirySearchQuery]);
 
   const resetForm = () => {
     setFormData({
