@@ -337,7 +337,7 @@ export default function AdminDashboard() {
                         data-testid="item-meta-details-input"
                         className="text-sm"
                       />
-                      <p className="text-xs text-gray-500 mt-1">Examples: "relaxation, stress relief, calm, peaceful, anxiety, focus, creativity, energy boost, sleep aid"</p>
+                      <p className="text-xs text-gray-500 mt-1">Examples: &quot;relaxation, stress relief, calm, peaceful, anxiety, focus, creativity, energy boost, sleep aid&quot;</p>
                     </div>
 
                     {/* Type Selection */}
