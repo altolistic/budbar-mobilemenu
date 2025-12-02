@@ -21,8 +21,11 @@ import { SortableMenuItem } from "@/components/SortableMenuItem";
 const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
 const API = `${BACKEND_URL}/api`;
 
-// Sortable Category Item Component
-function SortableCategoryItem({ id, name }) {
+// Manageable Category Item Component with Drag, Edit, and Delete
+function ManageableCategoryItem({ id, name, onDelete, onRename }) {
+  const [isEditing, setIsEditing] = useState(false);
+  const [editValue, setEditValue] = useState(name);
+
   const {
     attributes,
     listeners,
@@ -38,17 +41,68 @@ function SortableCategoryItem({ id, name }) {
     opacity: isDragging ? 0.5 : 1,
   };
 
+  const handleSaveEdit = () => {
+    if (editValue.trim() && editValue !== name) {
+      onRename(name, editValue.trim());
+      toast.success(`Category renamed to "${editValue}"`);
+    }
+    setIsEditing(false);
+  };
+
   return (
     <div
       ref={setNodeRef}
       style={style}
-      className="flex items-center gap-3 p-3 bg-white border rounded-md hover:shadow-md transition-shadow"
-      data-testid={`sortable-category-${id}`}
+      className="flex items-center gap-2 p-3 bg-white border rounded-md hover:shadow-md transition-shadow"
+      data-testid={`manageable-category-${id}`}
     >
       <div {...attributes} {...listeners} className="cursor-grab active:cursor-grabbing">
         <GripVertical className="h-5 w-5 text-gray-400" />
       </div>
-      <span className="font-medium flex-1">{name}</span>
+      
+      {isEditing ? (
+        <Input
+          value={editValue}
+          onChange={(e) => setEditValue(e.target.value)}
+          onKeyDown={(e) => {
+            if (e.key === 'Enter') handleSaveEdit();
+            if (e.key === 'Escape') { setEditValue(name); setIsEditing(false); }
+          }}
+          onBlur={handleSaveEdit}
+          autoFocus
+          className="flex-1"
+          data-testid={`edit-category-input-${id}`}
+        />
+      ) : (
+        <span 
+          className="font-medium flex-1 cursor-pointer hover:text-blue-600" 
+          onClick={() => setIsEditing(true)}
+          data-testid={`category-name-${id}`}
+        >
+          {name}
+        </span>
+      )}
+
+      <div className="flex gap-1">
+        <Button
+          variant="outline"
+          size="sm"
+          onClick={() => setIsEditing(true)}
+          data-testid={`edit-category-${id}`}
+          title="Edit name"
+        >
+          <Edit2 className="h-4 w-4" />
+        </Button>
+        <Button
+          variant="destructive"
+          size="sm"
+          onClick={() => onDelete(name)}
+          data-testid={`delete-category-${id}`}
+          title="Delete"
+        >
+          <Trash2 className="h-4 w-4" />
+        </Button>
+      </div>
     </div>
   );
 }
