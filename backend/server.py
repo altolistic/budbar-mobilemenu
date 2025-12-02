@@ -162,21 +162,25 @@ async def get_categories():
 @api_router.post("/validate-delivery")
 async def validate_delivery(validation: DeliveryValidation):
     """Validate delivery address and return minimum order requirement"""
-    PICKUP_ADDRESS = "5624 Grand River Road"
+    # Full pickup address with city, state for accurate geocoding
+    PICKUP_ADDRESS = "5624 Grand River Road, Lansing, Michigan"
     
     try:
-        geolocator = Nominatim(user_agent="budbar_marketplace")
+        geolocator = Nominatim(user_agent="budbar_marketplace", timeout=10)
         
-        # Geocode addresses
-        pickup_location = geolocator.geocode(PICKUP_ADDRESS)
-        delivery_location = geolocator.geocode(validation.delivery_address)
+        # Geocode pickup address with more specific query
+        pickup_location = geolocator.geocode(PICKUP_ADDRESS, exactly_one=True)
+        
+        # Geocode delivery address
+        delivery_location = geolocator.geocode(validation.delivery_address, exactly_one=True)
         
         if not delivery_location:
             raise HTTPException(status_code=400, detail="Could not find delivery address. Please enter a valid address.")
         
         if not pickup_location:
-            # Fallback coordinates if geocoding fails
-            pickup_coords = (42.9634, -82.4249)  # Approximate coordinates
+            # Specific coordinates for 5624 Grand River Road, Lansing, MI
+            pickup_coords = (42.7540, -84.5825)
+            logging.warning("Using fallback coordinates for pickup address")
         else:
             pickup_coords = (pickup_location.latitude, pickup_location.longitude)
         
