@@ -446,7 +446,7 @@ export default function CustomerView() {
                 <SheetTrigger asChild>
                   <Button variant="outline" className="relative" data-testid="cart-button">
                     <ShoppingCart className="mr-2 h-5 w-5" />
-                    Inquiry Cart
+                    Submit an Inquiry
                     {cart.length > 0 && (
                       <Badge className="ml-2 bg-green-600" data-testid="cart-count">{cart.length}</Badge>
                     )}
@@ -455,7 +455,7 @@ export default function CustomerView() {
                 <SheetContent className="w-full sm:max-w-lg overflow-y-auto">
                 <SheetHeader>
                   <div className="flex justify-between items-center">
-                    <SheetTitle>Your Inquiry Cart</SheetTitle>
+                    <SheetTitle>Your Inquiry</SheetTitle>
                     <Button 
                       variant="outline" 
                       size="sm"
