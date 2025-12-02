@@ -898,6 +898,7 @@ export default function AdminDashboard() {
                             item={item}
                             onEdit={handleEdit}
                             onDelete={handleDelete}
+                            onDuplicate={handleDuplicate}
                           />
                         ))}
                         {filteredMenuItems.filter(item => item.item_type === "blends").length === 0 && (
