@@ -475,7 +475,7 @@ export default function CustomerView() {
       {showBackToTop && (
         <button
           onClick={scrollToTop}
-          className="fixed bottom-8 right-8 z-50 p-4 rounded-full shadow-lg transition-all duration-300 hover:scale-110"
+          className="fixed bottom-8 left-8 z-50 p-4 rounded-full shadow-lg transition-all duration-300 hover:scale-110"
           style={{ 
             background: 'linear-gradient(135deg, #D4AF37 0%, #c9a527 100%)',
             color: '#000000'
