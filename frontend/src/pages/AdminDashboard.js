@@ -584,60 +584,125 @@ export default function AdminDashboard() {
               />
             </div>
 
-            {/* Menu Items List */}
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {filteredMenuItems.length === 0 && menuSearchQuery && (
-                <div className="col-span-full text-center text-gray-500 py-8">
-                  No menu items match your search
-                </div>
-              )}
-              {filteredMenuItems.map(item => (
-                <Card key={item.id} data-testid={`admin-menu-item-${item.id}`}>
-                  <CardHeader>
-                    <div className="aspect-video overflow-hidden rounded-lg mb-4">
-                      {item.images && item.images.length > 0 ? (
-                        <img src={item.images[0]} alt={item.title} className="w-full h-full object-cover" />
-                      ) : (
-                        <div className="w-full h-full bg-gray-200 flex items-center justify-center">
-                          <span className="text-gray-400">No image</span>
-                        </div>
+            {/* Detailed View */}
+            {menuView === "detailed" && (
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                {filteredMenuItems.length === 0 && menuSearchQuery && (
+                  <div className="col-span-full text-center text-gray-500 py-8">
+                    No menu items match your search
+                  </div>
+                )}
+                {filteredMenuItems.map(item => (
+                  <Card key={item.id} data-testid={`admin-menu-item-${item.id}`}>
+                    <CardHeader>
+                      <div className="aspect-video overflow-hidden rounded-lg mb-4">
+                        {item.images && item.images.length > 0 ? (
+                          <img src={item.images[0]} alt={item.title} className="w-full h-full object-cover" />
+                        ) : (
+                          <div className="w-full h-full bg-gray-200 flex items-center justify-center">
+                            <span className="text-gray-400">No image</span>
+                          </div>
+                        )}
+                      </div>
+                      <CardTitle>{item.title}</CardTitle>
+                    </CardHeader>
+                    <CardContent>
+                      <p className="text-sm text-gray-600 mb-2">{item.description}</p>
+                      <p className="text-sm mb-2">Category: <span className="font-semibold">{item.category}</span></p>
+                      {item.discount > 0 && (
+                        <p className="text-sm text-green-600 mb-2">Discount: {item.discount}%</p>
                       )}
-                    </div>
-                    <CardTitle>{item.title}</CardTitle>
-                  </CardHeader>
-                  <CardContent>
-                    <p className="text-sm text-gray-600 mb-2">{item.description}</p>
-                    <p className="text-sm mb-2">Category: <span className="font-semibold">{item.category}</span></p>
-                    {item.discount > 0 && (
-                      <p className="text-sm text-green-600 mb-2">Discount: {item.discount}%</p>
-                    )}
-                    <div className="space-y-1 mb-4">
-                      {item.variants.map((v, idx) => (
-                        <p key={idx} className="text-sm">{v.name}: ${v.price.toFixed(2)}</p>
-                      ))}
-                    </div>
-                    <div className="flex gap-2">
-                      <Button
-                        size="sm"
-                        variant="outline"
-                        onClick={() => handleEdit(item)}
-                        data-testid={`edit-item-${item.id}`}
-                      >
-                        <Edit2 className="h-4 w-4" />
-                      </Button>
-                      <Button
-                        size="sm"
-                        variant="destructive"
-                        onClick={() => handleDelete(item.id)}
-                        data-testid={`delete-item-${item.id}`}
-                      >
-                        <Trash2 className="h-4 w-4" />
-                      </Button>
-                    </div>
-                  </CardContent>
-                </Card>
-              ))}
-            </div>
+                      <div className="space-y-1 mb-4">
+                        {item.variants.map((v, idx) => (
+                          <p key={idx} className="text-sm">{v.name}: ${v.price.toFixed(2)}</p>
+                        ))}
+                      </div>
+                      <div className="flex gap-2">
+                        <Button
+                          size="sm"
+                          variant="outline"
+                          onClick={() => handleEdit(item)}
+                          data-testid={`edit-item-${item.id}`}
+                        >
+                          <Edit2 className="h-4 w-4" />
+                        </Button>
+                        <Button
+                          size="sm"
+                          variant="destructive"
+                          onClick={() => handleDelete(item.id)}
+                          data-testid={`delete-item-${item.id}`}
+                        >
+                          <Trash2 className="h-4 w-4" />
+                        </Button>
+                      </div>
+                    </CardContent>
+                  </Card>
+                ))}
+              </div>
+            )}
+
+            {/* List View with Drag & Drop */}
+            {menuView === "list" && (
+              <div className="space-y-8">
+                {/* Buds Section */}
+                <div>
+                  <h3 className="text-xl font-bold mb-4 flex items-center gap-2">
+                    <span>Buds</span>
+                    <span className="text-sm font-normal text-gray-500">
+                      (Drag to reorder)
+                    </span>
+                  </h3>
+                  <DndContext
+                    sensors={sensors}
+                    collisionDetection={closestCenter}
+                    onDragEnd={(event) => handleDragEnd(event, "buds")}
+                  >
+                    <SortableContext
+                      items={filteredMenuItems.filter(item => item.item_type === "buds").map(item => item.id)}
+                      strategy={verticalListSortingStrategy}
+                    >
+                      <div className="space-y-2">
+                        {filteredMenuItems.filter(item => item.item_type === "buds").map(item => (
+                          <SortableMenuItem key={item.id} item={item} />
+                        ))}
+                        {filteredMenuItems.filter(item => item.item_type === "buds").length === 0 && (
+                          <p className="text-center text-gray-500 py-4">No buds items</p>
+                        )}
+                      </div>
+                    </SortableContext>
+                  </DndContext>
+                </div>
+
+                {/* Blends Section */}
+                <div>
+                  <h3 className="text-xl font-bold mb-4 flex items-center gap-2">
+                    <span>Blends</span>
+                    <span className="text-sm font-normal text-gray-500">
+                      (Drag to reorder)
+                    </span>
+                  </h3>
+                  <DndContext
+                    sensors={sensors}
+                    collisionDetection={closestCenter}
+                    onDragEnd={(event) => handleDragEnd(event, "blends")}
+                  >
+                    <SortableContext
+                      items={filteredMenuItems.filter(item => item.item_type === "blends").map(item => item.id)}
+                      strategy={verticalListSortingStrategy}
+                    >
+                      <div className="space-y-2">
+                        {filteredMenuItems.filter(item => item.item_type === "blends").map(item => (
+                          <SortableMenuItem key={item.id} item={item} />
+                        ))}
+                        {filteredMenuItems.filter(item => item.item_type === "blends").length === 0 && (
+                          <p className="text-center text-gray-500 py-4">No blends items</p>
+                        )}
+                      </div>
+                    </SortableContext>
+                  </DndContext>
+                </div>
+              </div>
+            )}
           </TabsContent>
 
           {/* Inquiries Tab */}
