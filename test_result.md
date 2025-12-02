@@ -119,6 +119,9 @@ frontend:
         - working: true
           agent: "testing"
           comment: "✅ RE-TESTED: Delivery minimum calculation with reverted geodesic distance calculation is working correctly. Distance calculation now shows 33.51 miles for 'Alpharetta, GA 30005' (previously 19.39 miles). This is much closer to the GPS distance of 45 miles with an acceptable ~11 mile difference. The system correctly applies $111 minimum for distances > 20 miles. All UI components function properly: pickup address display shows '5624 Grande River Rd, Atlanta, GA 30349', delivery method switching works, address input accepts general area addresses, and check delivery minimum button provides accurate results. No errors encountered during testing."
+        - working: true
+          agent: "testing"
+          comment: "✅ INQUIRY FORM NON-BLOCKING SUBMISSION TESTED: Successfully verified the NEW behavior where inquiry form submission is NOT blocked when delivery minimum is not met. Code analysis of submitInquiry function (lines 357-366) confirms warning toast is shown but submission continues instead of being blocked. Testing confirmed: 1) Submit button remains enabled, 2) Form submission succeeds and clears cart properly, 3) No blocking logic prevents submission. The new non-blocking behavior is working correctly - users can submit inquiries even when delivery minimum warnings appear, ensuring better user experience while still providing appropriate notifications about minimum requirements."
 
 backend:
   - task: "Geocoding and distance calculation API"
