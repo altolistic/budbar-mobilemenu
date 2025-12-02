@@ -461,13 +461,87 @@ export default function AdminDashboard() {
                       required
                       data-testid="item-description-input"
                     />
-                    <Input
-                      placeholder="Category"
-                      value={formData.category}
-                      onChange={(e) => setFormData({ ...formData, category: e.target.value })}
-                      required
-                      data-testid="item-category-input"
-                    />
+                    {/* Categories Multi-Select */}
+                    <div>
+                      <label className="block text-sm font-medium mb-2">Categories</label>
+                      <div className="space-y-2">
+                        {/* Selected Categories */}
+                        <div className="flex flex-wrap gap-2 min-h-[40px] p-2 border rounded-md">
+                          {formData.categories && formData.categories.length > 0 ? (
+                            formData.categories.map((cat, index) => (
+                              <Badge key={index} variant="secondary" className="flex items-center gap-1">
+                                {cat}
+                                <button
+                                  type="button"
+                                  onClick={() => {
+                                    const newCategories = formData.categories.filter((_, i) => i !== index);
+                                    setFormData({ ...formData, categories: newCategories });
+                                  }}
+                                  className="ml-1 hover:text-red-500"
+                                >
+                                  ×
+                                </button>
+                              </Badge>
+                            ))
+                          ) : (
+                            <span className="text-gray-400 text-sm">No categories selected</span>
+                          )}
+                        </div>
+                        
+                        {/* Dropdown to select existing categories */}
+                        <Select
+                          onValueChange={(value) => {
+                            if (value && !formData.categories.includes(value)) {
+                              setFormData({ ...formData, categories: [...formData.categories, value] });
+                            }
+                          }}
+                        >
+                          <SelectTrigger data-testid="category-dropdown">
+                            <SelectValue placeholder="Select existing category" />
+                          </SelectTrigger>
+                          <SelectContent>
+                            {availableCategories.map((cat) => (
+                              <SelectItem 
+                                key={cat} 
+                                value={cat}
+                                disabled={formData.categories.includes(cat)}
+                              >
+                                {cat}
+                              </SelectItem>
+                            ))}
+                            {availableCategories.length === 0 && (
+                              <div className="p-2 text-sm text-gray-500">No categories yet</div>
+                            )}
+                          </SelectContent>
+                        </Select>
+
+                        {/* Add new category */}
+                        <div className="flex gap-2">
+                          <Input
+                            placeholder="Add new category"
+                            value={newCategoryInput}
+                            onChange={(e) => setNewCategoryInput(e.target.value)}
+                            data-testid="new-category-input"
+                          />
+                          <Button
+                            type="button"
+                            onClick={() => {
+                              if (newCategoryInput.trim() && !formData.categories.includes(newCategoryInput.trim())) {
+                                const newCat = newCategoryInput.trim();
+                                setFormData({ ...formData, categories: [...formData.categories, newCat] });
+                                if (!availableCategories.includes(newCat)) {
+                                  setAvailableCategories([...availableCategories, newCat].sort());
+                                }
+                                setNewCategoryInput("");
+                              }
+                            }}
+                            data-testid="add-category-button"
+                          >
+                            Add
+                          </Button>
+                        </div>
+                      </div>
+                    </div>
                     
                     {/* Meta Details for Enhanced Search */}
                     <div>
