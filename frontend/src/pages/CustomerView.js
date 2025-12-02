@@ -541,7 +541,15 @@ export default function CustomerView() {
                   )}
                 </div>
                 <p className="text-gray-600 mb-4" data-testid={`menu-item-description-${item.id}`}>{item.description}</p>
-                <Badge variant="outline" className="mb-4" data-testid={`category-badge-${item.id}`}>{item.category}</Badge>
+                <div className="flex gap-2 mb-4">
+                  <Badge variant="outline" data-testid={`category-badge-${item.id}`}>{item.category}</Badge>
+                  <Badge 
+                    className={item.item_type === "buds" ? "bg-green-600" : "bg-purple-600"}
+                    data-testid={`type-badge-${item.id}`}
+                  >
+                    {item.item_type === "buds" ? "Bud" : "Blend"}
+                  </Badge>
+                </div>
 
                 {/* Variants */}
                 <div className="space-y-2 mt-4">
