@@ -470,6 +470,19 @@ export default function CustomerView() {
                         <p className="text-sm">5624 Grande River Rd, Atlanta, GA 30349</p>
                         <p className="text-xs text-gray-500 mt-2">No minimum order required for pickup</p>
                       </div>
+                    ) : deliveryMethod === "event" ? (
+                      <div className="p-4 bg-gradient-to-r from-yellow-50 to-yellow-100 rounded-lg border-2 border-yellow-300" data-testid="event-info-display">
+                        <p className="text-sm font-semibold mb-1 flex items-center gap-2">
+                          🎉 Event Pickup
+                          {hasFlightPass && <Badge className="bg-yellow-500">Flight Pass Member</Badge>}
+                        </p>
+                        <p className="text-sm">Your order will be available for pickup at the event location.</p>
+                        {hasFlightPass && (
+                          <p className="text-xs text-green-700 font-semibold mt-2">
+                            ✓ You're earning 3% cashback on this order!
+                          </p>
+                        )}
+                      </div>
                     ) : (
                       <div className="space-y-2">
                         <div className="relative">
