@@ -254,8 +254,9 @@ metadata:
 
 test_plan:
   current_focus:
-    - "Scroll functionality in category management sections"
-  stuck_tasks: []
+    - "Specials filter functionality (gold button)"
+  stuck_tasks:
+    - "Specials filter functionality (gold button)"
   test_all: false
   test_priority: "high_first"
 
