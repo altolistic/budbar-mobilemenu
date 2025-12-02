@@ -522,7 +522,7 @@ export default function CustomerView() {
                         <p className="text-sm">Your order will be available for pickup at the event location.</p>
                         {hasFlightPass && (
                           <p className="text-xs text-green-700 font-semibold mt-2">
-                            ✓ You're earning 3% cashback on this order!
+                            ✓ You&apos;re earning 3% cashback on this order!
                           </p>
                         )}
                       </div>
