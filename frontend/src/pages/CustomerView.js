@@ -271,6 +271,7 @@ export default function CustomerView() {
                 </div>
               </SheetContent>
             </Sheet>
+            </div>
           </div>
         </div>
       </header>
