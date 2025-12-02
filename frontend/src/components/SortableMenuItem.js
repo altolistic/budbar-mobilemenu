@@ -1,10 +1,10 @@
 import { useSortable } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
-import { GripVertical, Edit2, Trash2 } from "lucide-react";
+import { GripVertical, Edit2, Trash2, Copy } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 
-export function SortableMenuItem({ item, onEdit, onDelete }) {
+export function SortableMenuItem({ item, onEdit, onDelete, onDuplicate }) {
   const {
     attributes,
     listeners,
