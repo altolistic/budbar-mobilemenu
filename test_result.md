@@ -102,7 +102,7 @@
 # Testing Data - Main Agent and testing sub agent both should log testing data below this section
 #====================================================================================================
 
-user_problem_statement: "Test the new duplicate menu item feature in BudBar admin dashboard - verify duplicate button (Copy icon) appears in both detailed and list views, creates new product with (Copy) suffix, copies all properties correctly, and allows editing of duplicated items"
+user_problem_statement: "Test the new admin session management and form auto-save features in BudBar admin dashboard - verify form auto-save to localStorage, restore prompt after page refresh, activity tracking without unexpected logouts, and proper session error handling"
 
 frontend:
   - task: "Multi-select categories feature in admin dashboard"
