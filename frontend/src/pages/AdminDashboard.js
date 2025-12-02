@@ -46,60 +46,56 @@ export default function AdminDashboard() {
     navigate("/admin/login");
   };
 
-  const fetchMenuItems = async () => {
+  const fetchMenuItems = useCallback(async () => {
     try {
       const response = await axios.get(`${API}/menu/items`);
       setMenuItems(response.data);
-      setFilteredMenuItems(response.data);
     } catch (error) {
       console.error("Error fetching menu items:", error);
     }
-  };
+  }, []);
 
-  const fetchInquiries = async () => {
+  const fetchInquiries = useCallback(async () => {
     try {
       const response = await axios.get(`${API}/admin/inquiries`, getAuthHeaders());
       setInquiries(response.data);
-      setFilteredInquiries(response.data);
     } catch (error) {
       console.error("Error fetching inquiries:", error);
       if (error.response?.status === 401) {
         handleLogout();
       }
     }
-  };
+  }, []);
 
-  const filterMenuItems = () => {
+  // Filtered menu items using useMemo
+  const filteredMenuItems = useMemo(() => {
     if (!menuSearchQuery) {
-      setFilteredMenuItems(menuItems);
-      return;
+      return menuItems;
     }
 
     const query = menuSearchQuery.toLowerCase();
-    const filtered = menuItems.filter(item =>
+    return menuItems.filter(item =>
       item.title.toLowerCase().includes(query) ||
       item.description.toLowerCase().includes(query) ||
       item.category.toLowerCase().includes(query) ||
       (item.meta_details && item.meta_details.toLowerCase().includes(query))
     );
-    setFilteredMenuItems(filtered);
-  };
+  }, [menuItems, menuSearchQuery]);
 
-  const filterInquiries = () => {
+  // Filtered inquiries using useMemo
+  const filteredInquiries = useMemo(() => {
     if (!inquirySearchQuery) {
-      setFilteredInquiries(inquiries);
-      return;
+      return inquiries;
     }
 
     const query = inquirySearchQuery.toLowerCase();
-    const filtered = inquiries.filter(inquiry =>
+    return inquiries.filter(inquiry =>
       inquiry.first_name.toLowerCase().includes(query) ||
       inquiry.phone_number.includes(query) ||
       inquiry.delivery_address?.toLowerCase().includes(query) ||
       inquiry.items.some(item => item.title.toLowerCase().includes(query))
     );
-    setFilteredInquiries(filtered);
-  };
+  }, [inquiries, inquirySearchQuery]);
 
   useEffect(() => {
     fetchMenuItems();
