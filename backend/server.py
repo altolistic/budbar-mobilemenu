@@ -226,6 +226,15 @@ async def update_inquiry_status(
     
     return {"message": "Status updated successfully", "status": status}
 
+@api_router.delete("/admin/inquiries/{inquiry_id}")
+async def delete_inquiry(inquiry_id: str, token: dict = Depends(verify_token)):
+    result = await db.inquiries.delete_one({"id": inquiry_id})
+    
+    if result.deleted_count == 0:
+        raise HTTPException(status_code=404, detail="Inquiry not found")
+    
+    return {"message": "Inquiry deleted successfully"}
+
 # Initialize admin user on startup
 @app.on_event("startup")
 async def startup_event():
