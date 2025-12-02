@@ -93,6 +93,9 @@ export default function CustomerView() {
 
   useEffect(() => {
     fetchMenuItems();
+  }, [selectedType]);
+
+  useEffect(() => {
     fetchCategories();
     
     // Refresh data when window gains focus (e.g., returning from admin)
