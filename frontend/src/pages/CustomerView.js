@@ -166,6 +166,11 @@ export default function CustomerView() {
   const filterItems = () => {
     let filtered = menuItems;
 
+    // Filter by Specials (items with discount > 0)
+    if (showSpecials) {
+      filtered = filtered.filter(item => item.discount > 0);
+    }
+
     // Type is already filtered by API call
     
     if (selectedCategory) {
