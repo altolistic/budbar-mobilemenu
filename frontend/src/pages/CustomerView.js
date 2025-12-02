@@ -353,15 +353,15 @@ export default function CustomerView() {
       return;
     }
 
-    // Validate delivery if applicable
+    // Validate delivery address if applicable (but don't block submission)
     if (deliveryMethod === "delivery") {
       const isValid = await validateDeliveryAddress();
       if (!isValid && deliveryValidation) {
-        toast.error(
-          `Delivery minimum not met. You need to add $${deliveryValidation.remaining_needed.toFixed(2)} more to your order. (${deliveryValidation.distance_miles} miles away - $${deliveryValidation.minimum_order} minimum required)`,
+        toast.warning(
+          `Note: Delivery minimum not met. Your order is $${deliveryValidation.remaining_needed.toFixed(2)} below the $${deliveryValidation.minimum_order} minimum for ${deliveryValidation.distance_miles} miles. We'll contact you to discuss options.`,
           { duration: 6000 }
         );
-        return;
+        // Continue with submission instead of returning
       }
     }
 
