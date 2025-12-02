@@ -743,34 +743,47 @@ export default function AdminDashboard() {
                           )}
                         </div>
                         
-                        {/* Dropdown to select existing categories */}
-                        <Select
-                          onValueChange={(value) => {
-                            if (value && !formData.categories.includes(value)) {
-                              setFormData({ ...formData, categories: [...formData.categories, value] });
-                            }
-                          }}
-                        >
-                          <SelectTrigger data-testid="category-dropdown">
-                            <SelectValue placeholder="Select existing category" />
-                          </SelectTrigger>
-                          <SelectContent className="max-h-[300px]">
-                            <div className="max-h-[280px] overflow-y-auto">
-                              {availableCategories.map((cat) => (
-                                <SelectItem 
-                                  key={cat} 
-                                  value={cat}
-                                  disabled={formData.categories.includes(cat)}
-                                >
-                                  {cat}
-                                </SelectItem>
-                              ))}
-                              {availableCategories.length === 0 && (
-                                <div className="p-2 text-sm text-gray-500">No categories yet</div>
+                        {/* Searchable category selector */}
+                        <div className="relative">
+                          <Input
+                            placeholder="Search or select category..."
+                            value={categorySearchQuery}
+                            onChange={(e) => setCategorySearchQuery(e.target.value)}
+                            data-testid="category-search-input"
+                          />
+                          {categorySearchQuery && (
+                            <div className="absolute z-50 w-full mt-1 max-h-[200px] overflow-y-auto bg-white border rounded-md shadow-lg">
+                              {availableCategories
+                                .filter(cat => 
+                                  cat.toLowerCase().includes(categorySearchQuery.toLowerCase()) &&
+                                  !formData.categories.includes(cat)
+                                )
+                                .map((cat) => (
+                                  <button
+                                    key={cat}
+                                    type="button"
+                                    onClick={() => {
+                                      setFormData({ ...formData, categories: [...formData.categories, cat] });
+                                      setCategorySearchQuery("");
+                                    }}
+                                    className="w-full text-left px-3 py-2 hover:bg-gray-100 text-sm"
+                                    data-testid={`category-option-${cat}`}
+                                  >
+                                    {cat}
+                                  </button>
+                                ))
+                              }
+                              {availableCategories.filter(cat => 
+                                cat.toLowerCase().includes(categorySearchQuery.toLowerCase()) &&
+                                !formData.categories.includes(cat)
+                              ).length === 0 && (
+                                <div className="px-3 py-2 text-sm text-gray-500">
+                                  No matching categories
+                                </div>
                               )}
                             </div>
-                          </SelectContent>
-                        </Select>
+                          )}
+                        </div>
 
                         {/* Add new category */}
                         <div className="flex gap-2">
