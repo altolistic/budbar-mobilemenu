@@ -451,6 +451,8 @@ export default function AdminDashboard() {
                           </SelectContent>
                         </Select>
                       </div>
+                      <p><strong>Delivery Method:</strong> <span className="capitalize">{inquiry.delivery_method || 'N/A'}</span></p>
+                      <p><strong>Address:</strong> {inquiry.delivery_address || 'N/A'}</p>
                       <p><strong>Date:</strong> {new Date(inquiry.created_at).toLocaleString()}</p>
                       <p><strong>Total:</strong> <span className="gold-text font-bold">${inquiry.total.toFixed(2)}</span></p>
 
