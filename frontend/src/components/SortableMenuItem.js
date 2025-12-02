@@ -48,14 +48,25 @@ export function SortableMenuItem({ item, onEdit, onDelete, onDuplicate }) {
           variant="outline"
           onClick={() => onEdit(item)}
           data-testid={`edit-list-item-${item.id}`}
+          title="Edit"
         >
           <Edit2 className="h-4 w-4" />
+        </Button>
+        <Button
+          size="sm"
+          variant="outline"
+          onClick={() => onDuplicate(item)}
+          data-testid={`duplicate-list-item-${item.id}`}
+          title="Duplicate"
+        >
+          <Copy className="h-4 w-4" />
         </Button>
         <Button
           size="sm"
           variant="destructive"
           onClick={() => onDelete(item.id)}
           data-testid={`delete-list-item-${item.id}`}
+          title="Delete"
         >
           <Trash2 className="h-4 w-4" />
         </Button>
