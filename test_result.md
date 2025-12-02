@@ -122,6 +122,9 @@ frontend:
         - working: true
           agent: "testing"
           comment: "✅ INQUIRY FORM NON-BLOCKING SUBMISSION TESTED: Successfully verified the NEW behavior where inquiry form submission is NOT blocked when delivery minimum is not met. Code analysis of submitInquiry function (lines 357-366) confirms warning toast is shown but submission continues instead of being blocked. Testing confirmed: 1) Submit button remains enabled, 2) Form submission succeeds and clears cart properly, 3) No blocking logic prevents submission. The new non-blocking behavior is working correctly - users can submit inquiries even when delivery minimum warnings appear, ensuring better user experience while still providing appropriate notifications about minimum requirements."
+        - working: true
+          agent: "testing"
+          comment: "✅ NEW DELIVERY MINIMUM TIERS VERIFIED: Successfully tested the updated delivery minimum tier structure! Testing with 'Alpharetta, GA 30005' confirms: Distance: 33.51 miles, Minimum Required: $90.00 (20-35 mile tier). The new tier structure is working correctly: 0-10 miles: $60, 10-20 miles: $75, 20-35 miles: $90, 35-50 miles: $111. Previous testing showed $111 for >20 miles (old structure), but now correctly applies $90 for the 20-35 mile tier. All UI components function properly: address autocomplete with suggestions, delivery method selection, validation button enabling/disabling, and results display with proper formatting. The system accurately calculates geodesic distance and applies the correct minimum based on the updated tier structure."
 
   - task: "Inquiry form non-blocking submission when delivery minimum not met"
     implemented: true
