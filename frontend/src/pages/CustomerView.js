@@ -375,7 +375,7 @@ export default function CustomerView() {
       const isValid = await validateDeliveryAddress();
       if (!isValid && deliveryValidation) {
         toast.warning(
-          `Note: Delivery minimum not met. Your order is $${deliveryValidation.remaining_needed.toFixed(2)} below the $${deliveryValidation.minimum_order} minimum for ${deliveryValidation.distance_miles} miles. We'll contact you to discuss options.`,
+          `Note: Delivery minimum donation not met. Your donation is $${deliveryValidation.remaining_needed.toFixed(2)} below the $${deliveryValidation.minimum_order} minimum for ${deliveryValidation.distance_miles} miles. We'll contact you to discuss options.`,
           { duration: 6000 }
         );
         // Continue with submission instead of returning
