@@ -205,7 +205,17 @@ async def get_inquiries(token: dict = Depends(verify_token)):
     return inquiries
 
 @api_router.put("/admin/inquiries/{inquiry_id}/status")
-async def update_inquiry_status(inquiry_id: str, status: str, token: dict = Depends(verify_token)):
+async def update_inquiry_status(
+    inquiry_id: str, 
+    status: str = None,
+    token: dict = Depends(verify_token)
+):
+    if not status:
+        raise HTTPException(status_code=400, detail="Status is required")
+    
+    if status not in ["pending", "complete"]:
+        raise HTTPException(status_code=400, detail="Invalid status. Must be 'pending' or 'complete'")
+    
     result = await db.inquiries.update_one(
         {"id": inquiry_id},
         {"$set": {"status": status}}
@@ -214,7 +224,7 @@ async def update_inquiry_status(inquiry_id: str, status: str, token: dict = Depe
     if result.matched_count == 0:
         raise HTTPException(status_code=404, detail="Inquiry not found")
     
-    return {"message": "Status updated successfully"}
+    return {"message": "Status updated successfully", "status": status}
 
 # Initialize admin user on startup
 @app.on_event("startup")
