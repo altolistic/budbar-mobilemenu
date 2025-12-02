@@ -252,6 +252,64 @@ export default function AdminDashboard() {
     }
   };
 
+  const downloadCSV = () => {
+    let inquiriesToExport = filteredInquiries;
+
+    // Filter by date range if selected
+    if (startDate && endDate) {
+      inquiriesToExport = inquiriesToExport.filter(inquiry => {
+        const inquiryDate = new Date(inquiry.created_at);
+        return inquiryDate >= startDate && inquiryDate <= endDate;
+      });
+    }
+
+    if (inquiriesToExport.length === 0) {
+      toast.error("No inquiries to export");
+      return;
+    }
+
+    // CSV Headers
+    const headers = ["Date", "Customer Name", "Phone", "Delivery Method", "Address", "Referral Name", "Status", "Total", "Items"];
+    
+    // CSV Rows
+    const rows = inquiriesToExport.map(inquiry => {
+      const itemsList = inquiry.items.map(item => 
+        `${item.title} (${item.variant_name}) x${item.quantity}`
+      ).join("; ");
+      
+      return [
+        new Date(inquiry.created_at).toLocaleString(),
+        inquiry.first_name,
+        inquiry.phone_number,
+        inquiry.delivery_method,
+        inquiry.delivery_address || "",
+        inquiry.referral_name || "",
+        inquiry.status,
+        `$${inquiry.total.toFixed(2)}`,
+        itemsList
+      ];
+    });
+
+    // Create CSV content
+    const csvContent = [
+      headers.join(","),
+      ...rows.map(row => row.map(cell => `"${cell}"`).join(","))
+    ].join("\n");
+
+    // Download CSV
+    const blob = new Blob([csvContent], { type: "text/csv;charset=utf-8;" });
+    const link = document.createElement("a");
+    const url = URL.createObjectURL(blob);
+    link.setAttribute("href", url);
+    link.setAttribute("download", `inquiries_${new Date().toISOString().split('T')[0]}.csv`);
+    link.style.visibility = "hidden";
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+
+    toast.success(`Exported ${inquiriesToExport.length} inquiries to CSV`);
+  };
+
   return (
     <div className="min-h-screen bg-gray-50">
       {/* Header */}
