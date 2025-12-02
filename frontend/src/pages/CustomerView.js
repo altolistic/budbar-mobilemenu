@@ -91,6 +91,8 @@ export default function CustomerView() {
   const [referralName, setReferralName] = useState("");
   const [isCartOpen, setIsCartOpen] = useState(false);
   const [showBackToTop, setShowBackToTop] = useState(false);
+  const [deliveryValidation, setDeliveryValidation] = useState(null);
+  const [isValidatingAddress, setIsValidatingAddress] = useState(false);
 
   useEffect(() => {
     fetchMenuItems();
