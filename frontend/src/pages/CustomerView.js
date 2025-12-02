@@ -221,6 +221,11 @@ export default function CustomerView() {
       return;
     }
 
+    if (deliveryMethod === "delivery" && !deliveryAddress) {
+      toast.error("Please enter your delivery address");
+      return;
+    }
+
     if (cart.length === 0) {
       toast.error("Your inquiry cart is empty");
       return;
@@ -230,6 +235,8 @@ export default function CustomerView() {
       await axios.post(`${API}/inquiries`, {
         first_name: firstName,
         phone_number: phoneNumber,
+        delivery_method: deliveryMethod,
+        delivery_address: deliveryMethod === "delivery" ? deliveryAddress : "5624 Grand River Road",
         items: cart,
         total: calculateTotal()
       });
@@ -238,6 +245,8 @@ export default function CustomerView() {
       setCart([]);
       setFirstName("");
       setPhoneNumber("");
+      setDeliveryMethod("pickup");
+      setDeliveryAddress("");
       setIsCartOpen(false);
     } catch (error) {
       console.error("Error submitting inquiry:", error);
