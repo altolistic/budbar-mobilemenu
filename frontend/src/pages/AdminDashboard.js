@@ -955,7 +955,7 @@ export default function AdminDashboard() {
                       items={availableCategories}
                       strategy={verticalListSortingStrategy}
                     >
-                      <div className="space-y-2 mt-4">
+                      <div className="space-y-2 mt-4 max-h-[400px] overflow-y-auto pr-2">
                         {availableCategories.length > 0 ? (
                           availableCategories.map((cat) => (
                             <ManageableCategoryItem 
