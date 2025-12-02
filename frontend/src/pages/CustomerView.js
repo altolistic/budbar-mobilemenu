@@ -695,7 +695,7 @@ export default function CustomerView() {
                         </div>
                       )}
                       <div className="flex justify-between items-center text-xl font-bold">
-                        <span>Total:</span>
+                        <span>Donation Total:</span>
                         <span className="gold-text" data-testid="cart-total">${calculateTotal().toFixed(2)}</span>
                       </div>
                     </div>
