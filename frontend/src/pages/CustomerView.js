@@ -445,7 +445,7 @@ export default function CustomerView() {
             {categories.map(category => (
               <button
                 key={category}
-                onClick={() => setSelectedCategory(category)}
+                onClick={() => setSelectedCategory(selectedCategory === category ? "" : category)}
                 className={`px-6 py-2 rounded-full font-medium transition ${
                   selectedCategory === category
                     ? 'bg-black text-white'
@@ -459,19 +459,19 @@ export default function CustomerView() {
           </div>
         </div>
 
-        {/* Type Toggle - Blends vs Buds */}
+        {/* Type Toggle - ALL, Buds, Blends */}
         <div className="mb-8 flex justify-center">
           <div className="inline-flex rounded-lg border-2 border-gray-200 p-1 bg-white" data-testid="type-toggle">
             <button
-              onClick={() => setSelectedType("blends")}
+              onClick={() => setSelectedType("all")}
               className={`px-8 py-3 rounded-lg font-semibold transition-all ${
-                selectedType === "blends"
+                selectedType === "all"
                   ? 'bg-gradient-to-r from-[#D4AF37] to-[#c9a527] text-black shadow-md'
                   : 'text-gray-600 hover:text-gray-900'
               }`}
-              data-testid="blends-toggle"
+              data-testid="all-toggle"
             >
-              Blends
+              ALL
             </button>
             <button
               onClick={() => setSelectedType("buds")}
@@ -483,6 +483,17 @@ export default function CustomerView() {
               data-testid="buds-toggle"
             >
               Buds
+            </button>
+            <button
+              onClick={() => setSelectedType("blends")}
+              className={`px-8 py-3 rounded-lg font-semibold transition-all ${
+                selectedType === "blends"
+                  ? 'bg-gradient-to-r from-[#D4AF37] to-[#c9a527] text-black shadow-md'
+                  : 'text-gray-600 hover:text-gray-900'
+              }`}
+              data-testid="blends-toggle"
+            >
+              Blends
             </button>
           </div>
         </div>
