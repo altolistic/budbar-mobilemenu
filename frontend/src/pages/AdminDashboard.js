@@ -86,6 +86,7 @@ export default function AdminDashboard() {
     } catch (error) {
       console.error("Error fetching inquiries:", error);
       if (error.response?.status === 401) {
+        toast.error("Session expired. Please login again.");
         handleLogout();
       }
     }
