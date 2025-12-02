@@ -254,6 +254,16 @@ async def delete_inquiry(inquiry_id: str, token: dict = Depends(verify_token)):
     
     return {"message": "Inquiry deleted successfully"}
 
+@api_router.put("/admin/menu/reorder")
+async def reorder_menu_items(order_updates: List[dict], token: dict = Depends(verify_token)):
+    """Update display order for multiple menu items"""
+    for update in order_updates:
+        await db.menu_items.update_one(
+            {"id": update["id"]},
+            {"$set": {"display_order": update["display_order"]}}
+        )
+    return {"message": "Menu order updated successfully"}
+
 # Initialize admin user on startup
 @app.on_event("startup")
 async def startup_event():
