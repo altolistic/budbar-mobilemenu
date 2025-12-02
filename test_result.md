@@ -144,17 +144,20 @@ frontend:
           agent: "testing"
           comment: "✅ CUSTOMER MENU CATEGORY DISPLAY FULLY TESTED AND WORKING: Successfully verified the new smaller, rectangular category styling on the customer-facing BudBar menu. Testing confirmed: 1) Category filter buttons are displayed above the ALL/Buds/Blends toggle with correct positioning (lines 655-673), 2) Category buttons have proper small rectangular styling with px-3 py-1.5 classes and text-sm font size, 3) All categories from admin (Premium, Relaxation) are showing correctly, 4) Category filtering works perfectly (product count changed from 30 to 3 when filtering by Premium), 5) Toggle selection/deselection functionality works correctly (clicking same category deselects it and shows all products), 6) Product category badges have smaller styling with text-xs px-2 py-0.5 classes (lines 729-732), 7) Multiple categories display correctly on products when applicable. No console errors detected. The implementation meets all specified requirements for smaller, compact category buttons and badges."
 
-  - task: "Event delivery option with Flight Pass membership popup functionality"
+  - task: "Duplicate menu item feature in admin dashboard"
     implemented: true
-    working: "NA"
-    file: "/app/frontend/src/pages/CustomerView.js"
+    working: true
+    file: "/app/frontend/src/pages/AdminDashboard.js"
     stuck_count: 0
     priority: "high"
-    needs_retesting: true
+    needs_retesting: false
     status_history:
         - working: "NA"
           agent: "main"
-          comment: "NEW FEATURE IMPLEMENTED: Added complete Event delivery option with Flight Pass membership popup functionality. Implementation includes: 1) Event option in delivery method dropdown (lines 461), 2) Flight Pass popup triggered when Event is selected and user doesn't have Flight Pass (lines 451-453), 3) Comprehensive popup with benefits, signup bonus, and action buttons (lines 662-729), 4) Yes/Not Now button functionality with $50 charge addition, 5) Flight Pass line item display in cart breakdown (lines 632-640), 6) Event info section with member badge display (lines 474-485), 7) Popup state management to prevent reappearance after acceptance. Ready for comprehensive testing to verify all functionality works as expected."
+          comment: "NEW FEATURE IMPLEMENTED: Added duplicate menu item functionality in admin dashboard. Implementation includes: 1) handleDuplicate function (lines 211-232) that creates copy with '(Copy)' suffix, 2) Duplicate button with Copy icon in detailed view (lines 814-822), 3) Duplicate button in list view via SortableMenuItem component (lines 55-63), 4) All properties copied including description, categories, images, type, variants, 5) Success toast notification on duplication. Ready for comprehensive testing."
+        - working: true
+          agent: "testing"
+          comment: "✅ DUPLICATE MENU ITEM FEATURE FULLY TESTED AND WORKING: Successfully verified all aspects of the new duplicate functionality in BudBar admin dashboard. Testing confirmed: 1) Login successful with provided credentials (admin@purepath.com / Feelgoodmix), 2) Detailed view is active by default with grid layout of product cards, 3) All three buttons present on each card: Edit (pencil), Duplicate (copy icon), Delete (trash), 4) Duplicate functionality works perfectly - created multiple copies of 'WAKE UP BLEND' with proper '(Copy)' suffix, 5) All properties correctly copied: description, categories (Focus, Energy/Sativa), type (Blend), pricing variants, and meta details, 6) View toggle buttons present for switching between detailed and list views, 7) Product count increased from 1 to 3 items showing successful duplication. The feature handles all requirements perfectly with proper data integrity and user feedback. No console errors detected during testing."
 
 backend:
   - task: "Categories API endpoints for multi-select feature"
