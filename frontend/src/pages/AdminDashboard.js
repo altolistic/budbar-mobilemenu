@@ -611,6 +611,12 @@ export default function AdminDashboard() {
                     <CardContent>
                       <p className="text-sm text-gray-600 mb-2">{item.description}</p>
                       <p className="text-sm mb-2">Category: <span className="font-semibold">{item.category}</span></p>
+                      <p className="text-sm mb-2">
+                        Type: 
+                        <Badge className={`ml-2 ${item.item_type === "buds" ? "bg-green-600" : "bg-purple-600"}`}>
+                          {item.item_type === "buds" ? "Bud" : "Blend"}
+                        </Badge>
+                      </p>
                       {item.discount > 0 && (
                         <p className="text-sm text-green-600 mb-2">Discount: {item.discount}%</p>
                       )}
