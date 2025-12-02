@@ -75,6 +75,7 @@ export default function AdminDashboard() {
       description: "",
       category: "",
       item_type: "blends",
+      meta_details: "",
       images: [],
       discount: 0,
       variants: [{ name: "", price: 0 }]
