@@ -66,6 +66,8 @@ class InquiryItem(BaseModel):
 class InquiryCreate(BaseModel):
     first_name: str
     phone_number: str
+    delivery_method: str
+    delivery_address: Optional[str] = None
     items: List[InquiryItem]
     total: float
 
@@ -74,6 +76,8 @@ class Inquiry(BaseModel):
     id: str = Field(default_factory=lambda: str(uuid.uuid4()))
     first_name: str
     phone_number: str
+    delivery_method: str
+    delivery_address: Optional[str] = None
     items: List[InquiryItem]
     total: float
     status: str = "pending"
