@@ -19,6 +19,10 @@ export default function AdminDashboard() {
   const [inquiries, setInquiries] = useState([]);
   const [isAddDialogOpen, setIsAddDialogOpen] = useState(false);
   const [editingItem, setEditingItem] = useState(null);
+  const [menuSearchQuery, setMenuSearchQuery] = useState("");
+  const [inquirySearchQuery, setInquirySearchQuery] = useState("");
+  const [filteredMenuItems, setFilteredMenuItems] = useState([]);
+  const [filteredInquiries, setFilteredInquiries] = useState([]);
   const navigate = useNavigate();
 
   const [formData, setFormData] = useState({
