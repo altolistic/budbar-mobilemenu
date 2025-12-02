@@ -843,6 +843,7 @@ export default function CustomerView() {
                               )}
                             </div>
                             <div className="text-right">
+                              <p className="text-xs text-gray-500">Donation:</p>
                               <p className="font-bold text-lg">${order.total.toFixed(2)}</p>
                               <Badge className={`${
                                 order.status === 'pending' ? 'bg-yellow-500' :
