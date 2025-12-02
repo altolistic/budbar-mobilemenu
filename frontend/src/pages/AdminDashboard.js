@@ -325,6 +325,43 @@ export default function AdminDashboard() {
     setEndDate(null);
   };
 
+  const handleDragEnd = async (event, itemType) => {
+    const { active, over } = event;
+
+    if (!over || active.id === over.id) {
+      return;
+    }
+
+    const itemsOfType = filteredMenuItems.filter(item => item.item_type === itemType);
+    const oldIndex = itemsOfType.findIndex(item => item.id === active.id);
+    const newIndex = itemsOfType.findIndex(item => item.id === over.id);
+
+    const reorderedItems = arrayMove(itemsOfType, oldIndex, newIndex);
+    
+    // Update display_order for reordered items
+    const orderUpdates = reorderedItems.map((item, index) => ({
+      id: item.id,
+      display_order: index
+    }));
+
+    try {
+      await axios.put(`${API}/admin/menu/reorder`, orderUpdates, getAuthHeaders());
+      toast.success("Menu order updated");
+      fetchMenuItems();
+    } catch (error) {
+      console.error("Error updating order:", error);
+      toast.error("Failed to update menu order");
+    }
+  };
+
+  const sensors = useSensors(
+    useSensor(PointerSensor, {
+      activationConstraint: {
+        distance: 8,
+      },
+    })
+  );
+
   return (
     <div className="min-h-screen bg-gray-50">
       {/* Header */}
