@@ -856,6 +856,51 @@ export default function AdminDashboard() {
                   </div>
                 </DialogContent>
               </Dialog>
+
+              {/* Reorder Categories Dialog */}
+              <Dialog open={isCategoryOrderOpen} onOpenChange={setIsCategoryOrderOpen}>
+                <DialogTrigger asChild>
+                  <Button variant="outline" data-testid="reorder-categories-button">
+                    Reorder Categories
+                  </Button>
+                </DialogTrigger>
+                <DialogContent>
+                  <DialogHeader>
+                    <DialogTitle>Reorder Categories</DialogTitle>
+                    <DialogDescription>
+                      Drag and drop to reorder how categories appear on the customer menu.
+                    </DialogDescription>
+                  </DialogHeader>
+                  <DndContext
+                    sensors={sensors}
+                    collisionDetection={closestCenter}
+                    onDragEnd={(event) => {
+                      const { active, over } = event;
+                      if (active.id !== over.id) {
+                        const oldIndex = availableCategories.indexOf(active.id);
+                        const newIndex = availableCategories.indexOf(over.id);
+                        handleCategoryOrderChange(arrayMove(availableCategories, oldIndex, newIndex));
+                      }
+                    }}
+                  >
+                    <SortableContext
+                      items={availableCategories}
+                      strategy={verticalListSortingStrategy}
+                    >
+                      <div className="space-y-2 mt-4">
+                        {availableCategories.map((cat) => (
+                          <SortableCategoryItem key={cat} id={cat} name={cat} />
+                        ))}
+                      </div>
+                    </SortableContext>
+                  </DndContext>
+                  <div className="mt-4">
+                    <Button onClick={saveCategoryOrder} className="w-full" data-testid="save-category-order-button">
+                      Save Order
+                    </Button>
+                  </div>
+                </DialogContent>
+              </Dialog>
                 </div>
               </div>
             </div>
