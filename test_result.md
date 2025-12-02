@@ -105,20 +105,17 @@
 user_problem_statement: "Test the new variant dropdown selector functionality on BudBar customer menu - verify variants are displayed as dropdown selector, all functionality (pricing, discounts, add to cart) works correctly, and much more compact than previous expanded list"
 
 frontend:
-  - task: "Admin session management and form auto-save features"
+  - task: "Variant dropdown selector functionality on customer menu"
     implemented: true
     working: true
-    file: "/app/frontend/src/pages/AdminDashboard.js"
-    stuck_count: 1
+    file: "/app/frontend/src/pages/CustomerView.js"
+    stuck_count: 0
     priority: "high"
     needs_retesting: false
     status_history:
-        - working: false
-          agent: "testing"
-          comment: "❌ CRITICAL ISSUE FOUND IN FORM AUTO-SAVE RESTORE FUNCTIONALITY: Comprehensive testing revealed that while form auto-save to localStorage works correctly, the restore functionality has a critical bug. ISSUE IDENTIFIED: The restore useEffect (lines 144-173) runs immediately on component mount with empty dependency array, but at that time menuItems is still empty (fetchMenuItems is async). This causes the draft to be incorrectly removed during the login process. TESTING RESULTS: ✅ Form auto-save to localStorage works correctly, ✅ Activity tracking works (no unexpected logouts during active use), ✅ Login functionality works properly, ✅ Session error handling works, ❌ Form data restoration fails - draft is cleared during login process due to timing issue with async menuItems loading. ROOT CAUSE: useEffect restoration logic runs before menuItems are loaded, causing draft removal. SOLUTION NEEDED: Move restore logic to trigger when Add Item dialog opens, or add proper dependency management for menuItems loading state."
         - working: true
           agent: "testing"
-          comment: "✅ CRITICAL FIX VERIFIED - FORM AUTO-SAVE AND RESTORE FUNCTIONALITY NOW WORKING PERFECTLY: Comprehensive testing of the FIXED implementation confirms all issues have been resolved. TESTING RESULTS: ✅ Login functionality works correctly (admin@purepath.com / Feelgoodmix), ✅ Form auto-save to localStorage works perfectly (data saved as user types), ✅ Draft data persists through page refresh and login process, ✅ CRITICAL SUCCESS: Restore prompt appears correctly when Add Item dialog opens with message 'You have unsaved work from a previous session. Would you like to restore it?', ✅ Form data restoration works perfectly (title: 'AutoSave Test Product 123', description: 'Testing the fixed auto-save restore feature', categories: ['Test Category']), ✅ TIMING ISSUE FIXED: Restore logic now triggers when dialog opens (lines 144-171) instead of on component mount, eliminating the async menuItems loading conflict. The fix successfully moved the restore useEffect to depend on isAddDialogOpen and editingItem, ensuring proper timing. All specified test requirements met perfectly."
+          comment: "✅ VARIANT DROPDOWN SELECTOR FUNCTIONALITY FULLY TESTED AND WORKING PERFECTLY: Comprehensive testing of the new variant dropdown implementation confirms all requirements have been successfully met. TESTING RESULTS: ✅ Visual verification confirmed - variants displayed as compact dropdown selector with correct placeholder 'Select size & add to cart', ✅ No expanded list visible in closed state (compact view confirmed), ✅ Dropdown functionality works perfectly - opens showing all available variants (5 options for WAKE UP BLEND), ✅ Each variant option displays name and price correctly (King Size Preroll $11.00, 5 grams $40.00, 7 grams $60.00, 14 grams $88.00, 28 grams $133.00), ✅ Add to cart from dropdown works automatically - selecting variant adds to cart with success toast 'King Size Preroll added to cart', ✅ Cart verification successful - shows correct variant name, price, and quantity adjustment works, ✅ Multiple products testing confirmed - CHEST BLEND dropdown works independently with 5 options, ✅ Cart count updates correctly (from 1 to 2 items), ✅ Much more compact than previous expanded list implementation. Implementation uses shadcn/ui Select component (lines 863-897) with proper data-testid attributes for robust testing. All functionality preserved from previous implementation while providing significantly improved UX with compact design. No console errors detected during comprehensive testing."
 
   - task: "Multi-select categories feature in admin dashboard"
     implemented: true
