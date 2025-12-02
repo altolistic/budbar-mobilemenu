@@ -155,8 +155,13 @@ async def get_menu_items(
 
 @api_router.get("/menu/categories")
 async def get_categories():
-    items = await db.menu_items.find({}, {"_id": 0, "category": 1}).to_list(1000)
-    categories = sorted(list(set([item["category"] for item in items if "category" in item])))
+    items = await db.menu_items.find({}, {"_id": 0, "categories": 1}).to_list(1000)
+    # Flatten all categories from all items into a single unique sorted list
+    all_categories = []
+    for item in items:
+        if "categories" in item and isinstance(item["categories"], list):
+            all_categories.extend(item["categories"])
+    categories = sorted(list(set(all_categories)))
     return {"categories": categories}
 
 @api_router.post("/validate-delivery")
