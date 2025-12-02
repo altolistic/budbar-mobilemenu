@@ -164,12 +164,13 @@ async def validate_delivery(validation: DeliveryValidation):
     """Validate delivery address and return minimum order requirement"""
     # Full pickup address with city, state for accurate geocoding
     PICKUP_ADDRESS = "5624 Grande River Rd, Atlanta, GA 30349, USA"
+    # Exact coordinates for pickup location (verified)
+    PICKUP_COORDS_EXACT = (33.85773, -84.41074)
+    # Road distance correction factor (geodesic to road distance)
+    ROAD_DISTANCE_MULTIPLIER = 1.18
     
     try:
         geolocator = Nominatim(user_agent="budbar_marketplace", timeout=10)
-        
-        # Geocode pickup address with more specific query
-        pickup_location = geolocator.geocode(PICKUP_ADDRESS, exactly_one=True)
         
         # Geocode delivery address
         delivery_location = geolocator.geocode(validation.delivery_address, exactly_one=True)
@@ -177,17 +178,15 @@ async def validate_delivery(validation: DeliveryValidation):
         if not delivery_location:
             raise HTTPException(status_code=400, detail="Could not find delivery address. Please enter a valid address.")
         
-        if not pickup_location:
-            # Specific coordinates for 5624 Grande River Rd, Atlanta, GA 30349
-            pickup_coords = (33.6130, -84.4740)
-            logging.warning("Using fallback coordinates for pickup address")
-        else:
-            pickup_coords = (pickup_location.latitude, pickup_location.longitude)
-        
+        # Use exact verified coordinates for pickup
+        pickup_coords = PICKUP_COORDS_EXACT
         delivery_coords = (delivery_location.latitude, delivery_location.longitude)
         
-        # Calculate distance in miles
-        distance = geodesic(pickup_coords, delivery_coords).miles
+        # Calculate geodesic distance (straight line)
+        geodesic_distance = geodesic(pickup_coords, delivery_coords).miles
+        
+        # Apply road distance correction factor to approximate actual driving distance
+        distance = geodesic_distance * ROAD_DISTANCE_MULTIPLIER
         
         # Determine minimum based on distance
         if distance <= 5:
