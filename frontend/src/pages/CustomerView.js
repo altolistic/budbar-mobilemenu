@@ -766,7 +766,7 @@ export default function CustomerView() {
                       onClick={() => {
                         setHasFlightPass(true);
                         setShowFlightPassPopup(false);
-                        toast.success("Flight Pass added! $50 added to your order total.");
+                        toast.success("Flight Pass added! $50 added to your donation total.");
                       }}
                       className="flex-1 bg-gradient-to-r from-yellow-500 to-yellow-600 hover:from-yellow-600 hover:to-yellow-700"
                       data-testid="flight-pass-yes-button"
