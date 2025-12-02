@@ -105,6 +105,30 @@
 user_problem_statement: "Test the new variant dropdown selector functionality on BudBar customer menu - verify variants are displayed as dropdown selector, all functionality (pricing, discounts, add to cart) works correctly, and much more compact than previous expanded list"
 
 frontend:
+  - task: "Specials filter functionality (gold button)"
+    implemented: true
+    working: false
+    file: "/app/frontend/src/pages/CustomerView.js"
+    stuck_count: 1
+    priority: "high"
+    needs_retesting: false
+    status_history:
+        - working: false
+          agent: "testing"
+          comment: "❌ SPECIALS FILTER CRITICAL ISSUE IDENTIFIED: Comprehensive testing reveals the Specials filter is NOT working correctly. VISUAL ELEMENTS: ✅ SPECIALS button visible with correct gold gradient styling (✨ SPECIALS ✨), ✅ Button positioned above ALL/Buds/Blends toggle as required, ✅ Button state changes correctly when clicked (gradient changes from gold to brighter gold with scale effect). FILTERING LOGIC BROKEN: ❌ Shows all 39 items instead of filtering to only 2 items with discounts, ❌ Only 2 items have discounts (BLING -15% and GREASE MONKEY -15%) but all 39 items remain visible when SPECIALS is active. ROOT CAUSE: The filtering logic in lines 169-172 (showSpecials filter) is not properly filtering items. Expected behavior: should show only items where item.discount > 0. URGENT FIX NEEDED: The filterItems() function needs debugging to ensure the showSpecials condition properly filters the menu items array."
+
+  - task: "Order History functionality in inquiry cart"
+    implemented: true
+    working: true
+    file: "/app/frontend/src/pages/CustomerView.js"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: false
+    status_history:
+        - working: true
+          agent: "testing"
+          comment: "✅ ORDER HISTORY FUNCTIONALITY FULLY TESTED AND WORKING PERFECTLY: Comprehensive testing confirms all Order History requirements successfully implemented. CART INTEGRATION: ✅ 'View History' button appears in inquiry cart top-right as required, ✅ Button opens Order History dialog correctly. DIALOG FUNCTIONALITY: ✅ Dialog displays with proper title 'Order History' and description, ✅ Name and phone input fields work correctly, ✅ 'View Order History' button functions properly. HISTORY RETRIEVAL: ✅ Successfully fetches and displays past inquiries using same name/phone combination, ✅ Shows complete order details (Order ID, date/time, delivery method, total amount, status badge), ✅ Displays itemized list with quantities, variant names, and calculated prices including discounts, ✅ Case-insensitive name matching works correctly. EDGE CASES: ✅ Different name/phone combination correctly shows no results, ✅ Empty state handled properly with 'No order history found' message. All data-testid attributes properly implemented for robust testing. Feature is production-ready and meets all specified requirements."
+
   - task: "Variant dropdown selector functionality on customer menu"
     implemented: true
     working: true
