@@ -411,7 +411,21 @@ export default function AdminDashboard() {
                   <CardContent>
                     <div className="space-y-2">
                       <p><strong>Phone:</strong> {inquiry.phone_number}</p>
-                      <p><strong>Status:</strong> <span className="capitalize">{inquiry.status}</span></p>
+                      <div className="flex items-center gap-2">
+                        <p><strong>Status:</strong></p>
+                        <Select 
+                          value={inquiry.status} 
+                          onValueChange={(value) => handleStatusChange(inquiry.id, value)}
+                        >
+                          <SelectTrigger className="w-[180px]" data-testid={`status-select-${inquiry.id}`}>
+                            <SelectValue />
+                          </SelectTrigger>
+                          <SelectContent>
+                            <SelectItem value="pending">Pending</SelectItem>
+                            <SelectItem value="complete">Complete</SelectItem>
+                          </SelectContent>
+                        </Select>
+                      </div>
                       <p><strong>Date:</strong> {new Date(inquiry.created_at).toLocaleString()}</p>
                       <p><strong>Total:</strong> <span className="gold-text font-bold">${inquiry.total.toFixed(2)}</span></p>
 
