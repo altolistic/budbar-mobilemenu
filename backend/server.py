@@ -165,9 +165,8 @@ async def get_categories():
     return {"categories": categories}
 
 @api_router.delete("/admin/categories/{category_name}")
-async def delete_category(category_name: str, credentials: HTTPAuthorizationCredentials = Depends(security)):
+async def delete_category(category_name: str, token: dict = Depends(verify_token)):
     """Delete a category from the system and remove it from all products"""
-    verify_token(credentials.credentials)
     
     # Remove the category from all menu items that have it
     result = await db.menu_items.update_many(
