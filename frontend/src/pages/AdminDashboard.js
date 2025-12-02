@@ -127,6 +127,56 @@ export default function AdminDashboard() {
     fetchInquiries();
   }, [fetchMenuItems, fetchCategories, fetchInquiries]);
 
+  // Auto-logout after 15 minutes of inactivity with warning
+  useEffect(() => {
+    const INACTIVITY_TIMEOUT = 15 * 60 * 1000; // 15 minutes
+    const WARNING_TIME = 14 * 60 * 1000; // Show warning at 14 minutes
+    
+    let warningTimeout;
+    let logoutTimeout;
+
+    const resetTimers = () => {
+      setLastActivity(Date.now());
+      
+      // Clear existing timers
+      if (warningTimeout) clearTimeout(warningTimeout);
+      if (logoutTimeout) clearTimeout(logoutTimeout);
+      
+      // Set warning timer (14 minutes)
+      warningTimeout = setTimeout(() => {
+        toast.warning("You will be logged out in 1 minute due to inactivity", {
+          duration: 60000, // Show for 1 minute
+        });
+      }, WARNING_TIME);
+      
+      // Set logout timer (15 minutes)
+      logoutTimeout = setTimeout(() => {
+        toast.error("Session expired due to inactivity");
+        handleLogout();
+      }, INACTIVITY_TIMEOUT);
+    };
+
+    // Activity events to track
+    const events = ['mousedown', 'keydown', 'scroll', 'touchstart'];
+    
+    // Add event listeners
+    events.forEach(event => {
+      document.addEventListener(event, resetTimers);
+    });
+    
+    // Initialize timers
+    resetTimers();
+
+    // Cleanup
+    return () => {
+      events.forEach(event => {
+        document.removeEventListener(event, resetTimers);
+      });
+      if (warningTimeout) clearTimeout(warningTimeout);
+      if (logoutTimeout) clearTimeout(logoutTimeout);
+    };
+  }, [handleLogout]);
+
   const resetForm = () => {
     setFormData({
       title: "",
