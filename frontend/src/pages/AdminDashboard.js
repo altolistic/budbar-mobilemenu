@@ -208,6 +208,29 @@ export default function AdminDashboard() {
     }
   };
 
+  const handleDuplicate = async (item) => {
+    try {
+      // Create a copy of the item with a new title
+      const duplicatedItem = {
+        title: `${item.title} (Copy)`,
+        description: item.description,
+        categories: item.categories || [],
+        item_type: item.item_type || "blends",
+        meta_details: item.meta_details || "",
+        images: item.images || [],
+        discount: item.discount || 0,
+        variants: item.variants || []
+      };
+
+      await axios.post(`${API}/admin/menu/items`, duplicatedItem, getAuthHeaders());
+      toast.success("Item duplicated successfully");
+      fetchMenuItems();
+    } catch (error) {
+      console.error("Error duplicating item:", error);
+      toast.error("Failed to duplicate item");
+    }
+  };
+
   const addVariant = () => {
     setFormData({
       ...formData,
