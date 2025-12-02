@@ -25,6 +25,7 @@ export default function AdminDashboard() {
   const [inquirySearchQuery, setInquirySearchQuery] = useState("");
   const [startDate, setStartDate] = useState(null);
   const [endDate, setEndDate] = useState(null);
+  const [isDownloadDialogOpen, setIsDownloadDialogOpen] = useState(false);
   // Filtered arrays will be computed with useMemo
   const navigate = useNavigate();
 
