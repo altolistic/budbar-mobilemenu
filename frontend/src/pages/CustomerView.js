@@ -653,13 +653,13 @@ export default function CustomerView() {
         </div>
 
         {/* Category Filter */}
-        <div className="mb-8">
-          <div className="flex flex-wrap gap-3 justify-center">
+        <div className="mb-6">
+          <div className="flex flex-wrap gap-2 justify-center">
             {categories.map(category => (
               <button
                 key={category}
                 onClick={() => setSelectedCategory(selectedCategory === category ? "" : category)}
-                className={`px-6 py-2 rounded-full font-medium transition ${
+                className={`px-3 py-1.5 rounded text-sm font-medium transition ${
                   selectedCategory === category
                     ? 'bg-black text-white'
                     : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
