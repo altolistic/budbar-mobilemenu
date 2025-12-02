@@ -147,15 +147,18 @@ backend:
 
   - task: "Category delete API endpoint"
     implemented: true
-    working: "NA"
+    working: true
     file: "/app/backend/server.py"
     stuck_count: 0
     priority: "high"
-    needs_retesting: true
+    needs_retesting: false
     status_history:
         - working: "NA"
           agent: "main"
           comment: "NEW API ENDPOINT IMPLEMENTED: Added DELETE /api/admin/categories/{category_name} endpoint to support category deletion functionality. The endpoint should: 1) Delete the specified category from the system, 2) Remove the category from all products that use it, 3) Return the number of products that were updated, 4) Handle URL encoding for category names with special characters. Ready for testing with the frontend category management feature."
+        - working: true
+          agent: "testing"
+          comment: "✅ CATEGORY DELETE API ENDPOINT TESTED AND WORKING: Successfully tested the DELETE /api/admin/categories/{category_name} endpoint after fixing authentication issue. Testing confirmed: 1) Fixed authentication bug (changed from HTTPAuthorizationCredentials to token: dict = Depends(verify_token) pattern), 2) Endpoint correctly removes categories from all products that use them, 3) Returns proper success response with products_updated count, 4) Handles URL encoding for category names properly, 5) Integrates seamlessly with frontend category management dialog. Backend logs show successful 200 responses after fix. API endpoint is fully functional and production-ready."
 
 metadata:
   created_by: "testing_agent"
