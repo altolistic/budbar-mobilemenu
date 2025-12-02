@@ -206,8 +206,9 @@ metadata:
 
 test_plan:
   current_focus:
-    - "Duplicate menu item feature in admin dashboard"
-  stuck_tasks: []
+    - "Admin session management and form auto-save features"
+  stuck_tasks: 
+    - "Admin session management and form auto-save features"
   test_all: false
   test_priority: "high_first"
 
