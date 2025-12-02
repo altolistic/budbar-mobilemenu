@@ -235,6 +235,30 @@ export default function CustomerView() {
     return cart.reduce((sum, item) => sum + calculateItemPrice(item), 0);
   };
 
+  const validateDeliveryAddress = async () => {
+    if (deliveryMethod !== "delivery" || !deliveryAddress) {
+      setDeliveryValidation(null);
+      return true;
+    }
+
+    setIsValidatingAddress(true);
+    try {
+      const response = await axios.post(`${API}/validate-delivery`, {
+        delivery_address: deliveryAddress,
+        cart_total: calculateTotal()
+      });
+
+      setDeliveryValidation(response.data);
+      return response.data.meets_minimum;
+    } catch (error) {
+      console.error("Error validating delivery:", error);
+      toast.error(error.response?.data?.detail || "Could not validate delivery address");
+      return false;
+    } finally {
+      setIsValidatingAddress(false);
+    }
+  };
+
   const scrollToTop = () => {
     window.scrollTo({
       top: 0,
