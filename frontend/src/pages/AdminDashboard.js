@@ -180,6 +180,20 @@ export default function AdminDashboard() {
     setFormData({ ...formData, images: newImages });
   };
 
+  const handleStatusChange = async (inquiryId, newStatus) => {
+    try {
+      await axios.put(`${API}/admin/inquiries/${inquiryId}/status`, null, {
+        ...getAuthHeaders(),
+        params: { status: newStatus }
+      });
+      toast.success(`Status updated to ${newStatus}`);
+      fetchInquiries();
+    } catch (error) {
+      console.error("Error updating status:", error);
+      toast.error("Failed to update status");
+    }
+  };
+
   return (
     <div className="min-h-screen bg-gray-50">
       {/* Header */}
