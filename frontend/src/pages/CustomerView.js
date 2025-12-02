@@ -370,7 +370,7 @@ export default function CustomerView() {
         first_name: firstName,
         phone_number: phoneNumber,
         delivery_method: deliveryMethod,
-        delivery_address: deliveryMethod === "delivery" ? deliveryAddress : "5624 River Station Blvd, Atlanta, GA 30349",
+        delivery_address: deliveryMethod === "delivery" ? deliveryAddress : "5624 Grande River Rd, Atlanta, GA 30349",
         referral_name: referralName || null,
         items: cart,
         total: calculateTotal()
