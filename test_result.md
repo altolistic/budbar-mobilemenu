@@ -194,7 +194,7 @@ metadata:
 
 test_plan:
   current_focus:
-    - "Event delivery option with Flight Pass membership popup functionality"
+    - "Duplicate menu item feature in admin dashboard"
   stuck_tasks: []
   test_all: false
   test_priority: "high_first"
