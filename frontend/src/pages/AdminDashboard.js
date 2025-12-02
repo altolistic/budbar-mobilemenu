@@ -325,6 +325,20 @@ export default function AdminDashboard() {
                       required
                       data-testid="item-category-input"
                     />
+                    
+                    {/* Meta Details for Enhanced Search */}
+                    <div>
+                      <label className="block text-sm font-medium mb-2">Meta Details (Enhanced Search)</label>
+                      <Textarea
+                        placeholder="Add detailed keywords and descriptions for better search matching (e.g., effects, benefits, feelings, use cases). This is not visible to customers but helps match their search queries."
+                        value={formData.meta_details}
+                        onChange={(e) => setFormData({ ...formData, meta_details: e.target.value })}
+                        rows={4}
+                        data-testid="item-meta-details-input"
+                        className="text-sm"
+                      />
+                      <p className="text-xs text-gray-500 mt-1">Examples: "relaxation, stress relief, calm, peaceful, anxiety, focus, creativity, energy boost, sleep aid"</p>
+                    </div>
 
                     {/* Type Selection */}
                     <div>
