@@ -84,6 +84,8 @@ export default function CustomerView() {
   const [cart, setCart] = useState([]);
   const [firstName, setFirstName] = useState("");
   const [phoneNumber, setPhoneNumber] = useState("");
+  const [deliveryMethod, setDeliveryMethod] = useState("pickup");
+  const [deliveryAddress, setDeliveryAddress] = useState("");
   const [isCartOpen, setIsCartOpen] = useState(false);
   const [showBackToTop, setShowBackToTop] = useState(false);
 
