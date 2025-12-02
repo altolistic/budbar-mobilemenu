@@ -118,10 +118,16 @@ async def root():
     return {"message": "Marketplace Digital Menu API"}
 
 @api_router.get("/menu/items", response_model=List[MenuItem])
-async def get_menu_items(category: Optional[str] = None, search: Optional[str] = None):
+async def get_menu_items(
+    category: Optional[str] = None, 
+    search: Optional[str] = None,
+    item_type: Optional[str] = None
+):
     query = {}
     if category:
         query["category"] = category
+    if item_type:
+        query["item_type"] = item_type
     if search:
         query["$or"] = [
             {"title": {"$regex": search, "$options": "i"}},
