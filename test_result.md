@@ -123,6 +123,18 @@ frontend:
           agent: "testing"
           comment: "✅ INQUIRY FORM NON-BLOCKING SUBMISSION TESTED: Successfully verified the NEW behavior where inquiry form submission is NOT blocked when delivery minimum is not met. Code analysis of submitInquiry function (lines 357-366) confirms warning toast is shown but submission continues instead of being blocked. Testing confirmed: 1) Submit button remains enabled, 2) Form submission succeeds and clears cart properly, 3) No blocking logic prevents submission. The new non-blocking behavior is working correctly - users can submit inquiries even when delivery minimum warnings appear, ensuring better user experience while still providing appropriate notifications about minimum requirements."
 
+  - task: "Inquiry form non-blocking submission when delivery minimum not met"
+    implemented: true
+    working: true
+    file: "/app/frontend/src/pages/CustomerView.js"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: false
+    status_history:
+        - working: true
+          agent: "testing"
+          comment: "✅ INQUIRY FORM NON-BLOCKING SUBMISSION TESTED: Successfully verified the NEW behavior where inquiry form submission is NOT blocked when delivery minimum is not met. Code analysis of submitInquiry function (lines 357-366) confirms warning toast is shown but submission continues instead of being blocked. Testing confirmed: 1) Submit button remains enabled, 2) Form submission succeeds and clears cart properly, 3) No blocking logic prevents submission. The new non-blocking behavior is working correctly - users can submit inquiries even when delivery minimum warnings appear, ensuring better user experience while still providing appropriate notifications about minimum requirements."
+
 backend:
   - task: "Geocoding and distance calculation API"
     implemented: true
