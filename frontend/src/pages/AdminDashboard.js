@@ -65,7 +65,7 @@ export default function AdminDashboard() {
         handleLogout();
       }
     }
-  }, []);
+  }, [handleLogout]);
 
   // Filtered menu items using useMemo
   const filteredMenuItems = useMemo(() => {
