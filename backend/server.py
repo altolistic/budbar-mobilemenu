@@ -206,17 +206,25 @@ async def update_inquiry_status(inquiry_id: str, status: str, token: dict = Depe
 # Initialize admin user on startup
 @app.on_event("startup")
 async def startup_event():
-    # Create default admin if not exists
+    # Update or create default admin with new password
     admin_exists = await db.admin_users.find_one({"email": "admin@purepath.com"})
-    if not admin_exists:
+    if admin_exists:
+        # Update existing admin password
+        await db.admin_users.update_one(
+            {"email": "admin@purepath.com"},
+            {"$set": {"password_hash": pwd_context.hash("Feelgoodmix")}}
+        )
+        logging.info("Admin password updated: admin@purepath.com / Feelgoodmix")
+    else:
+        # Create new admin
         admin = AdminUser(
             email="admin@purepath.com",
-            password_hash=pwd_context.hash("admin123")
+            password_hash=pwd_context.hash("Feelgoodmix")
         )
         doc = admin.model_dump()
         doc['created_at'] = doc['created_at'].isoformat()
         await db.admin_users.insert_one(doc)
-        logging.info("Default admin created: admin@purepath.com / admin123")
+        logging.info("Default admin created: admin@purepath.com / Feelgoodmix")
 
 app.include_router(api_router)
 
