@@ -190,13 +190,17 @@ async def validate_delivery(validation: DeliveryValidation):
         distance = geodesic(pickup_coords, delivery_coords).miles
         
         # Determine minimum based on distance
-        if distance <= 5:
+        # 0-10 miles: $60, 10-20: $75, 20-35: $90, 35-50: $111
+        if distance <= 10:
             minimum = 60.0
-        elif distance <= 10:
-            minimum = 75.0
         elif distance <= 20:
+            minimum = 75.0
+        elif distance <= 35:
             minimum = 90.0
+        elif distance <= 50:
+            minimum = 111.0
         else:
+            # For distances over 50 miles, keep the highest minimum
             minimum = 111.0
         
         # Calculate remaining amount needed
