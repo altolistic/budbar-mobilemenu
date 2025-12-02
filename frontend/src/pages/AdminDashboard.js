@@ -129,7 +129,7 @@ export default function AdminDashboard() {
     setFormData({
       title: "",
       description: "",
-      category: "",
+      categories: [],
       item_type: "blends",
       meta_details: "",
       images: [],
@@ -138,6 +138,7 @@ export default function AdminDashboard() {
     });
     setUploadedImages([]);
     setEditingItem(null);
+    setNewCategoryInput("");
   };
 
   const handleSubmit = async (e) => {
