@@ -137,7 +137,7 @@ metadata:
 
 test_plan:
   current_focus:
-    - "Delivery minimum calculation feature"
+    - "Multi-select categories feature in admin dashboard"
   stuck_tasks: []
   test_all: false
   test_priority: "high_first"
