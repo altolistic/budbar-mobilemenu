@@ -445,6 +445,17 @@ export default function AdminDashboard() {
               </Dialog>
             </div>
 
+            {/* Search Bar for Menu Items */}
+            <div className="flex gap-4 items-center">
+              <Input
+                placeholder="Search menu items by title, description, category, or meta details..."
+                value={menuSearchQuery}
+                onChange={(e) => setMenuSearchQuery(e.target.value)}
+                className="flex-1"
+                data-testid="menu-search-input"
+              />
+            </div>
+
             {/* Menu Items List */}
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
               {menuItems.map(item => (
