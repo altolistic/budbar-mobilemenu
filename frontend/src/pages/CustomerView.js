@@ -438,13 +438,10 @@ export default function CustomerView() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
           <div className="flex justify-between items-center">
             <h1 className="text-4xl font-bold" style={{ color: '#D4AF37' }}>BudBar</h1>
-            <div className="flex items-center gap-4">
-              <a href="/admin/login" className="text-sm text-gray-600 hover:text-gray-900" data-testid="admin-link">
-                Admin
-              </a>
+            <div className="flex flex-col sm:flex-row items-center gap-2">
               <Sheet open={isCartOpen} onOpenChange={setIsCartOpen}>
                 <SheetTrigger asChild>
-                  <Button variant="outline" className="relative" data-testid="cart-button">
+                  <Button variant="outline" className="relative w-full sm:w-auto" data-testid="cart-button">
                     <ShoppingCart className="mr-2 h-5 w-5" />
                     Submit an Inquiry
                     {cart.length > 0 && (
