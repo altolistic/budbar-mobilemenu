@@ -365,6 +365,20 @@ async def delete_menu_item(item_id: str, token: dict = Depends(verify_token)):
     
     return {"message": "Item deleted successfully"}
 
+@api_router.get("/inquiries/history", response_model=List[Inquiry])
+async def get_order_history(first_name: str, phone_number: str):
+    """Get order history for a customer by first name and phone number"""
+    inquiries = await db.inquiries.find({
+        "first_name": {"$regex": f"^{first_name}$", "$options": "i"},  # Case insensitive exact match
+        "phone_number": phone_number
+    }, {"_id": 0}).sort("created_at", -1).to_list(100)  # Limit to 100 most recent
+    
+    for inquiry in inquiries:
+        if isinstance(inquiry.get('created_at'), str):
+            inquiry['created_at'] = datetime.fromisoformat(inquiry['created_at'])
+    
+    return inquiries
+
 @api_router.get("/admin/inquiries", response_model=List[Inquiry])
 async def get_inquiries(token: dict = Depends(verify_token)):
     inquiries = await db.inquiries.find({}, {"_id": 0}).sort("created_at", -1).to_list(1000)
