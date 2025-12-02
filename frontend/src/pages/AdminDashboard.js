@@ -712,6 +712,8 @@ export default function AdminDashboard() {
                   </form>
                 </DialogContent>
               </Dialog>
+                </div>
+              </div>
             </div>
 
             {/* Search Bar for Menu Items */}
