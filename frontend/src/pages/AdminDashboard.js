@@ -698,7 +698,12 @@ export default function AdminDashboard() {
                     >
                       <div className="space-y-2">
                         {filteredMenuItems.filter(item => item.item_type === "blends").map(item => (
-                          <SortableMenuItem key={item.id} item={item} />
+                          <SortableMenuItem 
+                            key={item.id} 
+                            item={item}
+                            onEdit={handleEdit}
+                            onDelete={handleDelete}
+                          />
                         ))}
                         {filteredMenuItems.filter(item => item.item_type === "blends").length === 0 && (
                           <p className="text-center text-gray-500 py-4">No blends items</p>
