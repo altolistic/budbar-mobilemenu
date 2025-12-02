@@ -415,10 +415,11 @@ export default function AdminDashboard() {
                     <List className="h-4 w-4" />
                   </button>
                 </div>
-                <Dialog open={isAddDialogOpen} onOpenChange={(open) => {
-                  setIsAddDialogOpen(open);
-                  if (!open) resetForm();
-                }}>
+              </div>
+              <Dialog open={isAddDialogOpen} onOpenChange={(open) => {
+                setIsAddDialogOpen(open);
+                if (!open) resetForm();
+              }}>
                   <DialogTrigger asChild>
                     <Button className="btn-primary" data-testid="add-menu-item-button">
                       <Plus className="mr-2 h-4 w-4" />
