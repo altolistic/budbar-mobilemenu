@@ -154,6 +154,18 @@ async def admin_login(credentials: AdminLogin):
     token = create_access_token({"email": admin["email"], "id": admin["id"]})
     return {"access_token": token, "token_type": "bearer"}
 
+@api_router.post("/admin/upload-images")
+async def upload_images(files: List[UploadFile] = File(...), token: dict = Depends(verify_token)):
+    """Upload multiple images and return base64 encoded strings"""
+    images = []
+    for file in files:
+        content = await file.read()
+        base64_image = base64.b64encode(content).decode('utf-8')
+        mime_type = file.content_type or 'image/jpeg'
+        data_url = f"data:{mime_type};base64,{base64_image}"
+        images.append(data_url)
+    return {"images": images}
+
 @api_router.post("/admin/menu/items", response_model=MenuItem)
 async def create_menu_item(item_data: MenuItemCreate, token: dict = Depends(verify_token)):
     menu_item = MenuItem(**item_data.model_dump())
