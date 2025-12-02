@@ -282,6 +282,18 @@ export default function CustomerView() {
       return;
     }
 
+    // Validate delivery if applicable
+    if (deliveryMethod === "delivery") {
+      const isValid = await validateDeliveryAddress();
+      if (!isValid && deliveryValidation) {
+        toast.error(
+          `Delivery minimum not met. You need to add $${deliveryValidation.remaining_needed.toFixed(2)} more to your order. (${deliveryValidation.distance_miles} miles away - $${deliveryValidation.minimum_order} minimum required)`,
+          { duration: 6000 }
+        );
+        return;
+      }
+    }
+
     try {
       await axios.post(`${API}/inquiries`, {
         first_name: firstName,
@@ -300,6 +312,7 @@ export default function CustomerView() {
       setDeliveryMethod("pickup");
       setDeliveryAddress("");
       setReferralName("");
+      setDeliveryValidation(null);
       setIsCartOpen(false);
     } catch (error) {
       console.error("Error submitting inquiry:", error);
