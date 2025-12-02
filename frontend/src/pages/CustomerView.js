@@ -100,6 +100,10 @@ export default function CustomerView() {
   const [isSearchingAddress, setIsSearchingAddress] = useState(false);
   const [showFlightPassPopup, setShowFlightPassPopup] = useState(false);
   const [hasFlightPass, setHasFlightPass] = useState(false);
+  const [isOrderHistoryOpen, setIsOrderHistoryOpen] = useState(false);
+  const [historyName, setHistoryName] = useState("");
+  const [historyPhone, setHistoryPhone] = useState("");
+  const [orderHistory, setOrderHistory] = useState([]);
 
   useEffect(() => {
     fetchMenuItems();
