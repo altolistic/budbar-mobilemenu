@@ -72,6 +72,7 @@ class InquiryCreate(BaseModel):
     phone_number: str
     delivery_method: str
     delivery_address: Optional[str] = None
+    referral_name: Optional[str] = None
     items: List[InquiryItem]
     total: float
 
@@ -82,6 +83,7 @@ class Inquiry(BaseModel):
     phone_number: str
     delivery_method: str
     delivery_address: Optional[str] = None
+    referral_name: Optional[str] = None
     items: List[InquiryItem]
     total: float
     status: str = "pending"
