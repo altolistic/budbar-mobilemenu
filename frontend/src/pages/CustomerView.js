@@ -205,6 +205,13 @@ export default function CustomerView() {
     return cart.reduce((sum, item) => sum + calculateItemPrice(item), 0);
   };
 
+  const scrollToTop = () => {
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth'
+    });
+  };
+
   const submitInquiry = async () => {
     if (!firstName || !phoneNumber) {
       toast.error("Please enter your name and phone number");
