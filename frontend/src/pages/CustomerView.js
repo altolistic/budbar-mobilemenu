@@ -454,7 +454,7 @@ export default function CustomerView() {
                     {deliveryMethod === "pickup" ? (
                       <div className="p-4 bg-gray-50 rounded-lg border" data-testid="pickup-address-display">
                         <p className="text-sm font-semibold mb-1">Pick Up Location:</p>
-                        <p className="text-sm">5624 Grand River Road</p>
+                        <p className="text-sm">5624 Grand River Road, Lansing, MI</p>
                         <p className="text-xs text-gray-500 mt-2">No minimum order required for pickup</p>
                       </div>
                     ) : (
