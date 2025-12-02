@@ -135,12 +135,24 @@ backend:
     working: true
     file: "/app/backend/server.py"
     stuck_count: 0
-    priority: "high"
+    priority: "medium"
     needs_retesting: false
     status_history:
         - working: true
           agent: "testing"
           comment: "✅ BACKEND CATEGORIES API TESTED: Backend successfully supports the multi-select categories feature. Testing confirmed: 1) /api/menu/categories endpoint works correctly (fetched in AdminDashboard.js line 73), 2) /api/admin/menu/items POST endpoint accepts and stores multiple categories in the categories array field, 3) Categories are properly persisted and retrieved when displaying products, 4) New categories are automatically added to the available categories list. The backend properly handles the categories field as an array and maintains data integrity across create/read operations."
+
+  - task: "Category delete API endpoint"
+    implemented: true
+    working: "NA"
+    file: "/app/backend/server.py"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: true
+    status_history:
+        - working: "NA"
+          agent: "main"
+          comment: "NEW API ENDPOINT IMPLEMENTED: Added DELETE /api/admin/categories/{category_name} endpoint to support category deletion functionality. The endpoint should: 1) Delete the specified category from the system, 2) Remove the category from all products that use it, 3) Return the number of products that were updated, 4) Handle URL encoding for category names with special characters. Ready for testing with the frontend category management feature."
 
 metadata:
   created_by: "testing_agent"
