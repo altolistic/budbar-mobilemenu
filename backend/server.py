@@ -141,7 +141,7 @@ async def get_menu_items(
             {"meta_details": {"$regex": search, "$options": "i"}}
         ]
     
-    items = await db.menu_items.find(query, {"_id": 0}).to_list(1000)
+    items = await db.menu_items.find(query, {"_id": 0}).sort("display_order", 1).to_list(1000)
     for item in items:
         if isinstance(item.get('created_at'), str):
             item['created_at'] = datetime.fromisoformat(item['created_at'])
