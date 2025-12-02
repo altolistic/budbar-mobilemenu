@@ -26,6 +26,7 @@ export default function AdminDashboard() {
   const [startDate, setStartDate] = useState(null);
   const [endDate, setEndDate] = useState(null);
   const [isDownloadDialogOpen, setIsDownloadDialogOpen] = useState(false);
+  const [menuView, setMenuView] = useState("detailed"); // "detailed" or "list"
   // Filtered arrays will be computed with useMemo
   const navigate = useNavigate();
 
