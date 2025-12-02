@@ -133,7 +133,8 @@ async def get_menu_items(
     if search:
         query["$or"] = [
             {"title": {"$regex": search, "$options": "i"}},
-            {"description": {"$regex": search, "$options": "i"}}
+            {"description": {"$regex": search, "$options": "i"}},
+            {"meta_details": {"$regex": search, "$options": "i"}}
         ]
     
     items = await db.menu_items.find(query, {"_id": 0}).to_list(1000)
