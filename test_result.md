@@ -218,7 +218,7 @@ metadata:
 
 test_plan:
   current_focus:
-    - "Variant dropdown selector functionality on customer menu"
+    - "Consolidated category management with drag, edit, and delete functionality"
   stuck_tasks: []
   test_all: false
   test_priority: "high_first"
