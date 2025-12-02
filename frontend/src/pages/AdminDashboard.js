@@ -140,37 +140,35 @@ export default function AdminDashboard() {
     }
   }, [formData, editingItem]);
 
-  // Restore form data on mount if available
+  // Check for draft when Add Item dialog opens
   useEffect(() => {
-    const savedDraft = localStorage.getItem('admin_form_draft');
-    if (savedDraft) {
-      try {
-        const { formData: savedFormData, editingItemId, timestamp } = JSON.parse(savedDraft);
-        const hourAgo = Date.now() - (60 * 60 * 1000);
-        
-        // Only restore if less than 1 hour old
-        if (timestamp > hourAgo) {
-          const restore = window.confirm(
-            "You have unsaved work. Would you like to restore it?"
-          );
-          if (restore) {
-            setFormData(savedFormData);
-            if (editingItemId) {
-              const item = menuItems.find(i => i.id === editingItemId);
-              if (item) setEditingItem(item);
+    if (isAddDialogOpen && !editingItem) {
+      const savedDraft = localStorage.getItem('admin_form_draft');
+      if (savedDraft) {
+        try {
+          const { formData: savedFormData, timestamp } = JSON.parse(savedDraft);
+          const hourAgo = Date.now() - (60 * 60 * 1000);
+          
+          // Only restore if less than 1 hour old and not currently editing
+          if (timestamp > hourAgo) {
+            const restore = window.confirm(
+              "You have unsaved work from a previous session. Would you like to restore it?"
+            );
+            if (restore) {
+              setFormData(savedFormData);
+              toast.info("Draft restored");
+            } else {
+              localStorage.removeItem('admin_form_draft');
             }
-            toast.info("Draft restored");
           } else {
             localStorage.removeItem('admin_form_draft');
           }
-        } else {
-          localStorage.removeItem('admin_form_draft');
+        } catch (e) {
+          console.error("Error restoring draft:", e);
         }
-      } catch (e) {
-        console.error("Error restoring draft:", e);
       }
     }
-  }, []); // Only run once on mount
+  }, [isAddDialogOpen, editingItem]);
 
   // Auto-logout after 15 minutes of inactivity with warning
   useEffect(() => {
