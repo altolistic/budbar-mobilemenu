@@ -675,7 +675,7 @@ export default function CustomerView() {
             <Dialog open={showFlightPassPopup} onOpenChange={setShowFlightPassPopup}>
               <DialogContent className="max-w-md">
                 <DialogHeader>
-                  <DialogTitle className="text-2xl font-bold text-center">Joining Our Official Community 🎉</DialogTitle>
+                  <DialogTitle className="text-2xl font-bold text-center">Join Our Official Community 🎉</DialogTitle>
                   <DialogDescription className="text-center">
                     Upgrade to Flight Pass Membership
                   </DialogDescription>
