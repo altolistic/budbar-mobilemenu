@@ -21,6 +21,38 @@ import { SortableMenuItem } from "@/components/SortableMenuItem";
 const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
 const API = `${BACKEND_URL}/api`;
 
+// Sortable Category Item Component
+function SortableCategoryItem({ id, name }) {
+  const {
+    attributes,
+    listeners,
+    setNodeRef,
+    transform,
+    transition,
+    isDragging,
+  } = useSortable({ id });
+
+  const style = {
+    transform: CSS.Transform.toString(transform),
+    transition,
+    opacity: isDragging ? 0.5 : 1,
+  };
+
+  return (
+    <div
+      ref={setNodeRef}
+      style={style}
+      className="flex items-center gap-3 p-3 bg-white border rounded-md hover:shadow-md transition-shadow"
+      data-testid={`sortable-category-${id}`}
+    >
+      <div {...attributes} {...listeners} className="cursor-grab active:cursor-grabbing">
+        <GripVertical className="h-5 w-5 text-gray-400" />
+      </div>
+      <span className="font-medium flex-1">{name}</span>
+    </div>
+  );
+}
+
 export default function AdminDashboard() {
   const [menuItems, setMenuItems] = useState([]);
   const [inquiries, setInquiries] = useState([]);
