@@ -102,7 +102,7 @@
 # Testing Data - Main Agent and testing sub agent both should log testing data below this section
 #====================================================================================================
 
-user_problem_statement: "Test the new multi-select categories feature in BudBar admin dashboard - verify ability to select existing categories, add new categories, display multiple categories as badges, and remove categories with × button"
+user_problem_statement: "Test the new category management feature with delete functionality in BudBar admin dashboard - verify 'Manage Categories' button, category management dialog, delete functionality with confirmation, success messages, and removal from products/dropdowns"
 
 frontend:
   - task: "Multi-select categories feature in admin dashboard"
@@ -110,12 +110,24 @@ frontend:
     working: true
     file: "/app/frontend/src/pages/AdminDashboard.js"
     stuck_count: 0
-    priority: "high"
+    priority: "medium"
     needs_retesting: false
     status_history:
         - working: true
           agent: "testing"
           comment: "✅ MULTI-SELECT CATEGORIES FEATURE FULLY TESTED AND WORKING: Successfully verified all aspects of the new multi-select categories feature in the BudBar admin dashboard. Testing confirmed: 1) Categories section displays correctly with proper UI layout (lines 464-544), 2) Can add multiple new categories using the 'Add new category' input and 'Add' button, 3) Selected categories display as removable badges with × buttons, 4) Category removal works by clicking × button on badges, 5) Form submission succeeds with multiple categories, 6) Created products display multiple category badges in the product list view. All data-testid attributes are properly implemented for robust testing. The feature handles edge cases well (no existing categories initially) and provides excellent user experience with immediate visual feedback."
+
+  - task: "Category management feature with delete functionality"
+    implemented: true
+    working: "NA"
+    file: "/app/frontend/src/pages/AdminDashboard.js"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: true
+    status_history:
+        - working: "NA"
+          agent: "main"
+          comment: "NEW FEATURE IMPLEMENTED: Added category management dialog with delete functionality. Features include: 1) 'Manage Categories' button next to 'Add Item' button (line 453), 2) Category management dialog showing all existing categories (lines 451-484), 3) Delete buttons for each category with trash icon (lines 469-477), 4) handleDeleteCategory function with confirmation dialog (lines 195-209), 5) Success toast showing number of products updated, 6) Automatic refresh of categories and menu items after deletion. Ready for comprehensive testing."
 
 backend:
   - task: "Categories API endpoints for multi-select feature"
