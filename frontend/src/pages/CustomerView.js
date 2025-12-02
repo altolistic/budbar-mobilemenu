@@ -726,8 +726,10 @@ export default function CustomerView() {
                   )}
                 </div>
                 <p className="text-gray-600 mb-4" data-testid={`menu-item-description-${item.id}`}>{item.description}</p>
-                <div className="flex gap-2 mb-4">
-                  <Badge variant="outline" data-testid={`category-badge-${item.id}`}>{item.category}</Badge>
+                <div className="flex flex-wrap gap-2 mb-4">
+                  {item.categories && item.categories.map((cat, idx) => (
+                    <Badge key={idx} variant="outline" data-testid={`category-badge-${item.id}-${idx}`}>{cat}</Badge>
+                  ))}
                   <Badge 
                     className={item.item_type === "buds" ? "bg-green-600" : "bg-purple-600"}
                     data-testid={`type-badge-${item.id}`}
