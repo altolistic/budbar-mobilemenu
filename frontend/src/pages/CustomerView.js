@@ -855,7 +855,10 @@ export default function CustomerView() {
               Buds
             </button>
             <button
-              onClick={() => setSelectedType("blends")}
+              onClick={() => {
+                setSelectedType("blends");
+                setShowSpecials(false);
+              }}
               className={`px-8 py-3 rounded-lg font-semibold transition-all ${
                 selectedType === "blends"
                   ? 'bg-gradient-to-r from-[#D4AF37] to-[#c9a527] text-black shadow-md'
