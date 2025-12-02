@@ -382,12 +382,7 @@ export default function CustomerView() {
           {filteredItems.map(item => (
             <div key={item.id} className="card" data-testid={`menu-item-${item.id}`}>
               <div className="aspect-video overflow-hidden">
-                <img
-                  src={item.image_url}
-                  alt={item.title}
-                  className="w-full h-full object-cover"
-                  data-testid={`menu-item-image-${item.id}`}
-                />
+                <ImageCarousel images={item.images || []} title={item.title} />
               </div>
               <div className="p-6">
                 <div className="flex justify-between items-start mb-2">
