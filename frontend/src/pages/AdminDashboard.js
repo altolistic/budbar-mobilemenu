@@ -134,6 +134,7 @@ export default function AdminDashboard() {
   const [uploadedImages, setUploadedImages] = useState([]);
   const [availableCategories, setAvailableCategories] = useState([]);
   const [newCategoryInput, setNewCategoryInput] = useState("");
+  const [categorySearchQuery, setCategorySearchQuery] = useState("");
   const [isCategoryManagerOpen, setIsCategoryManagerOpen] = useState(false);
   const [lastActivity, setLastActivity] = useState(Date.now());
 
