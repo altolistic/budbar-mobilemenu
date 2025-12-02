@@ -109,6 +109,7 @@ export default function AdminDashboard() {
       title: item.title,
       description: item.description,
       category: item.category,
+      item_type: item.item_type || "blends",
       images: item.images || [],
       discount: item.discount,
       variants: item.variants
