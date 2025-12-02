@@ -164,6 +164,22 @@ async def get_categories():
     categories = sorted(list(set(all_categories)))
     return {"categories": categories}
 
+@api_router.delete("/admin/categories/{category_name}")
+async def delete_category(category_name: str, credentials: HTTPAuthorizationCredentials = Depends(security)):
+    """Delete a category from the system and remove it from all products"""
+    verify_token(credentials.credentials)
+    
+    # Remove the category from all menu items that have it
+    result = await db.menu_items.update_many(
+        {"categories": category_name},
+        {"$pull": {"categories": category_name}}
+    )
+    
+    return {
+        "message": f"Category '{category_name}' deleted successfully",
+        "products_updated": result.modified_count
+    }
+
 @api_router.post("/validate-delivery")
 async def validate_delivery(validation: DeliveryValidation):
     """Validate delivery address and return minimum order requirement"""
