@@ -431,7 +431,17 @@ export default function CustomerView() {
                 </SheetTrigger>
                 <SheetContent className="w-full sm:max-w-lg overflow-y-auto">
                 <SheetHeader>
-                  <SheetTitle>Your Inquiry Cart</SheetTitle>
+                  <div className="flex justify-between items-center">
+                    <SheetTitle>Your Inquiry Cart</SheetTitle>
+                    <Button 
+                      variant="outline" 
+                      size="sm"
+                      onClick={() => setIsOrderHistoryOpen(true)}
+                      data-testid="view-history-button"
+                    >
+                      View History
+                    </Button>
+                  </div>
                   <SheetDescription>
                     Review your selections and submit your inquiry
                   </SheetDescription>
