@@ -145,6 +145,40 @@ export default function AdminDashboard() {
     setFormData({ ...formData, variants: newVariants });
   };
 
+  const handleImageUpload = async (e) => {
+    const files = Array.from(e.target.files);
+    if (files.length === 0) return;
+
+    const formDataUpload = new FormData();
+    files.forEach(file => {
+      formDataUpload.append('files', file);
+    });
+
+    try {
+      const response = await axios.post(`${API}/admin/upload-images`, formDataUpload, {
+        ...getAuthHeaders(),
+        headers: {
+          ...getAuthHeaders().headers,
+          'Content-Type': 'multipart/form-data'
+        }
+      });
+
+      const newImages = [...uploadedImages, ...response.data.images];
+      setUploadedImages(newImages);
+      setFormData({ ...formData, images: newImages });
+      toast.success(`${files.length} image(s) uploaded successfully`);
+    } catch (error) {
+      console.error("Error uploading images:", error);
+      toast.error("Failed to upload images");
+    }
+  };
+
+  const removeImage = (index) => {
+    const newImages = uploadedImages.filter((_, i) => i !== index);
+    setUploadedImages(newImages);
+    setFormData({ ...formData, images: newImages });
+  };
+
   return (
     <div className="min-h-screen bg-gray-50">
       {/* Header */}
