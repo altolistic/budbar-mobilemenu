@@ -99,7 +99,7 @@ export default function AdminDashboard() {
     return menuItems.filter(item =>
       item.title.toLowerCase().includes(query) ||
       item.description.toLowerCase().includes(query) ||
-      item.category.toLowerCase().includes(query) ||
+      (item.categories && item.categories.some(cat => cat.toLowerCase().includes(query))) ||
       (item.meta_details && item.meta_details.toLowerCase().includes(query))
     );
   }, [menuItems, menuSearchQuery]);
