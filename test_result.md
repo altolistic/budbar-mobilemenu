@@ -105,6 +105,18 @@
 user_problem_statement: "Test the new admin session management and form auto-save features in BudBar admin dashboard - verify form auto-save to localStorage, restore prompt after page refresh, activity tracking without unexpected logouts, and proper session error handling"
 
 frontend:
+  - task: "Admin session management and form auto-save features"
+    implemented: true
+    working: false
+    file: "/app/frontend/src/pages/AdminDashboard.js"
+    stuck_count: 1
+    priority: "high"
+    needs_retesting: false
+    status_history:
+        - working: false
+          agent: "testing"
+          comment: "❌ CRITICAL ISSUE FOUND IN FORM AUTO-SAVE RESTORE FUNCTIONALITY: Comprehensive testing revealed that while form auto-save to localStorage works correctly, the restore functionality has a critical bug. ISSUE IDENTIFIED: The restore useEffect (lines 144-173) runs immediately on component mount with empty dependency array, but at that time menuItems is still empty (fetchMenuItems is async). This causes the draft to be incorrectly removed during the login process. TESTING RESULTS: ✅ Form auto-save to localStorage works correctly, ✅ Activity tracking works (no unexpected logouts during active use), ✅ Login functionality works properly, ✅ Session error handling works, ❌ Form data restoration fails - draft is cleared during login process due to timing issue with async menuItems loading. ROOT CAUSE: useEffect restoration logic runs before menuItems are loaded, causing draft removal. SOLUTION NEEDED: Move restore logic to trigger when Add Item dialog opens, or add proper dependency management for menuItems loading state."
+
   - task: "Multi-select categories feature in admin dashboard"
     implemented: true
     working: true
