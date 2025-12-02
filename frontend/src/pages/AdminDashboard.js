@@ -253,19 +253,26 @@ export default function AdminDashboard() {
     }
   };
 
-  const downloadCSV = () => {
+  const downloadCSV = (useDateRange = false) => {
     let inquiriesToExport = filteredInquiries;
 
     // Filter by date range if selected
-    if (startDate && endDate) {
+    if (useDateRange && startDate && endDate) {
+      // Set time to start and end of day for proper comparison
+      const startOfDay = new Date(startDate);
+      startOfDay.setHours(0, 0, 0, 0);
+      
+      const endOfDay = new Date(endDate);
+      endOfDay.setHours(23, 59, 59, 999);
+
       inquiriesToExport = inquiriesToExport.filter(inquiry => {
         const inquiryDate = new Date(inquiry.created_at);
-        return inquiryDate >= startDate && inquiryDate <= endDate;
+        return inquiryDate >= startOfDay && inquiryDate <= endOfDay;
       });
     }
 
     if (inquiriesToExport.length === 0) {
-      toast.error("No inquiries to export");
+      toast.error("No inquiries found for the selected date range");
       return;
     }
 
@@ -309,6 +316,9 @@ export default function AdminDashboard() {
     document.body.removeChild(link);
 
     toast.success(`Exported ${inquiriesToExport.length} inquiries to CSV`);
+    setIsDownloadDialogOpen(false);
+    setStartDate(null);
+    setEndDate(null);
   };
 
   return (
