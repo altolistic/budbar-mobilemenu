@@ -85,6 +85,7 @@ export default function CustomerView() {
   const [firstName, setFirstName] = useState("");
   const [phoneNumber, setPhoneNumber] = useState("");
   const [isCartOpen, setIsCartOpen] = useState(false);
+  const [showBackToTop, setShowBackToTop] = useState(false);
 
   useEffect(() => {
     fetchMenuItems();
