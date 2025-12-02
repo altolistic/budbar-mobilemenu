@@ -587,14 +587,14 @@ export default function CustomerView() {
                               Distance: {deliveryValidation.distance_miles} miles
                             </p>
                             <p className="text-sm mb-1">
-                              Minimum Required: ${deliveryValidation.minimum_order.toFixed(2)}
+                              Minimum Donation Required: ${deliveryValidation.minimum_order.toFixed(2)}
                             </p>
                             <p className="text-sm mb-1">
-                              Your Total: ${deliveryValidation.cart_total.toFixed(2)}
+                              Your Donation Total: ${deliveryValidation.cart_total.toFixed(2)}
                             </p>
                             {!deliveryValidation.meets_minimum && (
                               <p className="text-sm font-bold text-yellow-700 mt-2">
-                                ⚠️ Add ${deliveryValidation.remaining_needed.toFixed(2)} more to meet minimum
+                                ⚠️ Add ${deliveryValidation.remaining_needed.toFixed(2)} more to meet minimum donation
                               </p>
                             )}
                             {deliveryValidation.meets_minimum && (
