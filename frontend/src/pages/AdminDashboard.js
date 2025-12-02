@@ -421,7 +421,17 @@ export default function AdminDashboard() {
               {inquiries.map(inquiry => (
                 <Card key={inquiry.id} data-testid={`inquiry-${inquiry.id}`}>
                   <CardHeader>
-                    <CardTitle>Inquiry from {inquiry.first_name}</CardTitle>
+                    <div className="flex justify-between items-start">
+                      <CardTitle>Inquiry from {inquiry.first_name}</CardTitle>
+                      <Button
+                        variant="destructive"
+                        size="sm"
+                        onClick={() => handleDeleteInquiry(inquiry.id, inquiry.first_name)}
+                        data-testid={`delete-inquiry-${inquiry.id}`}
+                      >
+                        <Trash2 className="h-4 w-4" />
+                      </Button>
+                    </div>
                   </CardHeader>
                   <CardContent>
                     <div className="space-y-2">
