@@ -443,13 +443,19 @@ export default function CustomerView() {
                     {/* Delivery Method */}
                     <div>
                       <label className="block text-sm font-medium mb-2">Delivery Method</label>
-                      <Select value={deliveryMethod} onValueChange={setDeliveryMethod}>
+                      <Select value={deliveryMethod} onValueChange={(value) => {
+                        setDeliveryMethod(value);
+                        if (value === "event" && !hasFlightPass) {
+                          setShowFlightPassPopup(true);
+                        }
+                      }}>
                         <SelectTrigger data-testid="delivery-method-select">
                           <SelectValue />
                         </SelectTrigger>
                         <SelectContent>
                           <SelectItem value="pickup">Pick Up</SelectItem>
                           <SelectItem value="delivery">Delivery</SelectItem>
+                          <SelectItem value="event">Event</SelectItem>
                         </SelectContent>
                       </Select>
                     </div>
