@@ -252,9 +252,16 @@ export default function AdminDashboard() {
       fetchMenuItems();
       setIsAddDialogOpen(false);
       resetForm();
+      // Clear the draft after successful save
+      localStorage.removeItem('admin_form_draft');
     } catch (error) {
       console.error("Error saving item:", error);
-      toast.error("Failed to save item");
+      if (error.response?.status === 401) {
+        toast.error("Session expired. Please login again.");
+        handleLogout();
+      } else {
+        toast.error("Failed to save item");
+      }
     }
   };
 
