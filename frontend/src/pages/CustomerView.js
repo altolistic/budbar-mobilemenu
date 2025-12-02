@@ -93,6 +93,9 @@ export default function CustomerView() {
   const [showBackToTop, setShowBackToTop] = useState(false);
   const [deliveryValidation, setDeliveryValidation] = useState(null);
   const [isValidatingAddress, setIsValidatingAddress] = useState(false);
+  const [addressSuggestions, setAddressSuggestions] = useState([]);
+  const [showSuggestions, setShowSuggestions] = useState(false);
+  const [isSearchingAddress, setIsSearchingAddress] = useState(false);
 
   useEffect(() => {
     fetchMenuItems();
