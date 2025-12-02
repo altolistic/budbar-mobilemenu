@@ -580,8 +580,10 @@ export default function AdminDashboard() {
                 </Card>
               ))}
 
-              {inquiries.length === 0 && (
-                <p className="text-center text-gray-500 py-8" data-testid="no-inquiries">No inquiries yet</p>
+              {filteredInquiries.length === 0 && (
+                <p className="text-center text-gray-500 py-8" data-testid="no-inquiries">
+                  {inquirySearchQuery ? "No inquiries match your search" : "No inquiries yet"}
+                </p>
               )}
             </div>
           </TabsContent>
