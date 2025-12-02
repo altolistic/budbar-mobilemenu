@@ -144,6 +144,18 @@ frontend:
           agent: "testing"
           comment: "✅ CUSTOMER MENU CATEGORY DISPLAY FULLY TESTED AND WORKING: Successfully verified the new smaller, rectangular category styling on the customer-facing BudBar menu. Testing confirmed: 1) Category filter buttons are displayed above the ALL/Buds/Blends toggle with correct positioning (lines 655-673), 2) Category buttons have proper small rectangular styling with px-3 py-1.5 classes and text-sm font size, 3) All categories from admin (Premium, Relaxation) are showing correctly, 4) Category filtering works perfectly (product count changed from 30 to 3 when filtering by Premium), 5) Toggle selection/deselection functionality works correctly (clicking same category deselects it and shows all products), 6) Product category badges have smaller styling with text-xs px-2 py-0.5 classes (lines 729-732), 7) Multiple categories display correctly on products when applicable. No console errors detected. The implementation meets all specified requirements for smaller, compact category buttons and badges."
 
+  - task: "Event delivery option with Flight Pass membership popup functionality"
+    implemented: true
+    working: "NA"
+    file: "/app/frontend/src/pages/CustomerView.js"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: true
+    status_history:
+        - working: "NA"
+          agent: "main"
+          comment: "NEW FEATURE IMPLEMENTED: Added complete Event delivery option with Flight Pass membership popup functionality. Implementation includes: 1) Event option in delivery method dropdown (lines 461), 2) Flight Pass popup triggered when Event is selected and user doesn't have Flight Pass (lines 451-453), 3) Comprehensive popup with benefits, signup bonus, and action buttons (lines 662-729), 4) Yes/Not Now button functionality with $50 charge addition, 5) Flight Pass line item display in cart breakdown (lines 632-640), 6) Event info section with member badge display (lines 474-485), 7) Popup state management to prevent reappearance after acceptance. Ready for comprehensive testing to verify all functionality works as expected."
+
 backend:
   - task: "Categories API endpoints for multi-select feature"
     implemented: true
