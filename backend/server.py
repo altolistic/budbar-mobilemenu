@@ -196,6 +196,33 @@ async def update_category_order(order: dict, token: dict = Depends(verify_token)
     
     return {"message": "Category order updated successfully"}
 
+@api_router.put("/admin/categories/{old_name}/rename")
+async def rename_category(old_name: str, new_data: dict, token: dict = Depends(verify_token)):
+    """Rename a category across all products"""
+    new_name = new_data.get("new_name")
+    
+    if not new_name or not new_name.strip():
+        raise HTTPException(status_code=400, detail="New name is required")
+    
+    # Update all menu items that have this category
+    result = await db.menu_items.update_many(
+        {"categories": old_name},
+        {"$set": {"categories.$[elem]": new_name}},
+        array_filters=[{"elem": old_name}]
+    )
+    
+    # Update category order if it exists
+    await db.category_order.update_one(
+        {"order": old_name},
+        {"$set": {"order.$[elem]": new_name}},
+        array_filters=[{"elem": old_name}]
+    )
+    
+    return {
+        "message": f"Category renamed from '{old_name}' to '{new_name}'",
+        "products_updated": result.modified_count
+    }
+
 @api_router.delete("/admin/categories/{category_name}")
 async def delete_category(category_name: str, token: dict = Depends(verify_token)):
     """Delete a category from the system and remove it from all products"""
@@ -204,6 +231,12 @@ async def delete_category(category_name: str, token: dict = Depends(verify_token
     result = await db.menu_items.update_many(
         {"categories": category_name},
         {"$pull": {"categories": category_name}}
+    )
+    
+    # Remove from category order
+    await db.category_order.update_one(
+        {},
+        {"$pull": {"order": category_name}}
     )
     
     return {
