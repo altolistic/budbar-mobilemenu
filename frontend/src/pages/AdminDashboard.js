@@ -42,6 +42,46 @@ export default function AdminDashboard() {
     fetchInquiries();
   }, []);
 
+  useEffect(() => {
+    filterMenuItems();
+  }, [menuItems, menuSearchQuery]);
+
+  useEffect(() => {
+    filterInquiries();
+  }, [inquiries, inquirySearchQuery]);
+
+  const filterMenuItems = () => {
+    if (!menuSearchQuery) {
+      setFilteredMenuItems(menuItems);
+      return;
+    }
+
+    const query = menuSearchQuery.toLowerCase();
+    const filtered = menuItems.filter(item =>
+      item.title.toLowerCase().includes(query) ||
+      item.description.toLowerCase().includes(query) ||
+      item.category.toLowerCase().includes(query) ||
+      (item.meta_details && item.meta_details.toLowerCase().includes(query))
+    );
+    setFilteredMenuItems(filtered);
+  };
+
+  const filterInquiries = () => {
+    if (!inquirySearchQuery) {
+      setFilteredInquiries(inquiries);
+      return;
+    }
+
+    const query = inquirySearchQuery.toLowerCase();
+    const filtered = inquiries.filter(inquiry =>
+      inquiry.first_name.toLowerCase().includes(query) ||
+      inquiry.phone_number.includes(query) ||
+      inquiry.delivery_address?.toLowerCase().includes(query) ||
+      inquiry.items.some(item => item.title.toLowerCase().includes(query))
+    );
+    setFilteredInquiries(filtered);
+  };
+
   const getAuthHeaders = () => {
     const token = localStorage.getItem('admin_token');
     return { headers: { Authorization: `Bearer ${token}` } };
