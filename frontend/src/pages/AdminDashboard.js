@@ -106,6 +106,7 @@ export default function AdminDashboard() {
     try {
       const response = await axios.get(`${API}/admin/inquiries`, getAuthHeaders());
       setInquiries(response.data);
+      setFilteredInquiries(response.data);
     } catch (error) {
       console.error("Error fetching inquiries:", error);
       if (error.response?.status === 401) {
