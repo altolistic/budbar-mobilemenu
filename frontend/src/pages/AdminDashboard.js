@@ -277,6 +277,23 @@ export default function AdminDashboard() {
                       data-testid="item-category-input"
                     />
 
+                    {/* Type Selection */}
+                    <div>
+                      <label className="block text-sm font-medium mb-2">Type</label>
+                      <Select 
+                        value={formData.item_type} 
+                        onValueChange={(value) => setFormData({ ...formData, item_type: value })}
+                      >
+                        <SelectTrigger data-testid="item-type-select">
+                          <SelectValue />
+                        </SelectTrigger>
+                        <SelectContent>
+                          <SelectItem value="blends">Blends</SelectItem>
+                          <SelectItem value="buds">Buds</SelectItem>
+                        </SelectContent>
+                      </Select>
+                    </div>
+
                     {/* Image Upload Section */}
                     <div className="space-y-2">
                       <label className="font-semibold">Product Images</label>
