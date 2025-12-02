@@ -106,10 +106,11 @@ export default function AdminDashboard() {
       title: item.title,
       description: item.description,
       category: item.category,
-      image_url: item.image_url,
+      images: item.images || [],
       discount: item.discount,
       variants: item.variants
     });
+    setUploadedImages(item.images || []);
     setIsAddDialogOpen(true);
   };
 
