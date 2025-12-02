@@ -132,6 +132,18 @@ frontend:
           agent: "testing"
           comment: "✅ CATEGORY MANAGEMENT WITH DELETE FUNCTIONALITY FULLY TESTED AND WORKING: Successfully tested all aspects of the category management feature after fixing a backend authentication issue. Testing confirmed: 1) Login successful with provided credentials (admin@purepath.com / Feelgoodmix), 2) Buttons are correctly stacked vertically (Add Item above Manage Categories), 3) 'Manage Categories' button opens dialog with proper title and description, 4) Dialog displays all existing categories with delete buttons (trash icons), 5) Category deletion works with confirmation dialog ('Are you sure you want to delete...'), 6) Success toast appears showing 'Category [name] deleted. X products updated.', 7) Deleted category is removed from the category list, 8) Deleted category is removed from product dropdown selectors, 9) Products are automatically updated to remove the deleted category. Fixed backend authentication issue in delete_category endpoint (changed from HTTPAuthorizationCredentials to token: dict = Depends(verify_token)). All functionality works perfectly with no console errors."
 
+  - task: "Customer menu category display with smaller rectangular styling"
+    implemented: true
+    working: true
+    file: "/app/frontend/src/pages/CustomerView.js"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: false
+    status_history:
+        - working: true
+          agent: "testing"
+          comment: "✅ CUSTOMER MENU CATEGORY DISPLAY FULLY TESTED AND WORKING: Successfully verified the new smaller, rectangular category styling on the customer-facing BudBar menu. Testing confirmed: 1) Category filter buttons are displayed above the ALL/Buds/Blends toggle with correct positioning (lines 655-673), 2) Category buttons have proper small rectangular styling with px-3 py-1.5 classes and text-sm font size, 3) All categories from admin (Premium, Relaxation) are showing correctly, 4) Category filtering works perfectly (product count changed from 30 to 3 when filtering by Premium), 5) Toggle selection/deselection functionality works correctly (clicking same category deselects it and shows all products), 6) Product category badges have smaller styling with text-xs px-2 py-0.5 classes (lines 729-732), 7) Multiple categories display correctly on products when applicable. No console errors detected. The implementation meets all specified requirements for smaller, compact category buttons and badges."
+
 backend:
   - task: "Categories API endpoints for multi-select feature"
     implemented: true
