@@ -42,6 +42,7 @@ class MenuItem(BaseModel):
     title: str
     description: str
     category: str
+    item_type: str = "blends"
     images: List[str] = []
     variants: List[Variant]
     discount: float = 0.0
@@ -51,6 +52,7 @@ class MenuItemCreate(BaseModel):
     title: str
     description: str
     category: str
+    item_type: str = "blends"
     images: List[str] = []
     variants: List[Variant]
     discount: float = 0.0
