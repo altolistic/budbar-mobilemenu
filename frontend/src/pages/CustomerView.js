@@ -150,6 +150,8 @@ export default function CustomerView() {
   const filterItems = () => {
     let filtered = menuItems;
 
+    // Type is already filtered by API call
+    
     if (selectedCategory !== "All") {
       filtered = filtered.filter(item => item.category === selectedCategory);
     }
