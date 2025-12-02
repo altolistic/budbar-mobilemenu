@@ -299,7 +299,8 @@ export default function CustomerView() {
   };
 
   const handleAddressSelect = (address) => {
-    setDeliveryAddress(address.display_name);
+    // Use the clean formatted address for display, but keep full address for geocoding
+    setDeliveryAddress(address.full_address || address.display_name);
     setShowSuggestions(false);
     setAddressSuggestions([]);
     setDeliveryValidation(null);
