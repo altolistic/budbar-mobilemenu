@@ -897,10 +897,15 @@ export default function AdminDashboard() {
                       {item.discount > 0 && (
                         <p className="text-sm text-green-600 mb-2">Discount: {item.discount}%</p>
                       )}
-                      <div className="space-y-1 mb-4">
-                        {item.variants.map((v, idx) => (
-                          <p key={idx} className="text-sm">{v.name}: ${v.price.toFixed(2)}</p>
-                        ))}
+                      <div className="mb-4">
+                        <p className="text-xs text-gray-500 mb-1">Sizes:</p>
+                        <div className="flex flex-wrap gap-1">
+                          {item.variants.map((v, idx) => (
+                            <Badge key={idx} variant="outline" className="text-xs">
+                              {v.name} - ${v.price.toFixed(2)}
+                            </Badge>
+                          ))}
+                        </div>
                       </div>
                       <div className="flex gap-2">
                         <Button
