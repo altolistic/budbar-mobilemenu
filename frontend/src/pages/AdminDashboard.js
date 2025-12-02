@@ -577,38 +577,85 @@ export default function AdminDashboard() {
             <div className="flex justify-between items-center">
               <h2 className="text-2xl font-bold">Customer Inquiries</h2>
               
-              {/* CSV Download with Date Range */}
-              <div className="flex items-center gap-4">
-                <div className="flex items-center gap-2">
-                  <DatePicker
-                    selected={startDate}
-                    onChange={(date) => setStartDate(date)}
-                    selectsStart
-                    startDate={startDate}
-                    endDate={endDate}
-                    placeholderText="Start Date"
-                    className="px-3 py-2 border rounded-md text-sm"
-                    data-testid="start-date-picker"
-                  />
-                  <span className="text-gray-500">to</span>
-                  <DatePicker
-                    selected={endDate}
-                    onChange={(date) => setEndDate(date)}
-                    selectsEnd
-                    startDate={startDate}
-                    endDate={endDate}
-                    minDate={startDate}
-                    placeholderText="End Date"
-                    className="px-3 py-2 border rounded-md text-sm"
-                    data-testid="end-date-picker"
-                  />
-                </div>
-                <Button onClick={downloadCSV} className="btn-primary" data-testid="download-csv-button">
-                  <Download className="mr-2 h-4 w-4" />
-                  Export CSV
-                </Button>
-              </div>
+              {/* Download Button */}
+              <Button 
+                onClick={() => setIsDownloadDialogOpen(true)} 
+                className="btn-primary" 
+                data-testid="download-inquiries-button"
+              >
+                <Download className="mr-2 h-4 w-4" />
+                Download Inquiries
+              </Button>
             </div>
+
+            {/* Download Dialog */}
+            <Dialog open={isDownloadDialogOpen} onOpenChange={setIsDownloadDialogOpen}>
+              <DialogContent className="max-w-md">
+                <DialogHeader>
+                  <DialogTitle>Download Inquiries</DialogTitle>
+                  <DialogDescription>
+                    Choose to download all inquiries or select a specific date range
+                  </DialogDescription>
+                </DialogHeader>
+
+                <div className="space-y-6 mt-4">
+                  {/* Download All Button */}
+                  <Button 
+                    onClick={() => downloadCSV(false)} 
+                    className="w-full btn-secondary"
+                    data-testid="download-all-button"
+                  >
+                    Download All Inquiries
+                  </Button>
+
+                  <div className="relative">
+                    <div className="absolute inset-0 flex items-center">
+                      <span className="w-full border-t" />
+                    </div>
+                    <div className="relative flex justify-center text-xs uppercase">
+                      <span className="bg-white px-2 text-gray-500">Or</span>
+                    </div>
+                  </div>
+
+                  {/* Date Range Selection */}
+                  <div className="space-y-4">
+                    <label className="text-sm font-medium">Select Date Range:</label>
+                    <div className="flex items-center gap-2">
+                      <DatePicker
+                        selected={startDate}
+                        onChange={(date) => setStartDate(date)}
+                        selectsStart
+                        startDate={startDate}
+                        endDate={endDate}
+                        placeholderText="Start Date"
+                        className="px-3 py-2 border rounded-md text-sm w-full"
+                        data-testid="start-date-picker"
+                      />
+                      <span className="text-gray-500">to</span>
+                      <DatePicker
+                        selected={endDate}
+                        onChange={(date) => setEndDate(date)}
+                        selectsEnd
+                        startDate={startDate}
+                        endDate={endDate}
+                        minDate={startDate}
+                        placeholderText="End Date"
+                        className="px-3 py-2 border rounded-md text-sm w-full"
+                        data-testid="end-date-picker"
+                      />
+                    </div>
+                    <Button 
+                      onClick={() => downloadCSV(true)} 
+                      className="w-full btn-primary"
+                      disabled={!startDate || !endDate}
+                      data-testid="download-date-range-button"
+                    >
+                      Download Selected Range
+                    </Button>
+                  </div>
+                </div>
+              </DialogContent>
+            </Dialog>
 
             {/* Search Bar */}
             <Input
