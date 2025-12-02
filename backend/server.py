@@ -159,6 +159,57 @@ async def get_categories():
     categories = sorted(list(set([item["category"] for item in items if "category" in item])))
     return {"categories": categories}
 
+@api_router.post("/validate-delivery")
+async def validate_delivery(validation: DeliveryValidation):
+    """Validate delivery address and return minimum order requirement"""
+    PICKUP_ADDRESS = "5624 Grand River Road"
+    
+    try:
+        geolocator = Nominatim(user_agent="budbar_marketplace")
+        
+        # Geocode addresses
+        pickup_location = geolocator.geocode(PICKUP_ADDRESS)
+        delivery_location = geolocator.geocode(validation.delivery_address)
+        
+        if not delivery_location:
+            raise HTTPException(status_code=400, detail="Could not find delivery address. Please enter a valid address.")
+        
+        if not pickup_location:
+            # Fallback coordinates if geocoding fails
+            pickup_coords = (42.9634, -82.4249)  # Approximate coordinates
+        else:
+            pickup_coords = (pickup_location.latitude, pickup_location.longitude)
+        
+        delivery_coords = (delivery_location.latitude, delivery_location.longitude)
+        
+        # Calculate distance in miles
+        distance = geodesic(pickup_coords, delivery_coords).miles
+        
+        # Determine minimum based on distance
+        if distance <= 5:
+            minimum = 60.0
+        elif distance <= 10:
+            minimum = 75.0
+        elif distance <= 20:
+            minimum = 90.0
+        else:
+            minimum = 111.0
+        
+        # Calculate remaining amount needed
+        remaining = max(0, minimum - validation.cart_total)
+        
+        return {
+            "distance_miles": round(distance, 2),
+            "minimum_order": minimum,
+            "cart_total": validation.cart_total,
+            "remaining_needed": round(remaining, 2),
+            "meets_minimum": remaining == 0
+        }
+    
+    except Exception as e:
+        logging.error(f"Geocoding error: {str(e)}")
+        raise HTTPException(status_code=400, detail=f"Error validating address: {str(e)}")
+
 @api_router.post("/inquiries", response_model=Inquiry)
 async def create_inquiry(inquiry_data: InquiryCreate):
     inquiry = Inquiry(**inquiry_data.model_dump())
