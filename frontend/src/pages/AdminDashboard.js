@@ -96,6 +96,7 @@ export default function AdminDashboard() {
     try {
       const response = await axios.get(`${API}/menu/items`);
       setMenuItems(response.data);
+      setFilteredMenuItems(response.data);
     } catch (error) {
       console.error("Error fetching menu items:", error);
     }
