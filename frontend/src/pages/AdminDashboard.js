@@ -243,13 +243,35 @@ export default function AdminDashboard() {
                       required
                       data-testid="item-category-input"
                     />
-                    <Input
-                      placeholder="Image URL"
-                      value={formData.image_url}
-                      onChange={(e) => setFormData({ ...formData, image_url: e.target.value })}
-                      required
-                      data-testid="item-image-input"
-                    />
+
+                    {/* Image Upload Section */}
+                    <div className="space-y-2">
+                      <label className="font-semibold">Product Images</label>
+                      <Input
+                        type="file"
+                        accept="image/*"
+                        multiple
+                        onChange={handleImageUpload}
+                        data-testid="item-image-input"
+                      />
+                      {uploadedImages.length > 0 && (
+                        <div className="grid grid-cols-4 gap-2 mt-2">
+                          {uploadedImages.map((img, idx) => (
+                            <div key={idx} className="relative">
+                              <img src={img} alt={`Preview ${idx + 1}`} className="w-full h-20 object-cover rounded" />
+                              <button
+                                type="button"
+                                onClick={() => removeImage(idx)}
+                                className="absolute -top-2 -right-2 bg-red-500 text-white rounded-full w-6 h-6 flex items-center justify-center text-xs"
+                              >
+                                ×
+                              </button>
+                            </div>
+                          ))}
+                        </div>
+                      )}
+                    </div>
+
                     <Input
                       type="number"
                       placeholder="Discount (%)"
