@@ -167,7 +167,7 @@ export default function AdminDashboard() {
     setFormData({
       title: item.title,
       description: item.description,
-      category: item.category,
+      categories: item.categories || [],
       item_type: item.item_type || "blends",
       meta_details: item.meta_details || "",
       images: item.images || [],
