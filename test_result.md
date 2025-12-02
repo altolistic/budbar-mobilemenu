@@ -102,7 +102,7 @@
 # Testing Data - Main Agent and testing sub agent both should log testing data below this section
 #====================================================================================================
 
-user_problem_statement: "Test the new category management feature with delete functionality in BudBar admin dashboard - verify 'Manage Categories' button, category management dialog, delete functionality with confirmation, success messages, and removal from products/dropdowns"
+user_problem_statement: "Test the complete Event delivery option with Flight Pass membership popup functionality - verify Event option in delivery dropdown, Flight Pass popup appearance with benefits and signup bonus, Yes/Not Now button functionality, $50 charge addition, line item display, and popup behavior after acceptance"
 
 frontend:
   - task: "Multi-select categories feature in admin dashboard"
