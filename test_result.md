@@ -161,7 +161,8 @@ metadata:
 
 test_plan:
   current_focus:
-    - "Multi-select categories feature in admin dashboard"
+    - "Category management feature with delete functionality"
+    - "Category delete API endpoint"
   stuck_tasks: []
   test_all: false
   test_priority: "high_first"
