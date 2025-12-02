@@ -96,6 +96,8 @@ export default function CustomerView() {
   const [addressSuggestions, setAddressSuggestions] = useState([]);
   const [showSuggestions, setShowSuggestions] = useState(false);
   const [isSearchingAddress, setIsSearchingAddress] = useState(false);
+  const [showFlightPassPopup, setShowFlightPassPopup] = useState(false);
+  const [hasFlightPass, setHasFlightPass] = useState(false);
 
   useEffect(() => {
     fetchMenuItems();
