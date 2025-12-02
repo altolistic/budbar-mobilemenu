@@ -154,7 +154,7 @@ export default function CustomerView() {
 
     // Type is already filtered by API call
     
-    if (selectedCategory !== "All") {
+    if (selectedCategory) {
       filtered = filtered.filter(item => item.category === selectedCategory);
     }
 
