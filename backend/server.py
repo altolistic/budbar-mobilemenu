@@ -43,7 +43,7 @@ class MenuItem(BaseModel):
     id: str = Field(default_factory=lambda: str(uuid.uuid4()))
     title: str
     description: str
-    category: str
+    categories: List[str] = []
     item_type: str = "blends"
     meta_details: str = ""
     images: List[str] = []
@@ -55,7 +55,7 @@ class MenuItem(BaseModel):
 class MenuItemCreate(BaseModel):
     title: str
     description: str
-    category: str
+    categories: List[str] = []
     item_type: str = "blends"
     meta_details: str = ""
     images: List[str] = []
