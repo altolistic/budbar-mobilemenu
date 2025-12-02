@@ -860,47 +860,11 @@ export default function AdminDashboard() {
                     Manage Categories
                   </Button>
                 </DialogTrigger>
-                <DialogContent>
+                <DialogContent className="max-w-md">
                   <DialogHeader>
                     <DialogTitle>Manage Categories</DialogTitle>
                     <DialogDescription>
-                      Delete categories that are no longer needed. This will remove them from all products.
-                    </DialogDescription>
-                  </DialogHeader>
-                  <div className="space-y-2 mt-4">
-                    {availableCategories.length > 0 ? (
-                      availableCategories.map((cat) => (
-                        <div key={cat} className="flex items-center justify-between p-3 border rounded-md">
-                          <span className="font-medium">{cat}</span>
-                          <Button
-                            variant="destructive"
-                            size="sm"
-                            onClick={() => handleDeleteCategory(cat)}
-                            data-testid={`delete-category-${cat}`}
-                          >
-                            <Trash2 className="h-4 w-4" />
-                          </Button>
-                        </div>
-                      ))
-                    ) : (
-                      <p className="text-gray-500 text-center py-4">No categories available</p>
-                    )}
-                  </div>
-                </DialogContent>
-              </Dialog>
-
-              {/* Reorder Categories Dialog */}
-              <Dialog open={isCategoryOrderOpen} onOpenChange={setIsCategoryOrderOpen}>
-                <DialogTrigger asChild>
-                  <Button variant="outline" data-testid="reorder-categories-button">
-                    Reorder Categories
-                  </Button>
-                </DialogTrigger>
-                <DialogContent>
-                  <DialogHeader>
-                    <DialogTitle>Reorder Categories</DialogTitle>
-                    <DialogDescription>
-                      Drag and drop to reorder how categories appear on the customer menu.
+                      Drag to reorder, click to edit name, or delete categories. Changes sync to the customer menu.
                     </DialogDescription>
                   </DialogHeader>
                   <DndContext
@@ -911,7 +875,17 @@ export default function AdminDashboard() {
                       if (active.id !== over.id) {
                         const oldIndex = availableCategories.indexOf(active.id);
                         const newIndex = availableCategories.indexOf(over.id);
-                        handleCategoryOrderChange(arrayMove(availableCategories, oldIndex, newIndex));
+                        const newOrder = arrayMove(availableCategories, oldIndex, newIndex);
+                        handleCategoryOrderChange(newOrder);
+                        // Auto-save order
+                        axios.put(`${API}/admin/categories/order`, 
+                          { categories: newOrder }, 
+                          getAuthHeaders()
+                        ).then(() => {
+                          toast.success("Category order updated");
+                        }).catch(() => {
+                          toast.error("Failed to update order");
+                        });
                       }
                     }}
                   >
@@ -920,17 +894,25 @@ export default function AdminDashboard() {
                       strategy={verticalListSortingStrategy}
                     >
                       <div className="space-y-2 mt-4">
-                        {availableCategories.map((cat) => (
-                          <SortableCategoryItem key={cat} id={cat} name={cat} />
-                        ))}
+                        {availableCategories.length > 0 ? (
+                          availableCategories.map((cat) => (
+                            <ManageableCategoryItem 
+                              key={cat} 
+                              id={cat} 
+                              name={cat}
+                              onDelete={handleDeleteCategory}
+                              onRename={(oldName, newName) => {
+                                const newCategories = availableCategories.map(c => c === oldName ? newName : c);
+                                setAvailableCategories(newCategories);
+                              }}
+                            />
+                          ))
+                        ) : (
+                          <p className="text-gray-500 text-center py-4">No categories available</p>
+                        )}
                       </div>
                     </SortableContext>
                   </DndContext>
-                  <div className="mt-4">
-                    <Button onClick={saveCategoryOrder} className="w-full" data-testid="save-category-order-button">
-                      Save Order
-                    </Button>
-                  </div>
                 </DialogContent>
               </Dialog>
                 </div>
