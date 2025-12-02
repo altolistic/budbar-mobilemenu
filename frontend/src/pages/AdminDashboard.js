@@ -389,16 +389,42 @@ export default function AdminDashboard() {
           <TabsContent value="menu" className="space-y-6">
             <div className="flex justify-between items-center">
               <h2 className="text-2xl font-bold">Manage Menu Items</h2>
-              <Dialog open={isAddDialogOpen} onOpenChange={(open) => {
-                setIsAddDialogOpen(open);
-                if (!open) resetForm();
-              }}>
-                <DialogTrigger asChild>
-                  <Button className="btn-primary" data-testid="add-menu-item-button">
-                    <Plus className="mr-2 h-4 w-4" />
-                    Add Item
-                  </Button>
-                </DialogTrigger>
+              <div className="flex items-center gap-4">
+                {/* View Toggle */}
+                <div className="inline-flex rounded-lg border p-1 bg-white">
+                  <button
+                    onClick={() => setMenuView("detailed")}
+                    className={`px-4 py-2 rounded-md transition-colors ${
+                      menuView === "detailed"
+                        ? "bg-gray-900 text-white"
+                        : "text-gray-600 hover:text-gray-900"
+                    }`}
+                    data-testid="detailed-view-button"
+                  >
+                    <Grid className="h-4 w-4" />
+                  </button>
+                  <button
+                    onClick={() => setMenuView("list")}
+                    className={`px-4 py-2 rounded-md transition-colors ${
+                      menuView === "list"
+                        ? "bg-gray-900 text-white"
+                        : "text-gray-600 hover:text-gray-900"
+                    }`}
+                    data-testid="list-view-button"
+                  >
+                    <List className="h-4 w-4" />
+                  </button>
+                </div>
+                <Dialog open={isAddDialogOpen} onOpenChange={(open) => {
+                  setIsAddDialogOpen(open);
+                  if (!open) resetForm();
+                }}>
+                  <DialogTrigger asChild>
+                    <Button className="btn-primary" data-testid="add-menu-item-button">
+                      <Plus className="mr-2 h-4 w-4" />
+                      Add Item
+                    </Button>
+                  </DialogTrigger>
                 <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto">
                   <DialogHeader>
                     <DialogTitle>{editingItem ? "Edit" : "Add"} Menu Item</DialogTitle>
