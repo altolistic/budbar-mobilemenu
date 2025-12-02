@@ -340,6 +340,17 @@ export default function CustomerView() {
                         data-testid="delivery-address-input"
                       />
                     )}
+
+                    {/* Referral Name (Optional) */}
+                    <div>
+                      <label className="block text-sm font-medium mb-2">Referral Name (Optional)</label>
+                      <Input
+                        placeholder="Who referred you?"
+                        value={referralName}
+                        onChange={(e) => setReferralName(e.target.value)}
+                        data-testid="referral-name-input"
+                      />
+                    </div>
                   </div>
 
                   {/* Cart Items */}
