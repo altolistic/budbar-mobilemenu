@@ -370,7 +370,7 @@ export default function CustomerView() {
         first_name: firstName,
         phone_number: phoneNumber,
         delivery_method: deliveryMethod,
-        delivery_address: deliveryMethod === "delivery" ? deliveryAddress : "5624 Grand River Road",
+        delivery_address: deliveryMethod === "delivery" ? deliveryAddress : "5624 Grand River Road, Lansing, MI",
         referral_name: referralName || null,
         items: cart,
         total: calculateTotal()
