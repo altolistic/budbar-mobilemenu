@@ -41,10 +41,10 @@ export default function AdminDashboard() {
     return { headers: { Authorization: `Bearer ${token}` } };
   };
 
-  const handleLogout = () => {
+  const handleLogout = useCallback(() => {
     localStorage.removeItem('admin_token');
     navigate("/admin/login");
-  };
+  }, [navigate]);
 
   const fetchMenuItems = useCallback(async () => {
     try {
