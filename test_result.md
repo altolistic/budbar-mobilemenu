@@ -102,7 +102,7 @@
 # Testing Data - Main Agent and testing sub agent both should log testing data below this section
 #====================================================================================================
 
-user_problem_statement: "Test the new admin session management and form auto-save features in BudBar admin dashboard - verify form auto-save to localStorage, restore prompt after page refresh, activity tracking without unexpected logouts, and proper session error handling"
+user_problem_statement: "Test the new variant dropdown selector functionality on BudBar customer menu - verify variants are displayed as dropdown selector, all functionality (pricing, discounts, add to cart) works correctly, and much more compact than previous expanded list"
 
 frontend:
   - task: "Admin session management and form auto-save features"
