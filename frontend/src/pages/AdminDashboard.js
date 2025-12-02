@@ -458,6 +458,11 @@ export default function AdminDashboard() {
 
             {/* Menu Items List */}
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {filteredMenuItems.length === 0 && menuSearchQuery && (
+                <div className="col-span-full text-center text-gray-500 py-8">
+                  No menu items match your search
+                </div>
+              )}
               {filteredMenuItems.map(item => (
                 <Card key={item.id} data-testid={`admin-menu-item-${item.id}`}>
                   <CardHeader>
