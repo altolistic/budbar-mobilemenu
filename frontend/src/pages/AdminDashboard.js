@@ -192,6 +192,22 @@ export default function AdminDashboard() {
     }
   };
 
+  const handleDeleteCategory = async (categoryName) => {
+    if (!window.confirm(`Are you sure you want to delete the category "${categoryName}"? This will remove it from all products that use it.`)) {
+      return;
+    }
+
+    try {
+      const response = await axios.delete(`${API}/admin/categories/${encodeURIComponent(categoryName)}`, getAuthHeaders());
+      toast.success(`Category "${categoryName}" deleted. ${response.data.products_updated} products updated.`);
+      fetchCategories();
+      fetchMenuItems(); // Refresh to show updated products
+    } catch (error) {
+      console.error("Error deleting category:", error);
+      toast.error("Failed to delete category");
+    }
+  };
+
   const addVariant = () => {
     setFormData({
       ...formData,
