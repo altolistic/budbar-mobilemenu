@@ -174,8 +174,7 @@ export default function CustomerView() {
                     )}
                   </Button>
                 </SheetTrigger>
-              </div>
-              <SheetContent className="w-full sm:max-w-lg overflow-y-auto">
+                <SheetContent className="w-full sm:max-w-lg overflow-y-auto">
                 <SheetHeader>
                   <SheetTitle>Your Inquiry Cart</SheetTitle>
                   <SheetDescription>
