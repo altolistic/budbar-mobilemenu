@@ -21,8 +21,7 @@ export default function AdminDashboard() {
   const [editingItem, setEditingItem] = useState(null);
   const [menuSearchQuery, setMenuSearchQuery] = useState("");
   const [inquirySearchQuery, setInquirySearchQuery] = useState("");
-  const [filteredMenuItems, setFilteredMenuItems] = useState([]);
-  const [filteredInquiries, setFilteredInquiries] = useState([]);
+  // Filtered arrays will be computed with useMemo
   const navigate = useNavigate();
 
   const [formData, setFormData] = useState({
