@@ -664,7 +664,12 @@ export default function AdminDashboard() {
                     >
                       <div className="space-y-2">
                         {filteredMenuItems.filter(item => item.item_type === "buds").map(item => (
-                          <SortableMenuItem key={item.id} item={item} />
+                          <SortableMenuItem 
+                            key={item.id} 
+                            item={item} 
+                            onEdit={handleEdit}
+                            onDelete={handleDelete}
+                          />
                         ))}
                         {filteredMenuItems.filter(item => item.item_type === "buds").length === 0 && (
                           <p className="text-center text-gray-500 py-4">No buds items</p>
