@@ -194,6 +194,21 @@ export default function AdminDashboard() {
     }
   };
 
+  const handleDeleteInquiry = async (inquiryId, customerName) => {
+    if (!window.confirm(`Are you sure you want to delete the inquiry from ${customerName}? This action cannot be undone.`)) {
+      return;
+    }
+
+    try {
+      await axios.delete(`${API}/admin/inquiries/${inquiryId}`, getAuthHeaders());
+      toast.success("Inquiry deleted successfully");
+      fetchInquiries();
+    } catch (error) {
+      console.error("Error deleting inquiry:", error);
+      toast.error("Failed to delete inquiry");
+    }
+  };
+
   return (
     <div className="min-h-screen bg-gray-50">
       {/* Header */}
