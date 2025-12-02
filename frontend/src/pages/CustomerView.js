@@ -298,6 +298,35 @@ export default function CustomerView() {
                       onChange={(e) => setPhoneNumber(e.target.value)}
                       data-testid="inquiry-phone-number"
                     />
+                    
+                    {/* Delivery Method */}
+                    <div>
+                      <label className="block text-sm font-medium mb-2">Delivery Method</label>
+                      <Select value={deliveryMethod} onValueChange={setDeliveryMethod}>
+                        <SelectTrigger data-testid="delivery-method-select">
+                          <SelectValue />
+                        </SelectTrigger>
+                        <SelectContent>
+                          <SelectItem value="pickup">Pick Up</SelectItem>
+                          <SelectItem value="delivery">Delivery</SelectItem>
+                        </SelectContent>
+                      </Select>
+                    </div>
+
+                    {/* Address Info */}
+                    {deliveryMethod === "pickup" ? (
+                      <div className="p-4 bg-gray-50 rounded-lg border" data-testid="pickup-address-display">
+                        <p className="text-sm font-semibold mb-1">Pick Up Location:</p>
+                        <p className="text-sm">5624 Grand River Road</p>
+                      </div>
+                    ) : (
+                      <Input
+                        placeholder="Delivery Address"
+                        value={deliveryAddress}
+                        onChange={(e) => setDeliveryAddress(e.target.value)}
+                        data-testid="delivery-address-input"
+                      />
+                    )}
                   </div>
 
                   {/* Cart Items */}
