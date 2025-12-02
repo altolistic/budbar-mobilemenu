@@ -433,15 +433,44 @@ export default function CustomerView() {
                       </div>
                     ) : (
                       <div className="space-y-2">
-                        <Input
-                          placeholder="Delivery Address (e.g., 123 Main St, City, State ZIP)"
-                          value={deliveryAddress}
-                          onChange={(e) => {
-                            setDeliveryAddress(e.target.value);
-                            setDeliveryValidation(null);
-                          }}
-                          data-testid="delivery-address-input"
-                        />
+                        <div className="relative">
+                          <Input
+                            placeholder="Start typing your address..."
+                            value={deliveryAddress}
+                            onChange={(e) => {
+                              const value = e.target.value;
+                              setDeliveryAddress(value);
+                              setDeliveryValidation(null);
+                              searchAddresses(value);
+                            }}
+                            onFocus={() => {
+                              if (addressSuggestions.length > 0) {
+                                setShowSuggestions(true);
+                              }
+                            }}
+                            data-testid="delivery-address-input"
+                          />
+                          {isSearchingAddress && (
+                            <div className="absolute right-3 top-1/2 transform -translate-y-1/2">
+                              <div className="animate-spin h-4 w-4 border-2 border-gray-300 border-t-gray-600 rounded-full"></div>
+                            </div>
+                          )}
+                          {showSuggestions && addressSuggestions.length > 0 && (
+                            <div className="absolute z-50 w-full mt-1 bg-white border rounded-lg shadow-lg max-h-60 overflow-y-auto" data-testid="address-suggestions">
+                              {addressSuggestions.map((suggestion, index) => (
+                                <button
+                                  key={index}
+                                  type="button"
+                                  className="w-full text-left px-4 py-3 hover:bg-gray-100 border-b last:border-b-0 transition-colors"
+                                  onClick={() => handleAddressSelect(suggestion)}
+                                  data-testid={`address-suggestion-${index}`}
+                                >
+                                  <p className="text-sm">{suggestion.display_name}</p>
+                                </button>
+                              ))}
+                            </div>
+                          )}
+                        </div>
                         <Button
                           type="button"
                           variant="outline"
