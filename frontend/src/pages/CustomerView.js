@@ -248,6 +248,7 @@ export default function CustomerView() {
         phone_number: phoneNumber,
         delivery_method: deliveryMethod,
         delivery_address: deliveryMethod === "delivery" ? deliveryAddress : "5624 Grand River Road",
+        referral_name: referralName || null,
         items: cart,
         total: calculateTotal()
       });
@@ -258,6 +259,7 @@ export default function CustomerView() {
       setPhoneNumber("");
       setDeliveryMethod("pickup");
       setDeliveryAddress("");
+      setReferralName("");
       setIsCartOpen(false);
     } catch (error) {
       console.error("Error submitting inquiry:", error);
