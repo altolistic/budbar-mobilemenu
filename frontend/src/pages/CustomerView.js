@@ -470,6 +470,22 @@ export default function CustomerView() {
           <p className="text-gray-400 mt-2">Premium products and services</p>
         </div>
       </footer>
+
+      {/* Back to Top Button */}
+      {showBackToTop && (
+        <button
+          onClick={scrollToTop}
+          className="fixed bottom-8 right-8 z-50 p-4 rounded-full shadow-lg transition-all duration-300 hover:scale-110"
+          style={{ 
+            background: 'linear-gradient(135deg, #D4AF37 0%, #c9a527 100%)',
+            color: '#000000'
+          }}
+          aria-label="Back to top"
+          data-testid="back-to-top-button"
+        >
+          <ArrowUp className="h-6 w-6" />
+        </button>
+      )}
     </div>
   );
 }
