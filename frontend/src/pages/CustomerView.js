@@ -97,8 +97,22 @@ export default function CustomerView() {
       fetchCategories();
     };
     
+    // Show/hide back to top button based on scroll position
+    const handleScroll = () => {
+      if (window.scrollY > 400) {
+        setShowBackToTop(true);
+      } else {
+        setShowBackToTop(false);
+      }
+    };
+    
     window.addEventListener('focus', handleFocus);
-    return () => window.removeEventListener('focus', handleFocus);
+    window.addEventListener('scroll', handleScroll);
+    
+    return () => {
+      window.removeEventListener('focus', handleFocus);
+      window.removeEventListener('scroll', handleScroll);
+    };
   }, []);
 
   useEffect(() => {
