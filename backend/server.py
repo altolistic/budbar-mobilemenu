@@ -131,7 +131,7 @@ async def get_menu_items(category: Optional[str] = None, search: Optional[str] =
 @api_router.get("/menu/categories")
 async def get_categories():
     items = await db.menu_items.find({}, {"_id": 0, "category": 1}).to_list(1000)
-    categories = list(set([item["category"] for item in items if "category" in item]))
+    categories = sorted(list(set([item["category"] for item in items if "category" in item])))
     return {"categories": categories}
 
 @api_router.post("/inquiries", response_model=Inquiry)
