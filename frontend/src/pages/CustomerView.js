@@ -121,7 +121,7 @@ export default function CustomerView() {
 
   useEffect(() => {
     filterItems();
-  }, [menuItems, selectedCategory, searchQuery]);
+  }, [menuItems, selectedCategory, selectedType, searchQuery]);
 
   const fetchMenuItems = async () => {
     try {
