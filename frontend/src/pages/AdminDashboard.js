@@ -753,19 +753,21 @@ export default function AdminDashboard() {
                           <SelectTrigger data-testid="category-dropdown">
                             <SelectValue placeholder="Select existing category" />
                           </SelectTrigger>
-                          <SelectContent className="max-h-[300px] overflow-y-auto">
-                            {availableCategories.map((cat) => (
-                              <SelectItem 
-                                key={cat} 
-                                value={cat}
-                                disabled={formData.categories.includes(cat)}
-                              >
-                                {cat}
-                              </SelectItem>
-                            ))}
-                            {availableCategories.length === 0 && (
-                              <div className="p-2 text-sm text-gray-500">No categories yet</div>
-                            )}
+                          <SelectContent className="max-h-[300px]">
+                            <div className="max-h-[280px] overflow-y-auto">
+                              {availableCategories.map((cat) => (
+                                <SelectItem 
+                                  key={cat} 
+                                  value={cat}
+                                  disabled={formData.categories.includes(cat)}
+                                >
+                                  {cat}
+                                </SelectItem>
+                              ))}
+                              {availableCategories.length === 0 && (
+                                <div className="p-2 text-sm text-gray-500">No categories yet</div>
+                              )}
+                            </div>
                           </SelectContent>
                         </Select>
 
