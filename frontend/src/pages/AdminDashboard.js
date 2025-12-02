@@ -523,7 +523,7 @@ export default function AdminDashboard() {
             </div>
 
             <div className="space-y-4">
-              {inquiries.map(inquiry => (
+              {filteredInquiries.map(inquiry => (
                 <Card key={inquiry.id} data-testid={`inquiry-${inquiry.id}`}>
                   <CardHeader>
                     <div className="flex justify-between items-start">
