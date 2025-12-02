@@ -24,10 +24,11 @@ export default function AdminDashboard() {
     title: "",
     description: "",
     category: "",
-    image_url: "",
+    images: [],
     discount: 0,
     variants: [{ name: "", price: 0 }]
   });
+  const [uploadedImages, setUploadedImages] = useState([]);
 
   useEffect(() => {
     fetchMenuItems();
