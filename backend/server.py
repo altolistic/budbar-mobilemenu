@@ -158,13 +158,43 @@ async def get_menu_items(
 @api_router.get("/menu/categories")
 async def get_categories():
     items = await db.menu_items.find({}, {"_id": 0, "categories": 1}).to_list(1000)
-    # Flatten all categories from all items into a single unique sorted list
+    # Flatten all categories from all items into a single unique list
     all_categories = []
     for item in items:
         if "categories" in item and isinstance(item["categories"], list):
             all_categories.extend(item["categories"])
-    categories = sorted(list(set(all_categories)))
-    return {"categories": categories}
+    unique_categories = list(set(all_categories))
+    
+    # Get saved category order
+    category_order_doc = await db.category_order.find_one({}, {"_id": 0})
+    
+    if category_order_doc and "order" in category_order_doc:
+        ordered_categories = category_order_doc["order"]
+        # Add any new categories that aren't in the saved order
+        for cat in unique_categories:
+            if cat not in ordered_categories:
+                ordered_categories.append(cat)
+        # Remove any categories that no longer exist
+        ordered_categories = [cat for cat in ordered_categories if cat in unique_categories]
+    else:
+        # If no order saved, return sorted alphabetically
+        ordered_categories = sorted(unique_categories)
+    
+    return {"categories": ordered_categories}
+
+@api_router.put("/admin/categories/order")
+async def update_category_order(order: dict, token: dict = Depends(verify_token)):
+    """Update the display order of categories"""
+    category_list = order.get("categories", [])
+    
+    # Save or update the category order
+    await db.category_order.update_one(
+        {},
+        {"$set": {"order": category_list}},
+        upsert=True
+    )
+    
+    return {"message": "Category order updated successfully"}
 
 @api_router.delete("/admin/categories/{category_name}")
 async def delete_category(category_name: str, token: dict = Depends(verify_token)):
