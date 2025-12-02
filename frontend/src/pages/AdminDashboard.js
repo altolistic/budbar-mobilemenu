@@ -100,15 +100,7 @@ export default function AdminDashboard() {
   useEffect(() => {
     fetchMenuItems();
     fetchInquiries();
-  }, []);
-
-  useEffect(() => {
-    filterMenuItems();
-  }, [menuItems, menuSearchQuery]);
-
-  useEffect(() => {
-    filterInquiries();
-  }, [inquiries, inquirySearchQuery]);
+  }, [fetchMenuItems, fetchInquiries]);
 
   const resetForm = () => {
     setFormData({
