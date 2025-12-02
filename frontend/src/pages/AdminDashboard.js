@@ -955,9 +955,21 @@ export default function AdminDashboard() {
                               id={cat} 
                               name={cat}
                               onDelete={handleDeleteCategory}
-                              onRename={(oldName, newName) => {
-                                const newCategories = availableCategories.map(c => c === oldName ? newName : c);
-                                setAvailableCategories(newCategories);
+                              onRename={async (oldName, newName) => {
+                                try {
+                                  await axios.put(
+                                    `${API}/admin/categories/${encodeURIComponent(oldName)}/rename`,
+                                    { new_name: newName },
+                                    getAuthHeaders()
+                                  );
+                                  const newCategories = availableCategories.map(c => c === oldName ? newName : c);
+                                  setAvailableCategories(newCategories);
+                                  fetchMenuItems(); // Refresh to show updated products
+                                  toast.success(`Category renamed to "${newName}"`);
+                                } catch (error) {
+                                  console.error("Error renaming category:", error);
+                                  toast.error("Failed to rename category");
+                                }
                               }}
                             />
                           ))
