@@ -66,10 +66,6 @@ export default function AdminLogin({ setIsAuthenticated }) {
               Login
             </Button>
           </form>
-          <div className="mt-4 text-center text-sm text-gray-600">
-            <p>Default credentials:</p>
-            <p className="font-mono">admin@purepath.com / Feelgoodmix</p>
-          </div>
         </CardContent>
       </Card>
     </div>
