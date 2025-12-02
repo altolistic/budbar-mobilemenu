@@ -435,7 +435,7 @@ export default function CustomerView() {
       {/* Footer */}
       <footer className="bg-black text-white mt-20 py-8">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <p className="gold-text text-lg font-semibold">PurePath Marketplace</p>
+          <p className="gold-text text-lg font-semibold">BudBar Marketplace</p>
           <p className="text-gray-400 mt-2">Premium products and services</p>
         </div>
       </footer>
