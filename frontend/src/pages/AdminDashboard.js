@@ -511,6 +511,17 @@ export default function AdminDashboard() {
           <TabsContent value="inquiries" className="space-y-6">
             <h2 className="text-2xl font-bold">Customer Inquiries</h2>
 
+            {/* Search Bar for Inquiries */}
+            <div className="flex gap-4 items-center">
+              <Input
+                placeholder="Search inquiries by customer name, phone, address, or items..."
+                value={inquirySearchQuery}
+                onChange={(e) => setInquirySearchQuery(e.target.value)}
+                className="flex-1"
+                data-testid="inquiry-search-input"
+              />
+            </div>
+
             <div className="space-y-4">
               {inquiries.map(inquiry => (
                 <Card key={inquiry.id} data-testid={`inquiry-${inquiry.id}`}>
