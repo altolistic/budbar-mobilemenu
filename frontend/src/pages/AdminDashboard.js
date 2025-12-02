@@ -127,6 +127,50 @@ export default function AdminDashboard() {
     fetchInquiries();
   }, [fetchMenuItems, fetchCategories, fetchInquiries]);
 
+  // Auto-save form data to localStorage
+  useEffect(() => {
+    // Only save if form has data (not default empty state)
+    if (formData.title || formData.description) {
+      localStorage.setItem('admin_form_draft', JSON.stringify({
+        formData,
+        editingItemId: editingItem?.id,
+        timestamp: Date.now()
+      }));
+    }
+  }, [formData, editingItem]);
+
+  // Restore form data on mount if available
+  useEffect(() => {
+    const savedDraft = localStorage.getItem('admin_form_draft');
+    if (savedDraft) {
+      try {
+        const { formData: savedFormData, editingItemId, timestamp } = JSON.parse(savedDraft);
+        const hourAgo = Date.now() - (60 * 60 * 1000);
+        
+        // Only restore if less than 1 hour old
+        if (timestamp > hourAgo) {
+          const restore = window.confirm(
+            "You have unsaved work. Would you like to restore it?"
+          );
+          if (restore) {
+            setFormData(savedFormData);
+            if (editingItemId) {
+              const item = menuItems.find(i => i.id === editingItemId);
+              if (item) setEditingItem(item);
+            }
+            toast.info("Draft restored");
+          } else {
+            localStorage.removeItem('admin_form_draft');
+          }
+        } else {
+          localStorage.removeItem('admin_form_draft');
+        }
+      } catch (e) {
+        console.error("Error restoring draft:", e);
+      }
+    }
+  }, []); // Only run once on mount
+
   // Auto-logout after 15 minutes of inactivity with warning
   useEffect(() => {
     const INACTIVITY_TIMEOUT = 15 * 60 * 1000; // 15 minutes
