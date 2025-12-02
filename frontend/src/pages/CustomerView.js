@@ -701,6 +701,10 @@ export default function CustomerView() {
                         <span className="text-green-600 font-bold">✓</span>
                         <span><strong>Priority access</strong> to new products</span>
                       </div>
+                      <div className="flex items-start gap-2">
+                        <span className="text-green-600 font-bold">✓</span>
+                        <span><strong>$5 for every referral</strong> you make</span>
+                      </div>
                     </div>
                   </div>
 
