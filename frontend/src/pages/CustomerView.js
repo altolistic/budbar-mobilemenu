@@ -83,6 +83,7 @@ export default function CustomerView() {
   const [categories, setCategories] = useState([]);
   const [selectedCategory, setSelectedCategory] = useState("");
   const [selectedType, setSelectedType] = useState("all");
+  const [showSpecials, setShowSpecials] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
   const [cart, setCart] = useState([]);
   const [firstName, setFirstName] = useState("");
