@@ -858,31 +858,43 @@ export default function CustomerView() {
                   </Badge>
                 </div>
 
-                {/* Variants */}
-                <div className="space-y-2 mt-4">
-                  {item.variants.map((variant, idx) => (
-                    <div key={idx} className="flex justify-between items-center" data-testid={`variant-${item.id}-${idx}`}>
-                      <div>
-                        <span className="font-medium">{variant.name}</span>
-                        {item.discount > 0 && (
-                          <span className="ml-2 text-sm text-gray-400 line-through">
-                            ${variant.price.toFixed(2)}
-                          </span>
-                        )}
-                        <span className="ml-2 font-bold gold-text">
-                          ${(variant.price * (1 - item.discount / 100)).toFixed(2)}
-                        </span>
-                      </div>
-                      <Button
-                        size="sm"
-                        onClick={() => addToCart(item, variant)}
-                        className="btn-outline"
-                        data-testid={`add-to-cart-${item.id}-${idx}`}
-                      >
-                        Add
-                      </Button>
-                    </div>
-                  ))}
+                {/* Variants Dropdown */}
+                <div className="mt-4">
+                  <Select
+                    onValueChange={(value) => {
+                      const variantIndex = parseInt(value);
+                      const selectedVariant = item.variants[variantIndex];
+                      addToCart(item, selectedVariant);
+                      toast.success(`${selectedVariant.name} added to cart`);
+                    }}
+                  >
+                    <SelectTrigger className="w-full" data-testid={`variant-select-${item.id}`}>
+                      <SelectValue placeholder="Select size & add to cart" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      {item.variants.map((variant, idx) => (
+                        <SelectItem 
+                          key={idx} 
+                          value={idx.toString()}
+                          data-testid={`variant-option-${item.id}-${idx}`}
+                        >
+                          <div className="flex justify-between items-center w-full gap-4">
+                            <span className="font-medium">{variant.name}</span>
+                            <div className="flex items-center gap-2">
+                              {item.discount > 0 && (
+                                <span className="text-sm text-gray-400 line-through">
+                                  ${variant.price.toFixed(2)}
+                                </span>
+                              )}
+                              <span className="font-bold text-yellow-600">
+                                ${(variant.price * (1 - item.discount / 100)).toFixed(2)}
+                              </span>
+                            </div>
+                          </div>
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
                 </div>
               </div>
             </div>
