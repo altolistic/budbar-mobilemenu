@@ -802,11 +802,35 @@ export default function CustomerView() {
           </div>
         </div>
 
+        {/* Specials Filter Button */}
+        <div className="mb-6 flex justify-center">
+          <button
+            onClick={() => {
+              setShowSpecials(!showSpecials);
+              if (!showSpecials) {
+                setSelectedCategory("");
+                setSelectedType("all");
+              }
+            }}
+            className={`px-6 py-2.5 rounded-lg font-bold text-lg transition-all shadow-lg ${
+              showSpecials
+                ? 'bg-gradient-to-r from-[#FFD700] to-[#FFA500] text-black scale-105'
+                : 'bg-gradient-to-r from-[#D4AF37] to-[#c9a527] text-white hover:scale-105'
+            }`}
+            data-testid="specials-button"
+          >
+            ✨ SPECIALS ✨
+          </button>
+        </div>
+
         {/* Type Toggle - ALL, Buds, Blends */}
         <div className="mb-8 flex justify-center">
           <div className="inline-flex rounded-lg border-2 border-gray-200 p-1 bg-white" data-testid="type-toggle">
             <button
-              onClick={() => setSelectedType("all")}
+              onClick={() => {
+                setSelectedType("all");
+                setShowSpecials(false);
+              }}
               className={`px-8 py-3 rounded-lg font-semibold transition-all ${
                 selectedType === "all"
                   ? 'bg-gradient-to-r from-[#D4AF37] to-[#c9a527] text-black shadow-md'
