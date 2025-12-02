@@ -807,14 +807,25 @@ export default function AdminDashboard() {
                           variant="outline"
                           onClick={() => handleEdit(item)}
                           data-testid={`edit-item-${item.id}`}
+                          title="Edit"
                         >
                           <Edit2 className="h-4 w-4" />
+                        </Button>
+                        <Button
+                          size="sm"
+                          variant="outline"
+                          onClick={() => handleDuplicate(item)}
+                          data-testid={`duplicate-item-${item.id}`}
+                          title="Duplicate"
+                        >
+                          <Copy className="h-4 w-4" />
                         </Button>
                         <Button
                           size="sm"
                           variant="destructive"
                           onClick={() => handleDelete(item.id)}
                           data-testid={`delete-item-${item.id}`}
+                          title="Delete"
                         >
                           <Trash2 className="h-4 w-4" />
                         </Button>
