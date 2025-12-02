@@ -102,7 +102,7 @@
 # Testing Data - Main Agent and testing sub agent both should log testing data below this section
 #====================================================================================================
 
-user_problem_statement: "Test the delivery minimum calculation feature for BudBar app - verify distance calculation shows closer to 45 miles (GPS distance) rather than previous 38 miles for address '6119 Hadden Hall Ct, Alpharetta, GA 30005'"
+user_problem_statement: "Test the new multi-select categories feature in BudBar admin dashboard - verify ability to select existing categories, add new categories, display multiple categories as badges, and remove categories with × button"
 
 frontend:
   - task: "Delivery minimum calculation feature"
