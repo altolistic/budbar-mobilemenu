@@ -47,6 +47,7 @@ class MenuItem(BaseModel):
     images: List[str] = []
     variants: List[Variant]
     discount: float = 0.0
+    display_order: int = 0
     created_at: datetime = Field(default_factory=lambda: datetime.now(timezone.utc))
 
 class MenuItemCreate(BaseModel):
@@ -58,6 +59,7 @@ class MenuItemCreate(BaseModel):
     images: List[str] = []
     variants: List[Variant]
     discount: float = 0.0
+    display_order: int = 0
 
 class InquiryItem(BaseModel):
     menu_item_id: str
