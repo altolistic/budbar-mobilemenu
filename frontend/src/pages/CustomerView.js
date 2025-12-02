@@ -873,6 +873,11 @@ export default function CustomerView() {
                 </div>
               </DialogContent>
             </Dialog>
+              <a href="/admin/login" className="w-full sm:w-auto">
+                <Button variant="outline" className="w-full" data-testid="admin-login-button">
+                  Admin Login
+                </Button>
+              </a>
             </div>
           </div>
         </div>
