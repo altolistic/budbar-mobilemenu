@@ -633,6 +633,76 @@ export default function CustomerView() {
                 </div>
               </SheetContent>
             </Sheet>
+
+            {/* Flight Pass Membership Popup */}
+            <Dialog open={showFlightPassPopup} onOpenChange={setShowFlightPassPopup}>
+              <DialogContent className="max-w-md">
+                <DialogHeader>
+                  <DialogTitle className="text-2xl font-bold text-center">Join Our Community! 🎉</DialogTitle>
+                  <DialogDescription className="text-center">
+                    Upgrade to Flight Pass Membership
+                  </DialogDescription>
+                </DialogHeader>
+                
+                <div className="space-y-4 py-4">
+                  <div className="bg-gradient-to-r from-yellow-50 to-yellow-100 p-4 rounded-lg border-2 border-yellow-300">
+                    <p className="text-lg font-bold text-center mb-2">✈️ Flight Pass - $50/Year</p>
+                    <div className="space-y-2 text-sm">
+                      <div className="flex items-start gap-2">
+                        <span className="text-green-600 font-bold">✓</span>
+                        <span><strong>3% cashback</strong> on every order</span>
+                      </div>
+                      <div className="flex items-start gap-2">
+                        <span className="text-green-600 font-bold">✓</span>
+                        <span><strong>Exclusive event discounts</strong></span>
+                      </div>
+                      <div className="flex items-start gap-2">
+                        <span className="text-green-600 font-bold">✓</span>
+                        <span><strong>Holiday gifts</strong> and surprises</span>
+                      </div>
+                      <div className="flex items-start gap-2">
+                        <span className="text-green-600 font-bold">✓</span>
+                        <span><strong>Priority access</strong> to new products</span>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="bg-green-50 p-3 rounded-lg border-2 border-green-300 text-center">
+                    <p className="font-bold text-green-700">🎁 Sign Up Today & Get</p>
+                    <p className="text-2xl font-bold text-green-600">$10 BudBar Cash</p>
+                    <p className="text-xs text-gray-600">(instead of the regular $5)</p>
+                  </div>
+
+                  <p className="text-center text-sm text-gray-600">
+                    Would you like to upgrade to Flight Pass membership?
+                  </p>
+
+                  <div className="flex gap-3">
+                    <Button
+                      onClick={() => {
+                        setHasFlightPass(true);
+                        setShowFlightPassPopup(false);
+                        toast.success("Flight Pass added! $50 added to your order total.");
+                      }}
+                      className="flex-1 bg-gradient-to-r from-yellow-500 to-yellow-600 hover:from-yellow-600 hover:to-yellow-700"
+                      data-testid="flight-pass-yes-button"
+                    >
+                      Yes, Upgrade! 🚀
+                    </Button>
+                    <Button
+                      onClick={() => {
+                        setShowFlightPassPopup(false);
+                      }}
+                      variant="outline"
+                      className="flex-1"
+                      data-testid="flight-pass-not-now-button"
+                    >
+                      Not Now
+                    </Button>
+                  </div>
+                </div>
+              </DialogContent>
+            </Dialog>
             </div>
           </div>
         </div>
