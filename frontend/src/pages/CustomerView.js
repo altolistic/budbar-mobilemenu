@@ -143,7 +143,7 @@ export default function CustomerView() {
   const fetchCategories = async () => {
     try {
       const response = await axios.get(`${API}/menu/categories`);
-      setCategories(["All", ...response.data.categories]);
+      setCategories(response.data.categories);
     } catch (error) {
       console.error("Error fetching categories:", error);
     }
