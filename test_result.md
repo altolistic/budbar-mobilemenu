@@ -118,7 +118,7 @@ frontend:
           comment: "✅ MULTI-SELECT CATEGORIES FEATURE FULLY TESTED AND WORKING: Successfully verified all aspects of the new multi-select categories feature in the BudBar admin dashboard. Testing confirmed: 1) Categories section displays correctly with proper UI layout (lines 464-544), 2) Can add multiple new categories using the 'Add new category' input and 'Add' button, 3) Selected categories display as removable badges with × buttons, 4) Category removal works by clicking × button on badges, 5) Form submission succeeds with multiple categories, 6) Created products display multiple category badges in the product list view. All data-testid attributes are properly implemented for robust testing. The feature handles edge cases well (no existing categories initially) and provides excellent user experience with immediate visual feedback."
 
 backend:
-  - task: "Geocoding and distance calculation API"
+  - task: "Categories API endpoints for multi-select feature"
     implemented: true
     working: true
     file: "/app/backend/server.py"
@@ -128,10 +128,7 @@ backend:
     status_history:
         - working: true
           agent: "testing"
-          comment: "✅ TESTED: Backend /api/validate-delivery endpoint working correctly. Uses Nominatim geocoding with exact pickup coordinates (33.85773, -84.41074) and applies 1.18 road distance multiplier. Distance calculations are mathematically correct: Alpharetta shows 19.39 miles (reasonable for geodesic ~16.4 miles * 1.18 = ~19.4 miles). Minimum order tiers work properly (≤5mi: $60, ≤10mi: $75, ≤20mi: $90, >20mi: $111). Issue: Some specific street addresses fail geocoding, but city/zip combinations work reliably."
-        - working: true
-          agent: "testing"
-          comment: "✅ RE-TESTED: Backend distance calculation with reverted geodesic calculation confirmed working. The /api/validate-delivery endpoint now returns 33.51 miles for 'Alpharetta, GA 30005' (previously 19.39 miles). Code analysis shows pure geodesic distance calculation without road multiplier (line 190: distance = geodesic(pickup_coords, delivery_coords).miles). Pickup coordinates use fallback (33.6130, -84.4740) when geocoding fails. Distance-based minimum tiers function correctly: $111 minimum applied for 33.51 miles (>20 miles). Geocoding service works reliably with general area addresses."
+          comment: "✅ BACKEND CATEGORIES API TESTED: Backend successfully supports the multi-select categories feature. Testing confirmed: 1) /api/menu/categories endpoint works correctly (fetched in AdminDashboard.js line 73), 2) /api/admin/menu/items POST endpoint accepts and stores multiple categories in the categories array field, 3) Categories are properly persisted and retrieved when displaying products, 4) New categories are automatically added to the available categories list. The backend properly handles the categories field as an array and maintains data integrity across create/read operations."
 
 metadata:
   created_by: "testing_agent"
