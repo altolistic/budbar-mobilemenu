@@ -238,6 +238,48 @@ export default function CustomerView() {
     return cart.reduce((sum, item) => sum + calculateItemPrice(item), 0);
   };
 
+  const searchAddresses = async (query) => {
+    if (!query || query.length < 3) {
+      setAddressSuggestions([]);
+      setShowSuggestions(false);
+      return;
+    }
+
+    setIsSearchingAddress(true);
+    try {
+      // Using Nominatim for address autocomplete
+      const response = await axios.get('https://nominatim.openstreetmap.org/search', {
+        params: {
+          q: query,
+          format: 'json',
+          addressdetails: 1,
+          limit: 5,
+          countrycodes: 'us'
+        }
+      });
+
+      const suggestions = response.data.map(item => ({
+        display_name: item.display_name,
+        lat: item.lat,
+        lon: item.lon
+      }));
+
+      setAddressSuggestions(suggestions);
+      setShowSuggestions(suggestions.length > 0);
+    } catch (error) {
+      console.error("Error searching addresses:", error);
+    } finally {
+      setIsSearchingAddress(false);
+    }
+  };
+
+  const handleAddressSelect = (address) => {
+    setDeliveryAddress(address.display_name);
+    setShowSuggestions(false);
+    setAddressSuggestions([]);
+    setDeliveryValidation(null);
+  };
+
   const validateDeliveryAddress = async () => {
     if (deliveryMethod !== "delivery" || !deliveryAddress) {
       setDeliveryValidation(null);
