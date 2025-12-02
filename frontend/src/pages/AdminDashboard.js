@@ -563,18 +563,51 @@ export default function AdminDashboard() {
 
           {/* Inquiries Tab */}
           <TabsContent value="inquiries" className="space-y-6">
-            <h2 className="text-2xl font-bold">Customer Inquiries</h2>
-
-            {/* Search Bar for Inquiries */}
-            <div className="flex gap-4 items-center">
-              <Input
-                placeholder="Search inquiries by customer name, phone, address, or items..."
-                value={inquirySearchQuery}
-                onChange={(e) => setInquirySearchQuery(e.target.value)}
-                className="flex-1"
-                data-testid="inquiry-search-input"
-              />
+            <div className="flex justify-between items-center">
+              <h2 className="text-2xl font-bold">Customer Inquiries</h2>
+              
+              {/* CSV Download with Date Range */}
+              <div className="flex items-center gap-4">
+                <div className="flex items-center gap-2">
+                  <DatePicker
+                    selected={startDate}
+                    onChange={(date) => setStartDate(date)}
+                    selectsStart
+                    startDate={startDate}
+                    endDate={endDate}
+                    placeholderText="Start Date"
+                    className="px-3 py-2 border rounded-md text-sm"
+                    data-testid="start-date-picker"
+                  />
+                  <span className="text-gray-500">to</span>
+                  <DatePicker
+                    selected={endDate}
+                    onChange={(date) => setEndDate(date)}
+                    selectsEnd
+                    startDate={startDate}
+                    endDate={endDate}
+                    minDate={startDate}
+                    placeholderText="End Date"
+                    className="px-3 py-2 border rounded-md text-sm"
+                    data-testid="end-date-picker"
+                  />
+                </div>
+                <Button onClick={downloadCSV} className="btn-primary" data-testid="download-csv-button">
+                  <Download className="mr-2 h-4 w-4" />
+                  Export CSV
+                </Button>
+              </div>
             </div>
+
+            {/* Search Bar */}
+            <Input
+              type="text"
+              placeholder="Search inquiries by customer name, phone, address, or items..."
+              value={inquirySearchQuery}
+              onChange={(e) => setInquirySearchQuery(e.target.value)}
+              data-testid="inquiry-search-input"
+              className="max-w-md"
+            />
 
             <div className="space-y-4">
               {filteredInquiries.map(inquiry => (
