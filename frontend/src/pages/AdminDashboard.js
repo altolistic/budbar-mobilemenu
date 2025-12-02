@@ -38,7 +38,7 @@ export default function AdminDashboard() {
   const [formData, setFormData] = useState({
     title: "",
     description: "",
-    category: "",
+    categories: [],
     item_type: "blends",
     meta_details: "",
     images: [],
@@ -46,6 +46,8 @@ export default function AdminDashboard() {
     variants: [{ name: "", price: 0 }]
   });
   const [uploadedImages, setUploadedImages] = useState([]);
+  const [availableCategories, setAvailableCategories] = useState([]);
+  const [newCategoryInput, setNewCategoryInput] = useState("");
 
   const getAuthHeaders = () => {
     const token = localStorage.getItem('admin_token');
