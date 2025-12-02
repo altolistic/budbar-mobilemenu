@@ -161,7 +161,9 @@ export default function CustomerView() {
     // Type is already filtered by API call
     
     if (selectedCategory) {
-      filtered = filtered.filter(item => item.category === selectedCategory);
+      filtered = filtered.filter(item => 
+        item.categories && item.categories.includes(selectedCategory)
+      );
     }
 
     if (searchQuery) {
