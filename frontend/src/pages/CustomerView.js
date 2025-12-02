@@ -630,12 +630,25 @@ export default function CustomerView() {
                   {cart.length > 0 && (
                     <div className="border-t pt-4 space-y-2">
                       {hasFlightPass && (
-                        <div className="flex justify-between items-center text-sm">
+                        <div className="flex justify-between items-center text-sm border-b pb-2">
                           <span className="flex items-center gap-2">
                             ✈️ Flight Pass Membership
                             <Badge className="bg-yellow-500 text-xs">Annual</Badge>
                           </span>
-                          <span className="font-semibold">$50.00</span>
+                          <div className="flex items-center gap-2">
+                            <span className="font-semibold">$50.00</span>
+                            <button
+                              onClick={() => {
+                                setHasFlightPass(false);
+                                toast.info("Flight Pass removed from cart");
+                              }}
+                              className="text-red-500 hover:text-red-700 transition"
+                              data-testid="remove-flight-pass-button"
+                              title="Remove Flight Pass"
+                            >
+                              <X className="h-4 w-4" />
+                            </button>
+                          </div>
                         </div>
                       )}
                       <div className="flex justify-between items-center text-xl font-bold">
