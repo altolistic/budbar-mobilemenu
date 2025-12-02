@@ -422,6 +422,34 @@ export default function CustomerView() {
           <p className="text-lg text-gray-600 max-w-2xl mx-auto">Discover our curated selection of premium products and services</p>
         </div>
 
+        {/* Type Toggle - Blends vs Buds */}
+        <div className="mb-8 flex justify-center">
+          <div className="inline-flex rounded-lg border-2 border-gray-200 p-1 bg-white" data-testid="type-toggle">
+            <button
+              onClick={() => setSelectedType("blends")}
+              className={`px-8 py-3 rounded-lg font-semibold transition-all ${
+                selectedType === "blends"
+                  ? 'bg-gradient-to-r from-[#D4AF37] to-[#c9a527] text-black shadow-md'
+                  : 'text-gray-600 hover:text-gray-900'
+              }`}
+              data-testid="blends-toggle"
+            >
+              Blends
+            </button>
+            <button
+              onClick={() => setSelectedType("buds")}
+              className={`px-8 py-3 rounded-lg font-semibold transition-all ${
+                selectedType === "buds"
+                  ? 'bg-gradient-to-r from-[#D4AF37] to-[#c9a527] text-black shadow-md'
+                  : 'text-gray-600 hover:text-gray-900'
+              }`}
+              data-testid="buds-toggle"
+            >
+              Buds
+            </button>
+          </div>
+        </div>
+
         {/* Search Bar */}
         <div className="mb-8">
           <div className="relative max-w-2xl mx-auto">
