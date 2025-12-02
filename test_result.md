@@ -166,9 +166,7 @@ metadata:
   test_sequence: 1
 
 test_plan:
-  current_focus:
-    - "Category management feature with delete functionality"
-    - "Category delete API endpoint"
+  current_focus: []
   stuck_tasks: []
   test_all: false
   test_priority: "high_first"
